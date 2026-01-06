@@ -10,11 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-//$ContractID     = (integer) @$Args['ContractID'];
-//$IsUponConsider = (boolean) @$Args['IsUponConsider'];
-$OrderID	= (integer) @$Args[3];
-
-//Debug(print_r($Args,true));
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -36,6 +32,9 @@ if($OrderID > 0)
 #-------------------------------------------------------------------------------
 $Columns = Array(	'*',
 			'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) AS `Customer`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`',
+			'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `IsPayed`',
+			'(SELECT `Comment` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) AS `Message`',
+			"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `HostingOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`",
 			);
 $HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
@@ -82,6 +81,16 @@ foreach($HostingOrders as $HostingOrder){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	// меняем формат графиков на выходе
+	$Comp = Comp_Load('Formats/GraphOut',$HostingOrder['Params'],$HostingOrder['StatusID']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$HostingOrder['Graphs'] = $Comp;
+	#-------------------------------------------------------------------------------
+	UnSet($HostingOrder['Params']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	// выпиливаем колонки
 	foreach(Array_Keys($HostingOrder) as $Column)
 		if(In_Array($Column,$Exclude))
@@ -92,7 +101,7 @@ foreach($HostingOrders as $HostingOrder){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return $Out;
+return ($OrderID > 0)?Current($Out):$Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

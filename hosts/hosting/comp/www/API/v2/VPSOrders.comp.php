@@ -10,11 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-//$ContractID     = (integer) @$Args['ContractID'];
-//$IsUponConsider = (boolean) @$Args['IsUponConsider'];
-$OrderID	= (integer) @$Args[3];
-
-//Debug(print_r($Args,true));
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -30,6 +26,8 @@ if($OrderID > 0)
 $Columns = Array(
 		'*',
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) AS `Customer`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`',
+		'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `IsPayed`',
+		"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `VPSOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`",
 		);
 #-------------------------------------------------------------------------------
 $VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
@@ -81,6 +79,16 @@ foreach($VPSOrders as $VPSOrder){
 	if($Servers[$ServerID]['Params']['SystemID'] == 'VmManager6_Hosting')
 		$VPSOrder['Login'] = SPrintF('%s@%s',$VPSOrder['Login'],$Servers[$ServerID]['Params']['Domain']);
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// меняем формат графиков на выходе
+	$Comp = Comp_Load('Formats/GraphOut',$VPSOrder['Params'],$VPSOrder['StatusID']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$VPSOrder['Graphs'] = $Comp;
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	UnSet($VPSOrder['Params']);
 	UnSet($VPSOrder['AdminNotice']);
 	#-------------------------------------------------------------------------------
 	$Out[$VPSOrder['ID']] = $VPSOrder;
@@ -88,7 +96,7 @@ foreach($VPSOrders as $VPSOrder){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return $Out;
+return ($OrderID > 0)?Current($Out):$Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

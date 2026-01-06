@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod','classes/Net_IDNA.class.php')))
 	return ERROR | @Trigger_Error(500);
@@ -28,9 +29,13 @@ $Out = Array();
 #-------------------------------------------------------------------------------
 $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
+if($OrderID > 0)
+	$Where[] = SPrintF('`OrderID` = %s',$OrderID);
+#-------------------------------------------------------------------------------
 $Columns = Array(
 		'*',
 		'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`',
+		'(SELECT `CostProlong` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `CostProlong`',
 		'CONCAT(`Ns1Name`,",",`Ns2Name`,",",`Ns3Name`,",",`Ns4Name`) AS `DNSs`',        // DNS for JBS-1337
 		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)) as `Params`',
 		'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `IsAutoProlong`',
@@ -102,7 +107,11 @@ foreach($DomainOrders as $DomainOrder){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	$DomainOrder['Message'] = Str_Replace('%CostProlong%',$DomainOrder['CostProlong'],$DomainOrder['Params']['Message']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	UnSet($DomainOrder['Params']);
+	UnSet($DomainOrder['CostProlong']);
 	#-------------------------------------------------------------------------------
 	// выпиливаем колонки
 	foreach(Array_Keys($DomainOrder) as $Column)
@@ -129,13 +138,13 @@ foreach($DomainOrders as $DomainOrder){
 	$DomainOrder['IDNA_Domain'] = $IDNA->encode($DomainOrder['Domain']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
 	$Out[$DomainOrder['ID']] = $DomainOrder;
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return $Out;
+return ($OrderID > 0)?Current($Out):$Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

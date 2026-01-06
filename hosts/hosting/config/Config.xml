@@ -572,6 +572,14 @@
 				<IsActive>1</IsActive>
 			</ServersQuestioning>
 			<!-- ********************************************************************* -->
+			<ServerAccountsResources>
+				<Name>Опрос используемых ресурсов на серверах</Name>
+				<Params type="array"/>
+				<IsActive>1</IsActive>
+				<Graphs>HDD,CPU,RAM,RAMp,IOPS,NETtx,NETrx,DBSize,InletTemp,CPUTemp,RearTemp,PowerMeter,FanSpeed,NVMeTemp</Graphs>
+				<Last>HDD,CPU,RAM,RAMp,IOPS,NETtx,NETrx,WWW,DNS,DBSize,DBLimit,DBUsers,EmailDomains,EmailBoxes,EmailSize,FTPUsers,InletTemp,CPUTemp,RearTemp,SystemPower,PowerOverload,DriveFault,FanStatus,PowerMeter,FanSpeed,SystemTemp,NVMeTemp</Last>
+				<Status>HDD,DBSize,CPU,IOPS</Status>
+			</ServerAccountsResources>
 			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
@@ -803,7 +811,7 @@
 				<!-- ********************************************************************* -->
 				<!-- задачи -->
 				<DailyTasks>
-					<EraseDeletedOrders>Удаление заказов в статусе Удален</EraseDeletedOrders>
+					<EraseDeletedOrders>Удаление заказов в статусе "Удалён"</EraseDeletedOrders>
 					<CheckBalance>Проверка балланса регистраторов, поставщиков</CheckBalance>
 					<ISPswCheckLicenses>Синхронизация лицензий с ISPsystem</ISPswCheckLicenses>
 					<ServersCheckUsers>Синхронизация аккаунтов биллинга и серверов</ServersCheckUsers>
@@ -936,7 +944,7 @@
 				<Color>DF5747</Color>
 			</Suspended>
 			<Deleted>
-				<Name>Удален</Name>
+				<Name>Удалён</Name>
 				<Color>999999</Color>
 			</Deleted>
 		</HostingOrders>
@@ -962,7 +970,7 @@
 				<Color>DF5747</Color>
 			</Suspended>
 			<Deleted>
-				<Name>Удален</Name>
+				<Name>Удалён</Name>
 				<Color>999999</Color>
 			</Deleted>
 		</VPSOrders>
@@ -1054,7 +1062,7 @@
 				<Color>4FA5E2</Color>
 			</OnTransfer>
 			<Deleted>
-				<Name>Удален</Name>
+				<Name>Удалён</Name>
 				<Color>999999</Color>
 			</Deleted>
 		</DomainOrders>
@@ -1073,7 +1081,7 @@
 				<Color>8FD658</Color>
 			</Active>
 			<Deleted>
-				<Name>Удален</Name>
+				<Name>Удалён</Name>
 				<Color>999999</Color>
 			</Deleted>
 		</ExtraIPOrders>
@@ -1100,7 +1108,7 @@
 				<Color>DF5747</Color>
 			</Suspended>
 			<Deleted>
-				<Name>Удален</Name>
+				<Name>Удалён</Name>
 				<Color>999999</Color>
 			</Deleted>
 		</ISPswOrders>
@@ -1155,7 +1163,7 @@
 				<Color>DF5747</Color>
 			</Suspended>
 			<Deleted>
-				<Name>Удален</Name>
+				<Name>Удалён</Name>
 				<Color>999999</Color>
 			</Deleted>
 		</DNSmanagerOrders>
@@ -1248,6 +1256,7 @@
 			<WhoIs>
 				<UseSystemApplication>0</UseSystemApplication>
 			</WhoIs>
+			<!-- *********************************************************************** -->
 		</Libs>
 		<!-- *********************************************************************** -->
 		<ISPswSettingURL>
@@ -1273,6 +1282,270 @@
 			</slaveserver-edit>
 			<!-- *********************************************************************** -->
 		</ISPswSettingURL>
+		<!-- *********************************************************************** -->
+		<!-- настройки переименования графиков -->
+		<Graphs>
+			<!-- *********************************************************************** -->
+			<HDD>
+				<Name>Диск</Name>
+				<Keys>
+					<df.root.used/>
+					<limit_quota/>
+				</Keys>
+				<Units>Mb</Units>
+				<SortID>10</SortID>
+			</HDD>
+			<!-- *********************************************************************** -->
+			<!-- *********************************************************************** -->
+			<CPU>
+				<Name>vCPU</Name>
+				<Keys>
+					<cpu_load/>
+					<CPU_Utilization/>
+				</Keys>
+				<Units>%</Units>
+				<SortID>11</SortID>
+			</CPU>
+			<!-- *********************************************************************** -->
+			<RAM>
+				<Name>RAM, всего</Name>
+				<Keys>
+					<mem_usage/>
+				</Keys>
+				<Units>Mb</Units>
+				<SortID>12</SortID>
+			</RAM>
+			<!-- *********************************************************************** -->
+			<RAMp>
+				<Name>RAM</Name>
+				<Keys>
+					<mem_usage_percent/>
+				</Keys>
+				<Units>%</Units>
+				<SortID>13</SortID>
+			</RAMp>
+			<!-- *********************************************************************** -->
+			<IOPS>
+				<Name>Ввод/вывод</Name>
+				<Keys>
+					<iops/>
+				</Keys>
+				<Units>iops</Units>
+				<SortID>14</SortID>
+			</IOPS>
+			<!-- *********************************************************************** -->
+			<NETtx>
+				<Name>Сеть, исходящий</Name>
+				<Keys>
+					<net_tx_summary/>
+				</Keys>
+				<Units>Mbit/s</Units>
+				<SortID>15</SortID>
+			</NETtx>
+			<!-- *********************************************************************** -->
+			<NETrx>
+				<Name>Сеть, входящий</Name>
+				<Keys>
+					<net_rx_summary/>
+				</Keys>
+				<Units>Mbit/s</Units>
+				<SortID>16</SortID>
+			</NETrx>
+			<!-- *********************************************************************** -->
+			<!-- *********************************************************************** -->
+			<WWW>
+				<Name>Сайты</Name>
+				<Keys>
+					<limit_webdomains/>
+				</Keys>
+				<Units>шт.</Units>
+				<SortID>20</SortID>
+			</WWW>
+			<!-- *********************************************************************** -->
+			<DNS>
+				<Name>Доменные имена</Name>
+				<Keys>
+					<limit_domains/>
+				</Keys>
+				<Units>шт.</Units>
+				<SortID>21</SortID>
+			</DNS>
+			<!-- *********************************************************************** -->
+			<DBSize>
+				<Name>Размер баз данных</Name>
+				<Keys>
+					<limit_dbsize/>
+				</Keys>
+				<Units>Mb</Units>
+				<SortID>22</SortID>
+			</DBSize>
+			<!-- *********************************************************************** -->
+			<DBLimit>
+				<Name>Базы данных</Name>
+				<Keys>
+					<limit_db/>
+				</Keys>
+				<Units>шт.</Units>
+				<SortID>23</SortID>
+			</DBLimit>
+			<!-- *********************************************************************** -->
+			<DBUsers>
+				<Name>Пользователи баз данных</Name>
+				<Keys>
+					<limit_db_users/>
+				</Keys>
+				<Units>шт.</Units>
+				<SortID>24</SortID>
+			</DBUsers>
+			<!-- *********************************************************************** -->
+			<EmailDomains>
+				<Name>Почтовые домены</Name>
+				<Keys>
+					<limit_emaildomains/>
+				</Keys>
+				<Units>шт.</Units>
+				<SortID>25</SortID>
+			</EmailDomains>
+			<!-- *********************************************************************** -->
+			<EmailBoxes>
+				<Name>Почтовые ящики</Name>
+				<Keys>
+					<limit_emails/>
+				</Keys>
+				<Units>шт.</Units>
+				<SortID>26</SortID>
+			</EmailBoxes>
+			<!-- *********************************************************************** -->
+			<EmailSize>
+				<Name>Максимальный размер почтового ящика</Name>
+				<Keys>
+					<limit_email_quota/>
+				</Keys>
+				<Units>Mb</Units>
+				<SortID>27</SortID>
+			</EmailSize>
+			<!-- *********************************************************************** -->
+			<FTPUsers>
+				<Name>FTP-пользователи</Name>
+				<Keys>
+					<limit_ftp_users/>
+				</Keys>
+				<Units>шт.</Units>
+				<SortID>20</SortID>
+			</FTPUsers>
+			<!-- *********************************************************************** -->
+			<!-- *********************************************************************** -->
+			<SystemPower>
+				<Name>Питание</Name>
+				<Keys>
+					<System_Power/>
+				</Keys>
+				<Units></Units>
+				<SortID>1</SortID>
+			</SystemPower>
+			<!-- *********************************************************************** -->
+			<PowerOverload>
+				<Name>Перегрузка</Name>
+				<Keys>
+					<Power_Overload/>
+				</Keys>
+				<Units></Units>
+				<SortID>402</SortID>
+			</PowerOverload>
+			<!-- *********************************************************************** -->
+			<DriveFault>
+				<Name>Сбой диска</Name>
+				<Keys>
+					<Drive_Fault/>
+				</Keys>
+				<Units></Units>
+				<SortID>403</SortID>
+			</DriveFault>
+			<!-- *********************************************************************** -->
+			<FanStatus>
+				<Name>Ошибка вентилятора</Name>
+				<Keys>
+					<Cooling_Fan_Fault/>
+				</Keys>
+				<Units></Units>
+				<SortID>404</SortID>
+			</FanStatus>
+			<!-- *********************************************************************** -->
+			<FanSpeed>
+				<Name>Скорость вентилятора</Name>
+				<Keys>
+					<FAN/>
+					<FAN_1/>
+					<Fan1_Inlet/>
+				</Keys>
+				<Units>RPM</Units>
+				<SortID>405</SortID>
+			</FanSpeed>
+			<!-- *********************************************************************** -->
+			<InletTemp>
+				<Name>Температура на входе</Name>
+				<Keys>
+					<Inlet_Ambient/>
+					<_Inlet_Ambient/>
+					<Temp_1/>
+				</Keys>
+				<Units>°C</Units>
+				<SortID>410</SortID>
+			</InletTemp>
+			<!-- *********************************************************************** -->
+			<SystemTemp>
+				<Name>Температура внутри</Name>
+				<Keys>
+					<System_Temp/>
+<!--					<Peripheral_Temp/>-->
+				</Keys>
+				<Units>°C</Units>
+				<SortID>411</SortID>
+			</SystemTemp>
+			<!-- *********************************************************************** -->
+			<CPUTemp>
+				<Name>Температура процессора</Name>
+				<Keys>
+					<CPU1/>
+					<CPU_Temp/>
+					<CPU_1/>
+					<_CPU_1/>
+				</Keys>
+				<Units>°C</Units>
+				<SortID>412</SortID>
+			</CPUTemp>
+			<!-- *********************************************************************** -->
+			<RearTemp>
+				<Name>Температура на выходе</Name>
+				<Keys>
+					<Rear_Board/>
+				</Keys>
+				<Units>°C</Units>
+				<SortID>413</SortID>
+			</RearTemp>
+			<!-- *********************************************************************** -->
+			<NVMeTemp>
+				<Name>Температура MVME диска</Name>
+				<Keys>
+					<NVMe1_SSD_Temp/>
+				</Keys>
+				<Units>°C</Units>
+				<SortID>414</SortID>
+			</NVMeTemp>
+			<!-- *********************************************************************** -->
+			<PowerMeter>
+				<Name>Потребляемая мощность</Name>
+				<Keys>
+					<Power_Meter/>
+					<PW_Consumption/>
+				</Keys>
+				<Units>W</Units>
+				<SortID>500</SortID>
+			</PowerMeter>
+
+
+			<!-- *********************************************************************** -->
+		</Graphs>
 		<!-- *********************************************************************** -->
 	</Other>
 	<!-- *********************************************************************** -->

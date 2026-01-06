@@ -10,6 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -37,6 +38,9 @@ $Out = Array();
 #-------------------------------------------------------------------------------
 $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 #-------------------------------------------------------------------------------
+if($OrderID > 0)
+	$Where[] = SPrintF('`OrderID` = %s',$OrderID);
+#-------------------------------------------------------------------------------
 $Columns = Array(
 		'*',
 		'(SELECT `Name` FROM `DSSchemes` WHERE `DSSchemes`.`ID` = `DSOrdersOwners`.`SchemeID`) as `Scheme`',
@@ -58,7 +62,9 @@ $Columns = Array(
 		'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DSOrdersOwners`.`OrderID`) AS `UserNotice`',
 		'(SELECT `AdminNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DSOrdersOwners`.`OrderID`) AS `AdminNotice`',
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DSOrdersOwners`.`ContractID`) AS `Customer`',
-		'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `DSOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`'
+		'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `DSOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`',
+		'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DSOrdersOwners`.`OrderID`) AS `IsPayed`',
+		"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `DSOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`",
 		);
 #-------------------------------------------------------------------------------
 $DSOrders = DB_Select('DSOrdersOwners',$Columns,Array('Where'=>$Where));
@@ -75,8 +81,6 @@ default:
 }
 #-------------------------------------------------------------------------------
 foreach($DSOrders as $DSOrder){
-	#-------------------------------------------------------------------------------
-	UnSet($DSOrder['Params']);
 	#-------------------------------------------------------------------------------
 	// выпиливаем колонки
 	foreach(Array_Keys($DSOrder) as $Column)
@@ -98,12 +102,23 @@ foreach($DSOrders as $DSOrder){
 	#-------------------------------------------------------------------------------
 	$DSOrder['Names'] = $Names;
 	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// меняем формат графиков на выходе
+	$Comp = Comp_Load('Formats/GraphOut',$DSOrder['Params'],$DSOrder['StatusID']);
+	if(Is_Error($Comp))
+		return ERROR | @Trigger_Error(500);
+	#-------------------------------------------------------------------------------
+	$DSOrder['Graphs'] = $Comp;
+	#-------------------------------------------------------------------------------
+	UnSet($DSOrder['Params']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
 	$Out[$DSOrder['ID']] = $DSOrder;
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return $Out;
+return ($OrderID > 0)?Current($Out):$Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

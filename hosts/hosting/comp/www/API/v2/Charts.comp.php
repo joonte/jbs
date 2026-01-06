@@ -11,62 +11,67 @@ Eval(COMP_INIT);
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
 $OrderID	= (integer) @$Args['OrderID'];
+$Period		=  (string) @$Args['Period'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-// список колонок которые юзеру не показываем
-$Config = Config();
+// разбираем присланный период
+switch($Period){
+	case "w": $Period = Time() - 7*24*60*60;	break;	// week
+	case "m": $Period = Time() - 30*24*60*60;	break;	// month
+	case "a": $Period = 0;				break;	// all
+	default:  $Period = Time() - 24*60*60;		break;	// day, default
+}
 #-------------------------------------------------------------------------------
-$Exclude = Array_Keys($Config['APIv2ExcludeColumns']);
 #-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Out = Array();
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
-#-------------------------------------------------------------------------------
-if($OrderID > 0)
-	$Where[] = SPrintF('`OrderID` = %s',$OrderID);
-#-------------------------------------------------------------------------------
+// выбираем данные графиковa
 $Columns = Array(
-			'*',
-			'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `ISPswOrdersOwners`.`ContractID`) AS `Customer`',
-			'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `ISPswOrdersOwners`.`OrderID`) AS `IsPayed`',
-			);
+		'ID','Params','Col1','Col2',
+		'(SELECT `StatusID` FROM `OrdersOwners` WHERE `ID` = `TmpData`.`Col1`) AS `StatusID`',
+		'(SELECT `UserID` FROM `OrdersOwners` WHERE `ID` = `TmpData`.`Col1`) AS `UserID`',
+		);
 #-------------------------------------------------------------------------------
-$ISPswOrders = DB_Select('ISPswOrdersOwners',$Columns,Array('Where'=>$Where));
-#-------------------------------------------------------------------------------
-switch(ValueOf($ISPswOrders)){
+$TmpData = DB_Select('TmpData',$Columns,Array('Where'=>Array('`AppID` = "Order.Statistics"',SPrintF('`Col1` = %u',$OrderID)),'Limits'=>Array(0,1),'UNIQ'));
+switch(ValueOf($TmpData)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
-	return $Out;
+	return Array();
 case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
-foreach($ISPswOrders as $ISPswOrder){
-	#-------------------------------------------------------------------------------
-	UnSet($ISPswOrder['Params']);
-	#-------------------------------------------------------------------------------
-	// выпиливаем колонки
-	foreach(Array_Keys($ISPswOrder) as $Column)
-		if(In_Array($Column,$Exclude))
-			UnSet($ISPswOrder[$Column]);
-	#-------------------------------------------------------------------------------
-	$ISPswOrder['ControlPanel'] = SPrintF('https://%s:1500/',$ISPswOrder['IP']);
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	$Out[$ISPswOrder['ID']] = $ISPswOrder;
-	#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// проверяем права юзера на этот заказ
+$__USER = $GLOBALS['__USER'];
+#-------------------------------------------------------------------------------
+$IsPermission = Permission_Check('ServiceOrderRead',(integer)$__USER['ID'],(integer)$TmpData['UserID']);
+#-------------------------------------------------------------------------------
+switch(ValueOf($IsPermission)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'false':
+	return ERROR | @Trigger_Error(700);
+case 'true':
+	break;
+default:
+	return ERROR | @Trigger_Error(101);
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return ($OrderID > 0)?Current($Out):$Out;
+// меняем формат графиков на выходе
+$Comp = Comp_Load('Formats/GraphOut',$TmpData['Params'],$TmpData['StatusID'],$Period);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+return $Comp;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 

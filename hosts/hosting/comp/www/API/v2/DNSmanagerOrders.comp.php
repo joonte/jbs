@@ -10,11 +10,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = IsSet($Args)?$Args:Args();
 #-------------------------------------------------------------------------------
-//$ContractID     = (integer) @$Args['ContractID'];
-//$IsUponConsider = (boolean) @$Args['IsUponConsider'];
-$OrderID	= (integer) @$Args[3];
-
-//Debug(print_r($Args,true));
+$OrderID	= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
@@ -34,7 +30,12 @@ $Where = Array(SPrintF('`UserID` = %u',$GLOBALS['__USER']['ID']));
 if($OrderID > 0)
 	$Where[] = SPrintF('`OrderID` = %u',$OrderID);
 #-------------------------------------------------------------------------------
-$Columns = Array('*','(SELECT `Params` FROM `Servers` WHERE `DNSmanagerOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`','(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DNSmanagerOrdersOwners`.`ContractID`) AS `Customer`');
+$Columns = Array(
+		'*',
+		'(SELECT `Params` FROM `Servers` WHERE `DNSmanagerOrdersOwners`.`ServerID` = `Servers`.`ID`) AS `Params`',
+		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DNSmanagerOrdersOwners`.`ContractID`) AS `Customer`',
+		'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DNSmanagerOrdersOwners`.`OrderID`) AS `IsPayed`',
+		);
 #-------------------------------------------------------------------------------
 $DNSmanagerOrders = DB_Select('DNSmanagerOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
@@ -66,7 +67,7 @@ foreach($DNSmanagerOrders as $DNSmanagerOrder){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-return $Out;
+return ($OrderID > 0)?Current($Out):$Out;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
