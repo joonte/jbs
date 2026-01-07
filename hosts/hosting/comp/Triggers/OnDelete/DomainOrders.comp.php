@@ -12,7 +12,7 @@ Eval(COMP_INIT);
 $StatusID = $DomainOrder['StatusID'];
 #-------------------------------------------------------------------------------
 if(!In_Array($StatusID,Array('Waiting','ForTransfer','Deleted')))
-	return new gException('DELETE_DENIED','Удаление заказа не возможно');
+	return new gException('DELETE_DENIED','Удаление заказа на домен невозможно до того, как закончится его оплаченный период, и срок блокировки');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Services/Orders/OrdersHistory',Array('OrderID'=>$DomainOrder['OrderID']));
