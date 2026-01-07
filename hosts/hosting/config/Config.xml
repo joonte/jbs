@@ -576,9 +576,9 @@
 				<Name>Опрос используемых ресурсов на серверах</Name>
 				<Params type="array"/>
 				<IsActive>1</IsActive>
-				<Graphs>HDD,CPU,RAM,RAMp,IOPS,NETtx,NETrx,DBSize,InletTemp,CPUTemp,RearTemp,PowerMeter,FanSpeed,NVMeTemp</Graphs>
+				<Graphs>HDD,CPU,RAM,RAMp,IOPS,NETtx,NETrx,DBSize,CPUTemp,PowerMeter,NVMeTemp</Graphs>
 				<Last>HDD,CPU,RAM,RAMp,IOPS,NETtx,NETrx,WWW,DNS,DBSize,DBLimit,DBUsers,EmailDomains,EmailBoxes,EmailSize,FTPUsers,InletTemp,CPUTemp,RearTemp,SystemPower,PowerOverload,DriveFault,FanStatus,PowerMeter,FanSpeed,SystemTemp,NVMeTemp</Last>
-				<Status>HDD,DBSize,CPU,IOPS</Status>
+				<Status>HDD,DBSize,CPU,IOPS,SystemPower,PowerOverload,DriveFault,FanStatus,CPUTemp,NVMeTemp</Status>
 			</ServerAccountsResources>
 			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
@@ -1441,6 +1441,7 @@
 					<System_Power/>
 				</Keys>
 				<Units></Units>
+				<Limit>Выключен</Limit>
 				<SortID>1</SortID>
 			</SystemPower>
 			<!-- *********************************************************************** -->
@@ -1450,6 +1451,7 @@
 					<Power_Overload/>
 				</Keys>
 				<Units></Units>
+				<Limit>да</Limit>
 				<SortID>402</SortID>
 			</PowerOverload>
 			<!-- *********************************************************************** -->
@@ -1459,6 +1461,7 @@
 					<Drive_Fault/>
 				</Keys>
 				<Units></Units>
+				<Limit>да</Limit>
 				<SortID>403</SortID>
 			</DriveFault>
 			<!-- *********************************************************************** -->
@@ -1468,6 +1471,7 @@
 					<Cooling_Fan_Fault/>
 				</Keys>
 				<Units></Units>
+				<Limit>да</Limit>
 				<SortID>404</SortID>
 			</FanStatus>
 			<!-- *********************************************************************** -->
@@ -1490,6 +1494,7 @@
 					<Temp_1/>
 				</Keys>
 				<Units>°C</Units>
+				<Limit>40</Limit>
 				<SortID>410</SortID>
 			</InletTemp>
 			<!-- *********************************************************************** -->
@@ -1500,6 +1505,7 @@
 <!--					<Peripheral_Temp/>-->
 				</Keys>
 				<Units>°C</Units>
+				<Limit>80</Limit>
 				<SortID>411</SortID>
 			</SystemTemp>
 			<!-- *********************************************************************** -->
@@ -1512,6 +1518,7 @@
 					<_CPU_1/>
 				</Keys>
 				<Units>°C</Units>
+				<Limit>105</Limit>
 				<SortID>412</SortID>
 			</CPUTemp>
 			<!-- *********************************************************************** -->
@@ -1521,6 +1528,7 @@
 					<Rear_Board/>
 				</Keys>
 				<Units>°C</Units>
+				<Limit>80</Limit>
 				<SortID>413</SortID>
 			</RearTemp>
 			<!-- *********************************************************************** -->
@@ -1530,6 +1538,7 @@
 					<NVMe1_SSD_Temp/>
 				</Keys>
 				<Units>°C</Units>
+				<Limit>70</Limit>
 				<SortID>414</SortID>
 			</NVMeTemp>
 			<!-- *********************************************************************** -->

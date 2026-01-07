@@ -141,8 +141,6 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 			// если находим сервер где не обновлялись - обновляем его. одного
 			foreach($Orders as $Order){
 				#-------------------------------------------------------------------------------
-				//Debug(SPrintF('[comp/Tasks/ServerAccountsResources]: Order[Code] = %s',$Order['Code']));
-				#-------------------------------------------------------------------------------
 				// IP адреса тоже на этом управляющем сервере
 				if($Order['Code'] != 'DS')
 					continue;
@@ -161,7 +159,7 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/ServerAccountsResources]: на %s необходимо обработать %s выделенных серверов',$Server['Address'],SizeOf($Array1)));
+			Debug(SPrintF('[comp/Tasks/ServerAccountsResources]: %s: осталось к опросу %s серверов',$Server['Address'],SizeOf($Array1)));
 			#-------------------------------------------------------------------------------
 			// если чё-то влетело, сортируем
 			if(SizeOf($Array1) > 0){
@@ -178,7 +176,7 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 			// втыкаем в выхлоп последний ключ
 			$Array[] = Current(Array_Keys($Array1));
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/ServerAccountsResources]: текущий заказ выделенного сервера: %s',Implode(',',$Array)));
+			//Debug(SPrintF('[comp/Tasks/ServerAccountsResources]: текущий заказ выделенного сервера: %s',Implode(',',$Array)));
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------
@@ -214,7 +212,7 @@ if(In_Array($Server['Code'],Array('DS'))){
 	#-------------------------------------------------------------------------------
 	// достаём список выделенных серверов на этом управляющем сервере
 	$Columns = Array('OrderID',"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `OrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`");
-	$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>Array('`StatusID` IN ("Active","Suspended")',SPrintF('`ServerID` = %u',$Server['ID']))));
+	$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>Array('`StatusID` IN ("Active","Suspended")','`ServiceID` IN (40000)',SPrintF('`ServerID` = %u',$Server['ID']))));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Orders)){
 	case 'error':

@@ -238,7 +238,7 @@ function DSScripting_Get_Account_Usage($Settings,$Scheme,$Users){
 		$Used = Str_Replace($Replace2,'',$OutTmp[$Key]);
 		#-------------------------------------------------------------------------------
 		// меняем значения
-		$Used = Str_Replace(Array('on','off','false','true'),Array('Включен','Выклчюен','нет','да'),$Used);
+		$Used = Str_iReplace(Array('on','off','false','true'),Array('Включен','Выклчюен','нет','да'),$Used);
 		#-------------------------------------------------------------------------------
 		// добавляем к выходным значениям
 		$Out[$User]['Last'][$Keys[$Key]] = Array('Used'=>$Used);
