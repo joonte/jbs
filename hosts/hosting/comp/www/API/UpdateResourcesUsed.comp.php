@@ -222,7 +222,7 @@ $Columns[] = ($Service['Code'] == 'DS')?'`OrderID` AS `Login`':'Login';
 #-------------------------------------------------------------------------------
 // у выделенных по номеру заказа выбираем
 $Where = ($Service['Code'] == 'DS')?SPrintF('`OrderID` IN (%s)',Implode(',',Array_Keys($Usage))):SPrintF('`Login` IN (%s)',Implode(',',$Users));
-$Accounts = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where));
+$Accounts = DB_Select(SPrintF('%sOrdersOwners',$Service['Code']),$Columns,Array('Where'=>$Where,'SortOn'=>'TmpDataID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Accounts)){
 case 'error':
@@ -376,7 +376,7 @@ foreach($Accounts as $Account){
 	$iParams['UpdateDate'] = Date('Y-m-d G:i:s');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	if(Is_Array($Account['Params'])){
+	if(Is_Numeric($Account['TmpDataID'])){
 		#-------------------------------------------------------------------------------
 		// обновляем
 		$IsUpdate = DB_Update('TmpData',Array('Params'=>$iParams,'Col2'=>$Service['ServerID']),Array('ID'=>$Account['TmpDataID']));

@@ -577,7 +577,7 @@
 				<Params type="array"/>
 				<IsActive>1</IsActive>
 				<Graphs>HDD,CPU,RAM,RAMp,IOPS,NETtx,NETrx,DBSize,CPUTemp,PowerMeter,NVMeTemp</Graphs>
-				<Last>HDD,CPU,RAM,RAMp,IOPS,NETtx,NETrx,WWW,DNS,DBSize,DBLimit,DBUsers,EmailDomains,EmailBoxes,EmailSize,FTPUsers,InletTemp,CPUTemp,RearTemp,SystemPower,PowerOverload,DriveFault,FanStatus,PowerMeter,FanSpeed,SystemTemp,NVMeTemp</Last>
+				<Last>HDD,CPU,RAM,RAMp,IOPS,NETtx,NETrx,WWW,DNS,DBSize,DBLimit,DBUsers,EmailDomains,EmailBoxes,EmailSize,FTPUsers,InletTemp,CPUTemp,RearTemp,PCHTemp,SystemTemp,OutTemp,SystemPower,PowerOverload,DriveFault,FanStatus,PowerMeter,FanSpeed,SystemTemp,NVMeTemp</Last>
 				<Status>HDD,DBSize,CPU,IOPS,SystemPower,PowerOverload,DriveFault,FanStatus,CPUTemp,NVMeTemp</Status>
 			</ServerAccountsResources>
 			<!-- ********************************************************************* -->
@@ -1490,7 +1490,7 @@
 				<Name>Температура на входе</Name>
 				<Keys>
 					<Inlet_Ambient/>
-					<_Inlet_Ambient/>
+					<_01-Front_Ambient/>
 					<Temp_1/>
 				</Keys>
 				<Units>°C</Units>
@@ -1502,7 +1502,6 @@
 				<Name>Температура внутри</Name>
 				<Keys>
 					<System_Temp/>
-<!--					<Peripheral_Temp/>-->
 				</Keys>
 				<Units>°C</Units>
 				<Limit>80</Limit>
@@ -1515,22 +1514,42 @@
 					<CPU1/>
 					<CPU_Temp/>
 					<CPU_1/>
-					<_CPU_1/>
+					<_02-CPU_1/>
 				</Keys>
 				<Units>°C</Units>
 				<Limit>105</Limit>
 				<SortID>412</SortID>
 			</CPUTemp>
 			<!-- *********************************************************************** -->
-			<RearTemp>
+			<SystemTemp>
+				<Name>Системная температура</Name>
+				<Keys>
+					<System_Temp/>
+				</Keys>
+				<Units>°C</Units>
+				<Limit>90</Limit>
+				<SortID>413</SortID>
+			</SystemTemp>
+			<!-- *********************************************************************** -->
+			<PCHTemp>
+				<Name>Температура чипсета</Name>
+				<Keys>
+					<PCH_Temp/>
+				</Keys>
+				<Units>°C</Units>
+				<Limit>90</Limit>
+				<SortID>414</SortID>
+			</PCHTemp>
+			<!-- *********************************************************************** -->
+			<OutTemp>
 				<Name>Температура на выходе</Name>
 				<Keys>
-					<Rear_Board/>
+					<Peripheral_Temp/>
 				</Keys>
 				<Units>°C</Units>
 				<Limit>80</Limit>
-				<SortID>413</SortID>
-			</RearTemp>
+				<SortID>415</SortID>
+			</OutTemp>
 			<!-- *********************************************************************** -->
 			<NVMeTemp>
 				<Name>Температура MVME диска</Name>
@@ -1539,7 +1558,7 @@
 				</Keys>
 				<Units>°C</Units>
 				<Limit>70</Limit>
-				<SortID>414</SortID>
+				<SortID>420</SortID>
 			</NVMeTemp>
 			<!-- *********************************************************************** -->
 			<PowerMeter>
