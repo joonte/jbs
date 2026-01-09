@@ -51,6 +51,9 @@ switch(ValueOf($ExtraIPOrder)){
         #-----------------------------------------------------------------------
         $StatusID = $ExtraIPOrder['StatusID'];
         #-----------------------------------------------------------------------
+        if(In_Array($StatusID,Array('Deleted')))
+          return new gException('ExtraIP_ORDER_DELETED','Заказ не может быть оплачен, он уже удалён. Вам необходимо сделать новый заказ');
+	#-------------------------------------------------------------------------------
         if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
           return new gException('ExtraIP_ORDER_CAN_NOT_PAY','Заказ не может быть оплачен');
         #-----------------------------------------------------------------------

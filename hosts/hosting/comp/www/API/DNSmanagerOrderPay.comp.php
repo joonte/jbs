@@ -33,7 +33,7 @@ switch(ValueOf($DNSmanagerOrder)){
   case 'error':
     return ERROR | @Trigger_Error(500);
   case 'exception':
-    return new gException('HOSTING_ORDER_NOT_FOUND','Выбранный заказ не найден');
+    return new gException('DNSManager_ORDER_NOT_FOUND','Выбранный заказ не найден');
   case 'array':
     #---------------------------------------------------------------------------
     $UserID = (integer)$DNSmanagerOrder['UserID'];
@@ -51,8 +51,11 @@ switch(ValueOf($DNSmanagerOrder)){
         #-----------------------------------------------------------------------
         $StatusID = $DNSmanagerOrder['StatusID'];
         #-----------------------------------------------------------------------
+	if(In_Array($StatusID,Array('Deleted')))
+		return new gException('DNSmanager_ORDER_DELETED','Заказ не может быть оплачен, он уже удалён. Вам необходимо сделать новый заказ');
+	#-------------------------------------------------------------------------------
         if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
-          return new gException('HOSTING_ORDER_CAN_NOT_PAY','Заказ не может быть оплачен');
+          return new gException('DNSManager_ORDER_CAN_NOT_PAY','Заказ не может быть оплачен');
         #-----------------------------------------------------------------------
         $UserID = $DNSmanagerOrder['UserID'];
         #-----------------------------------------------------------------------
