@@ -118,7 +118,8 @@
 <UserID>Integer</UserID>
 <GroupID>Integer</GroupID>
 <CreateDate>Integer</CreateDate>
-<!-- <ID>Integer</ID> -->
+<!-- -->
+<ID>Integer</ID>
 <Discount>Integer</Discount>
 
 <!-- User -->
@@ -127,13 +128,15 @@
 <Confirmed>Integer</Confirmed>
 <TimeBegin>Integer</TimeBegin>
 <TimeEnd>Integer</TimeEnd>
+
 <!-- Services -->
 <ServicesGroupID>Integer</ServicesGroupID>
 <PartnersRewardPercent>Integer</PartnersRewardPercent>
 <Priority>Integer</Priority>
 
 <!-- *Orders -->
-<!-- <OrderID>Integer</OrderID> -->
+<!-- -->
+<OrderID>Integer</OrderID>
 <ConsiderDay>Integer</ConsiderDay>
 <StatusDate>Integer</StatusDate>
 <ServiceID>Integer</ServiceID>
