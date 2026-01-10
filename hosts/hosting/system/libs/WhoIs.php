@@ -90,7 +90,7 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 				return ERROR | @Trigger_Error(SPrintF('[system/libs/WhoIs]: неверная доменная зона (%s)',$ZoneName));
 			#-------------------------------------------------------------------------------
 			# достаём список серверов на которых есть такой тариф
-			$Servers = DB_Select('DomainSchemes',Array('ServerID'),Array('Where'=>SPrintF('`Name` = "%s"',$ZoneName)));
+			$Servers = DB_Select('DomainSchemes',Array('ServerID'),Array('Where'=>Array(SPrintF('`Name` = "%s"',$ZoneName),'`IsActive` = "yes" OR `IsProlong` = "yes" OR `IsTransfer` = "yes"')));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Servers)){
 			case 'error':

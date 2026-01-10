@@ -1109,4 +1109,18 @@
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</fun>
+	<!-- *********************************************************************** -->
+	<!-- какой у нгео whois - неизвестно. этот работает тока для доменов зареганных через reg.ru -->
+	<team>
+		<Server>whois.reg.ru</Server>
+		<Name>team</Name>
+		<Available>No\sentries\sfound\sfor\sthe\sselected</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
+		<ExpirationDate>Registrar Registration Expiration Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</team>
 </XML>
