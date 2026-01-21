@@ -25,12 +25,13 @@ $Exclude = Array_Keys($Config['APIv2ExcludeColumns']);
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-// все колонки + Services.Params под именем AjaxCall
+// все колонки + Services.Params под именем AjaxCall + графики под именем Attribs
 $Columns = Array(
 		'*',
 		'(SELECT `Params` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `AjaxCall`',
 		'(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
 		'(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`OrdersOwners`.`ID`) AS PayedSumm',
+		"(SELECT `Params` FROM `TmpData` USE INDEX(`AppID_Col1`) WHERE `AppID` = 'Order.Statistics' AND `OrdersOwners`.`ID` = `TmpData`.`Col1` LIMIT 1) AS `Attribs`",
 		);
 #-------------------------------------------------------------------------------
 $Where = Array(SPrintF("`UserID` = %u",$GLOBALS['__USER']['ID']));
@@ -77,11 +78,11 @@ foreach($Orders as $Order){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// достаём тариф
-	$Comp = Comp_Load('Services/Orders/SchemeWrapper',$Order['Code'],$Order['ID'],TRUE);
-	if(Is_Error($Comp))
+	$Scheme = Comp_Load('Services/Orders/SchemeWrapper',$Order['Code'],$Order['ID'],TRUE);
+	if(Is_Error($Scheme))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
-	$Order['SchemeName'] = $Comp;
+	$Order['SchemeName'] = $Scheme;
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// для доменов, надо поправить в выхлопе DaysRemainded
@@ -137,6 +138,85 @@ foreach($Orders as $Order){
 	UnSet($Order['AjaxCall']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
+	// высовываем статусы заказов, нужен только Last
+	if(IsSet($Order['Attribs']['Last'])){
+		#-------------------------------------------------------------------------------
+		// убираем графики, для уменьшения объёма передаваемых/обрабатываемых данных
+		UnSet($Order['Attribs']['Graphs']);
+		#-------------------------------------------------------------------------------
+		$Comp = Comp_Load('Formats/GraphOut',Array('Params'=>$Order['Attribs'],'StatusID'=>$Order['StatusID']));
+		if(Is_Error($Comp))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$Order['Stat'] = $Comp;
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		$Order['Stat'] = Array();
+		#-------------------------------------------------------------------------------
+	}
+	#-------------------------------------------------------------------------------
+	UnSet($Order['Attribs']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// ключи, для зависимых услуг
+	if($Order['DependOrderID']){
+		#-------------------------------------------------------------------------------
+		$Order['AdditionalInfo'] = Array(Array('Key'=>'Тариф','Value'=>$Scheme));
+		#-------------------------------------------------------------------------------
+		// достаём IP
+		$IPs = Comp_Load('Services/Orders/GetOrderIPs',$Order['Code'],$Order['ID']);
+		if(Is_Error($IPs))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(SizeOf($IPs) > 0)
+			$Order['AdditionalInfo'][] = Array('Key'=>'IP адреса','Value'=>Implode("\n",$IPs));
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// для ВПС достаём обратную зону, шаблон
+		if($Order['Code'] == 'VPS'){
+			#-------------------------------------------------------------------------------
+			// PTR
+			$VPSOrder = DB_Select('VPSOrdersOwners',Array('Domain'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$Order['ID'])));
+			switch(ValueOf($VPSOrder)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				#-------------------------------------------------------------------------------
+				$Order['AdditionalInfo'][] = Array('Key'=>'PTR-запись','Value'=>$VPSOrder['Domain']);
+				#-------------------------------------------------------------------------------
+				break;
+				#-------------------------------------------------------------------------------
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			// шаблон
+			if(IsSet($Order['Params']['DiskTemplate']) && $Order['Params']['DiskTemplate'])
+				$Order['AdditionalInfo'][] = Array('Key'=>'Дисковый шаблон','Value'=>$Order['Params']['DiskTemplate']);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// достаём список доменов
+		$Domains = Comp_Load('Services/Orders/GetOrderDomains',$Order['Code'],$Order['ID'],$Order['DependOrderID']);
+		if(Is_Error($Domains))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		if(SizeOf($Domains) > 0)
+			$Order['AdditionalInfo'][] = Array('Key'=>'Домены','Value'=>Implode("\n",$Domains));
+		#-------------------------------------------------------------------------------
+	}
+/*	$Order['AdditionalInfo'] = Array(
+					Array('Key'=>'Тариф','Value'=>$Scheme),
+					Array('Key'=>'Номер услуги','Value'=>$Order['ID']),
+					Array('Key'=>'Комемнтарий','Value'=>$Order['UserNotice']),
+					Array('Key'=>'Ссылка','Value'=>'<a href="/v2/HostingOrders" title="подсказка">кликабельный текст</a>'),
+					);
+
+*/
 	$Out[$Order['ID']] = $Order;
 	#-------------------------------------------------------------------------------
 }

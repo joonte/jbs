@@ -201,7 +201,7 @@ if(SizeOf($Usage) < 1){
 	#-------------------------------------------------------------------------------
 	Debug(SPrintF('[comp/www/API/UpdateResourcesUsed]: нет юзеров, Code = %s; ServerID = %u, Orders = %s',$Service['Code'],$Service['ServerID'],print_r($Orders,TRUE)));
 	#-------------------------------------------------------------------------------
-	return TRUE;
+	return Array('Status'=>'Ok');
 	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
@@ -215,7 +215,7 @@ foreach(Array_Keys($Usage) as $User)
 // достаём список заказов с этими номерами заказов
 $Columns = Array(
 		'ID','OrderID','UserID',
-		SPrintF("(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `%sOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`",$Service['Code']),
+		SPrintF("(SELECT `Params` FROM `TmpData` USE INDEX(`AppID_Col1`) WHERE `AppID` = 'Order.Statistics' AND `%sOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`",$Service['Code']),
 		SPrintF("(SELECT `ID` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `%sOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `TmpDataID`",$Service['Code']),
 		);
 $Columns[] = ($Service['Code'] == 'DS')?'`OrderID` AS `Login`':'Login';
@@ -373,7 +373,7 @@ foreach($Accounts as $Account){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$iParams['UpdateDate'] = Date('Y-m-d G:i:s');
+	$iParams['UpdateDate'] = Date('Y-m-d H:i:s');
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	if(Is_Numeric($Account['TmpDataID'])){

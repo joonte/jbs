@@ -628,7 +628,7 @@ function VmManager6_Hosting_Password_Change($Settings,$Login,$Password,$Params){
 # added by lissyara 2011-08-09 in 09:55 MSK
 function VmManager6_Hosting_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
 	/****************************************************************************/
-        $__args_types = Array('array','string','string','string','string','string');
+        $__args_types = Array('array','string','string,integer','string','string','string');
 	#-------------------------------------------------------------------------------
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
 	/****************************************************************************/

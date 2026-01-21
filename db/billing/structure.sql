@@ -979,7 +979,8 @@ CREATE TABLE `TmpData` (
 	KEY `AppID` (`AppID`),
 	KEY `Col1` (`Col1`),
 	KEY `Col2` (`Col2`),
-	KEY `Col3` (`Col3`)
+	KEY `Col3` (`Col3`),
+	KEY `AppID_Col1` (`AppID`,`Col1`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 

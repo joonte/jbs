@@ -104,7 +104,7 @@ foreach($DSOrders as $DSOrder){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// меняем формат графиков на выходе
-	$Comp = Comp_Load('Formats/GraphOut',$DSOrder['Params'],$DSOrder['StatusID']);
+	$Comp = Comp_Load('Formats/GraphOut',Array('Params'=>$DSOrder['Params'],'StatusID'=>$DSOrder['StatusID']));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

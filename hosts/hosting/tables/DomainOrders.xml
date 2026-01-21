@@ -78,7 +78,7 @@
 						<!-- ****************************************************************** -->
 						<Expiration>
 							<Name>Оканчивающиеся заказы</Name>
-							<Where>`StatusID` = 'Active' AND `ExpirationDate` - UNIX_TIMESTAMP() &lt; 2678400</Where>
+							<Where>`StatusID` = 'Active' AND `ExpirationDate` - UNIX_TIMESTAMP() &lt; 5184000</Where>
 						</Expiration>
 						<!-- ****************************************************************** -->
 						<OnTransfer>

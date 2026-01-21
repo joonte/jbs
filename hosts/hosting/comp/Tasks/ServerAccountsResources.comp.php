@@ -122,7 +122,7 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 	// достаём список выделенных серверов на этом управляющем сервере
 	$Columns = Array(
 			'OrderID','(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
-			"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `OrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`"
+			"(SELECT `Params` FROM `TmpData` USE INDEX(`AppID_Col1`) WHERE `AppID` = 'Order.Statistics' AND `OrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`"
 			);
 	$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>Array('`StatusID` IN ("Active","Suspended")',SPrintF('`ServerID` = %u',$Server['ID']))));
 	#-------------------------------------------------------------------------------
@@ -211,7 +211,7 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 if(In_Array($Server['Code'],Array('DS'))){
 	#-------------------------------------------------------------------------------
 	// достаём список выделенных серверов на этом управляющем сервере
-	$Columns = Array('OrderID',"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `OrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`");
+	$Columns = Array('OrderID',"(SELECT `Params` FROM `TmpData` USE INDEX(`AppID_Col1`) WHERE `AppID` = 'Order.Statistics' AND `OrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`");
 	$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>Array('`StatusID` IN ("Active","Suspended")','`ServiceID` IN (40000)',SPrintF('`ServerID` = %u',$Server['ID']))));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Orders)){

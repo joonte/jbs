@@ -82,7 +82,7 @@ foreach($HostingOrders as $HostingOrder){
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// меняем формат графиков на выходе
-	$Comp = Comp_Load('Formats/GraphOut',$HostingOrder['Params'],$HostingOrder['StatusID']);
+	$Comp = Comp_Load('Formats/GraphOut',Array('Params'=>$HostingOrder['Params'],'StatusID'=>$HostingOrder['StatusID']));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------

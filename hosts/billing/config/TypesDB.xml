@@ -150,11 +150,14 @@
 <SchemeID>Integer</SchemeID>
 <OldSchemeID>Integer</OldSchemeID>
 <CostOrder>Float</CostOrder>
+<!-- домены -->
 <CostProlong>Float</CostProlong>
 <CostTransfer>Float</CostTransfer>
 <DaysToProlong>Integer</DaysToProlong>
 <DaysBeforeTransfer>Integer</DaysBeforeTransfer>
 <DaysAfterTransfer>Integer</DaysAfterTransfer>
+<MaxActionYears>Integer</MaxActionYears>
+<MinOrderYears>Integer</MinOrderYears>
 
 <!-- DependUsers -->
 <aInvoices>Float</aInvoices>
