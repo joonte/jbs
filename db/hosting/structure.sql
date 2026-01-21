@@ -489,7 +489,6 @@ CREATE TABLE IF NOT EXISTS `ExtraIPOrders` (
   `Domain` char(255) DEFAULT '',
   `Parked` text,
   `Login` char(32) DEFAULT 'noassign',
-  `Password` char(255) DEFAULT '',
   `ConsiderDay` int(11) DEFAULT '0',
   `StatusID` char(30) DEFAULT 'UnSeted',
   `StatusDate` int(11) DEFAULT '0',

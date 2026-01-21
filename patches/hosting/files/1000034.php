@@ -65,7 +65,7 @@ Debug(SPrintF("[patches/hosting/files/1000034.php]: EncryptionKey = %s",$Encrypt
  * hosts/hosting/config/TypesDB.xml:<DSpass>Crypt</DSpass>
  * hosts/hosting/config/TypesDB.xml:<ILOpass>Crypt</ILOpass>
  * */
-$Tables = Array('Servers','HostingOrders','VPSOrders','ExtraIPOrders','DNSmanagerOrders','DSSchemes');
+$Tables = Array('Servers','HostingOrders','VPSOrders','DNSmanagerOrders','DSSchemes');
 #-------------------------------------------------------------------------------
 foreach($Tables as $Table){
 	#-------------------------------------------------------------------------------
