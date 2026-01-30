@@ -76,7 +76,7 @@ CREATE TABLE `DomainOrders` (
   `WhoIs` text,
   `AuthInfo` char(64) default NULL,
   `UpdateDate` int(11) default '0',
-  `RegUpdateDate` INT(11) default '0',
+  `RegUpdateDate` INT(11) default '0',	/* TODO поле не используется нигде, надо выпилить */
   `StatusID` char(30) default 'UnSeted',
   `StatusDate` int(11) default '0',
   PRIMARY KEY  (`ID`),
