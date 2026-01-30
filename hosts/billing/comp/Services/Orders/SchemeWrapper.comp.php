@@ -26,6 +26,7 @@ switch(ValueOf($Order)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
+	return 'Заказ не найден';
 	return ERROR | @Trigger_Error(400);
 case 'array':
 	break;

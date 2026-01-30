@@ -30,7 +30,7 @@ if($OrderTypeCode == 'Default'){
 	case 'error':
 		return ERROR | @Trigger_Error(500);
 	case 'exception':
-		return ERROR | @Trigger_Error(400);
+		return $Out;
 	case 'array':
 		break;
 	default:
@@ -58,31 +58,29 @@ if($OrderTypeCode == 'Default'){
 		$Columns = 'CONCAT(`DomainName`,".",(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)) AS `Parked`';
 	#-------------------------------------------------------------------------------
 	$Domains = DB_Select(SPrintF('%sOrdersOwners',$OrderTypeCode),$Columns,Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ID)));
+	switch(ValueOf($Domains)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return $Out;
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
 	#-------------------------------------------------------------------------------
-}else{
+	#-------------------------------------------------------------------------------
+	$Parked = Explode(',',$Domains['Parked']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	foreach($Parked as $Domain)
+		if($Domain)
+			$Out[] = SPrintF('<a href="https://%s/" target="_blank">%s</a>',$Domain,$Domain);
+	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	return $Out;
 	#-------------------------------------------------------------------------------
 }
-#-------------------------------------------------------------------------------
-switch(ValueOf($Domains)){
-case 'error':
-	return ERROR | @Trigger_Error(500);
-case 'exception':
-	return $Out;
-case 'array':
-	break;
-default:
-	return ERROR | @Trigger_Error(101);
-}
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-$Parked = Explode(',',$Domains['Parked']);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
-foreach($Parked as $Domain)
-	if($Domain)
-		$Out[] = SPrintF('<a href="https://%s/" target="_blank">%s</a>',$Domain,$Domain);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return $Out;
