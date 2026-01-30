@@ -33,6 +33,7 @@ if($OrderID > 0)
 	$Where[] = SPrintF('`OrderID` = %s',$OrderID);
 #-------------------------------------------------------------------------------
 $Columns = Array(
+//		'ID','OrderID','DomainName','SchemeID','ExpirationDate','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','WhoIs','UpdateDate','StatusID','StatusDate','ServiceID','Name','OrderDate','ContractID',
 		'*',
 		'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`',
 		'(SELECT `CostProlong` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `CostProlong`',
@@ -40,7 +41,6 @@ $Columns = Array(
 		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)) as `Params`',
 		'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `IsAutoProlong`',
 		'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DomainOrdersOwners`.`OrderID`) AS `UserNotice`',
-		'(SELECT `AdminNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DomainOrdersOwners`.`OrderID`) AS `AdminNotice`',
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DomainOrdersOwners`.`ContractID`) AS `Customer`',
 		'(SELECT `TypeID` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`',
 		'(SELECT `IsPayed` FROM `Orders` WHERE `Orders`.`ID` = `DomainOrdersOwners`.`OrderID`) as `IsPayed`',
