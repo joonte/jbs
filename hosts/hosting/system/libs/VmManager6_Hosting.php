@@ -268,6 +268,10 @@ function VmManager6_Hosting_Create($Settings,$VPSOrder,$IP,$VPSScheme){
 	#-------------------------------------------------------------------------------
 	$Doc = VmManager6_Hosting_Request($Settings,$Request);
 	#-------------------------------------------------------------------------------
+	if(Is_Exception($Doc))
+		return $Doc;
+	#Debug(SPrintF('[system/libs/VmManager6_Hosting]: Is_Exception Doc = %s',$Doc->String));
+	#-------------------------------------------------------------------------------
 	if(IsSet($Doc['error']))
 		return new gException('ACCOUNT_CREATE_ERROR','Не удалось создать виртуальный сервер');
 	#-------------------------------------------------------------------------------
