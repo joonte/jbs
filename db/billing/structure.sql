@@ -333,7 +333,7 @@ CREATE TABLE `Tasks` (
   `ExecuteDate` int(11) default '0',
   `Params` LONGTEXT,
   `Errors` int(11) default '0',
-  `Result` text CHARACTER SET utf8mb4,
+  `Result` LONGTEXT CHARACTER SET utf8mb4,
   `IsExecuted` enum('no','yes') default 'no',
   `IsActive` enum('no','yes') default 'yes',
   PRIMARY KEY  (`ID`),
