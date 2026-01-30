@@ -1,0 +1,1 @@
+import{ak as u,r as a,al as s,am as o}from"./index-C9dBN6m4.js";const f=u("orders",()=>{const e=a({}),t=a([]);async function n(){const{data:r}=await s.get(o.orders);e.value=r||{},t.value=r?Object.values(r):[]}async function c(r){const{data:d}=await s.get(o.orders,{params:{ID:r}});return d}return{orders:e,ordersList:t,fetchAllOrders:n,fetchOneOrder:c}});export{f as u};

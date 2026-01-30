@@ -1,1 +1,0 @@
-import{c as e,o as r,t as a}from"./index-CmCGXBst.js";const o={class:"tw-w-full tw-border tw-border-gray-200 tw-rounded tw-text-center tw-bg-gray-50 tw-p-4 tw-text-sm tw-text-gray-500"},n={__name:"EmptyStateBlock",props:{label:{type:[String,Number],default:""}},setup(t){return(s,c)=>(r(),e("div",o,a(t.label),1))}};export{n as _};
