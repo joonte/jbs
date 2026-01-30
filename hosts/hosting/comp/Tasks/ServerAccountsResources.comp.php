@@ -176,7 +176,27 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 			// втыкаем в выхлоп последний ключ
 			$Array[] = Current(Array_Keys($Array1));
 			#-------------------------------------------------------------------------------
-			//Debug(SPrintF('[comp/Tasks/ServerAccountsResources]: текущий заказ выделенного сервера: %s',Implode(',',$Array)));
+			#-------------------------------------------------------------------------------
+			$DSOrderID = Implode(',',$Array);
+			#-------------------------------------------------------------------------------
+			// ищем тариф этого сервера
+			$DSOrder = DB_Select('DSOrdersOwners',Array('ID','(SELECT `Name` FROM `DSSchemes` WHERE `DSOrdersOwners`.`SchemeID` = `DSSchemes`.`ID`) as `SchemeName`'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$DSOrderID)));
+			#-------------------------------------------------------------------------------
+			switch(ValueOf($DSOrder)){
+			case 'error':
+				return ERROR | @Trigger_Error(500);
+			case 'exception':
+				return ERROR | @Trigger_Error(400);
+			case 'array':
+				break;
+			default:
+				return ERROR | @Trigger_Error(101);
+			}
+			#-------------------------------------------------------------------------------
+			//Debug(SPrintF('[comp/Tasks/ServerAccountsResources]: текущий заказ выделенного сервера: %s',$DSOrder['SchemeName']));
+			#-------------------------------------------------------------------------------
+			// выхлоп крона
+			$GLOBALS['TaskReturnInfo'][$Server['Name']][] = $DSOrder['SchemeName'];
 			#-------------------------------------------------------------------------------
 		}else{
 			#-------------------------------------------------------------------------------

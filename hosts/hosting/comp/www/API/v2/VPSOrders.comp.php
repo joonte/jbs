@@ -27,7 +27,6 @@ $Columns = Array(
 		'*',
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) AS `Customer`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`',
 		'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `IsPayed`',
-		"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `VPSOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`",
 		);
 #-------------------------------------------------------------------------------
 $VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
@@ -85,15 +84,6 @@ foreach($VPSOrders as $VPSOrder){
 		$VPSOrder['Login'] = SPrintF('%s@%s',$VPSOrder['Login'],$Servers[$ServerID]['Params']['Domain']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	// меняем формат графиков на выходе
-	$Comp = Comp_Load('Formats/GraphOut',Array('Params'=>$VPSOrder['Params'],'StatusID'=>$VPSOrder['StatusID']));
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$VPSOrder['Graphs'] = $Comp;
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	UnSet($VPSOrder['Params']);
 	UnSet($VPSOrder['AdminNotice']);
 	#-------------------------------------------------------------------------------
 	$Out[$VPSOrder['ID']] = $VPSOrder;

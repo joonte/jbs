@@ -34,7 +34,6 @@ $Columns = Array(	'*',
 			'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `HostingOrdersOwners`.`ContractID`) AS `Customer`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `ServerID`',
 			'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `HostingOrdersOwners`.`OrderID`) AS `IsPayed`',
 			'(SELECT `Comment` FROM `HostingSchemes` WHERE `HostingSchemes`.`ID` = `HostingOrdersOwners`.`SchemeID`) AS `Message`',
-			"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `HostingOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`",
 			);
 $HostingOrders = DB_Select('HostingOrdersOwners',$Columns,Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
@@ -79,16 +78,6 @@ foreach($HostingOrders as $HostingOrder){
 		$HostingOrder[$NsName] = $Servers[$ServerID]['Params'][$NsName];
 		#-------------------------------------------------------------------------------
 	}
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	// меняем формат графиков на выходе
-	$Comp = Comp_Load('Formats/GraphOut',Array('Params'=>$HostingOrder['Params'],'StatusID'=>$HostingOrder['StatusID']));
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$HostingOrder['Graphs'] = $Comp;
-	#-------------------------------------------------------------------------------
-	UnSet($HostingOrder['Params']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// выпиливаем колонки

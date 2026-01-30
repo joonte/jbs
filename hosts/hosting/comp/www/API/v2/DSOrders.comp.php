@@ -64,7 +64,6 @@ $Columns = Array(
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DSOrdersOwners`.`ContractID`) AS `Customer`',
 		'(SELECT (SELECT `Code` FROM `Services` WHERE `Orders`.`ServiceID` = `Services`.`ID`) FROM `Orders` WHERE `DSOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `Code`',
 		'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DSOrdersOwners`.`OrderID`) AS `IsPayed`',
-		"(SELECT `Params` FROM `TmpData` WHERE `AppID` = 'Order.Statistics' AND `DSOrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`",
 		);
 #-------------------------------------------------------------------------------
 $DSOrders = DB_Select('DSOrdersOwners',$Columns,Array('Where'=>$Where));
@@ -101,16 +100,6 @@ foreach($DSOrders as $DSOrder){
 	$DSOrder['ExtraIP'] = ($DSOrder['ExtraIP'])?Explode("\n",$DSOrder['ExtraIP']):Array();
 	#-------------------------------------------------------------------------------
 	$DSOrder['Names'] = $Names;
-	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	// меняем формат графиков на выходе
-	$Comp = Comp_Load('Formats/GraphOut',Array('Params'=>$DSOrder['Params'],'StatusID'=>$DSOrder['StatusID']));
-	if(Is_Error($Comp))
-		return ERROR | @Trigger_Error(500);
-	#-------------------------------------------------------------------------------
-	$DSOrder['Graphs'] = $Comp;
-	#-------------------------------------------------------------------------------
-	UnSet($DSOrder['Params']);
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	$Out[$DSOrder['ID']] = $DSOrder;
