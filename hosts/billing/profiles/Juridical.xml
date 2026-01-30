@@ -8,6 +8,7 @@
 		<CompanyForm>
 			<Title>Регистрационные данные</Title>
 			<Check>/^[а-яА-ЯёЁ0-9\s\-\(\)]+$/u</Check>
+			<Message>Русские буквы, цифры, пробелы, дефисы</Message>
 			<Comment>Краткая организационно-правовая форма</Comment>
 			<Example>ООО, АО, ЗАО, НПО</Example>
 			<Type>Input</Type>
@@ -21,6 +22,7 @@
 		<!-- ********************************************************************** -->
 		<CompanyFormFull>
 			<Check>/^[а-яА-ЯёЁ0-9\s\-\(\)]+$/u</Check>
+			<Message>Русские буквы, цифры, пробелы, дефисы</Message>
 			<Comment>Полная организационно-правовая форма</Comment>
 			<Example>Акционерное общество</Example>
 			<Type>Input</Type>
@@ -46,6 +48,7 @@
 		<!-- ********************************************************************** -->
 		<Basis>
 			<Check>/^[а-яА-ЯёЁ0-9№\s]{1,50}$/u</Check>
+			<Message>Русские буквы, цифры, пробелы, символ номера. До 50 символов</Message>
 			<Comment>Действует на основании</Comment>
 			<Example>Устава</Example>
 			<Type>Input</Type>
@@ -58,6 +61,7 @@
 		<!-- ********************************************************************** -->
 		<Ogrn>
 			<Check>Ogrn</Check>
+			<Message>Латинские буквы, цифры. От 8 до 13 символов</Message>
 			<Comment>ОГРН</Comment>
 			<Example>1704101359</Example>
 			<Type>Input</Type>
@@ -71,6 +75,7 @@
 		<!-- ********************************************************************** -->
 		<Inn>
 			<Check>Inn</Check>
+			<Message>Латинские буквы, цифры. От 10 до 12 символов</Message>
 			<Comment>ИНН</Comment>
 			<Example>7701107259</Example>
 			<Type>Input</Type>
@@ -83,6 +88,7 @@
 		<!-- ********************************************************************** -->
 		<Kpp>
 			<Check>Kpp</Check>
+			<Message>Цифры. От 8 до 10 символов</Message>
 			<Comment>КПП</Comment>
 			<Example>632946014</Example>
 			<Type>Input</Type>
@@ -146,7 +152,7 @@
 		<SiteURL>
 			<Check>Url</Check>
 			<Comment>Адрес сайта</Comment>
-			<Example>http://www.example.com</Example>
+			<Example>https://www.example.com</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
@@ -158,6 +164,7 @@
 		<dPost>
 			<Title>Директор</Title>
 			<Check>dPost</Check>
+			<Message>От 3 символов</Message>
 			<Comment>Должность</Comment>
 			<Example>Директор</Example>
 			<Type>Input</Type>
@@ -170,6 +177,7 @@
 		<!-- ********************************************************************** -->
 		<dSourname>
 			<Check>Sourname</Check>
+			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Фамилия директора</Comment>
 			<Example>Иванов</Example>
 			<Type>Input</Type>
@@ -183,6 +191,7 @@
 		<!-- ********************************************************************** -->
 		<dName>
 			<Check>Name</Check>
+			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Имя директора</Comment>
 			<Example>Пётр</Example>
 			<Type>Input</Type>
@@ -196,6 +205,7 @@
 		<!-- ********************************************************************** -->
 		<dLastname>
 			<Check>Lastname</Check>
+			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Отчество директора</Comment>
 			<Example>Викторович</Example>
 			<Type>Input</Type>
@@ -209,6 +219,7 @@
 		<!-- ********************************************************************** -->
 		<aSourname>
 			<Check>Sourname</Check>
+			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Title>Главный бухгалтер</Title>
 			<Comment>Фамилия главного бухгалтера</Comment>
 			<Example>Иванов</Example>
@@ -223,6 +234,7 @@
 		<!-- ********************************************************************** -->
 		<aName>
 			<Check>Name</Check>
+			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Имя главного бухгалтера</Comment>
 			<Example>Пётр</Example>
 			<Type>Input</Type>
@@ -236,6 +248,7 @@
 		<!-- ********************************************************************** -->
 		<aLastname>
 			<Check>Lastname</Check>
+			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Отчество главного бухгалтера</Comment>
 			<Example>Викторович</Example>
 			<Type>Input</Type>
@@ -300,6 +313,7 @@
 		<!-- ********************************************************************** -->
 		<jState>
 			<Check>State</Check>
+			<Message>Русские буквы, точка, дефис, пробел. От 2 до 60 символов</Message>
 			<Comment>Область / край юридического адреса</Comment>
 			<Example>Московская обл.</Example>
 			<Type>Input</Type>
@@ -313,6 +327,7 @@
 		<!-- ********************************************************************** -->
 		<jCity>
 			<Check>City</Check>
+			<Message>Русские буквы, цифры, точка, запятая, дефис, пробел. От 1 до 100 символов</Message>
 			<Comment>Населённый пункт юр. адреса</Comment>
 			<Example>Москва</Example>
 			<Type>Input</Type>
@@ -327,6 +342,7 @@
 		<!-- ********************************************************************** -->
 		<jIndex>
 			<Check>Index</Check>
+			<Message>Латинские буквы, цифры, дефис, пробел. От 3 до 10 символов</Message>
 			<Comment>Почтовый индекс юридического адреса</Comment>
 			<Example>101000</Example>
 			<Type>Input</Type>
@@ -370,6 +386,7 @@
 		<!-- ********************************************************************** -->
 		<jAddress>
 			<Check>Address</Check>
+			<Message>От 1 до 45 символов</Message>
 			<Comment>Улица, дом юридического адреса</Comment>
 			<Example>Ленина, д. 51, кв. 7</Example>
 			<Type>TextArea</Type>
@@ -433,6 +450,7 @@
 		<!-- ********************************************************************** -->
 		<pState>
 			<Check>State</Check>
+			<Message>Русские буквы, точка, дефис, пробел. От 2 до 60 символов</Message>
 			<Comment>Область / край почтового адреса</Comment>
 			<Example>Московская обл.</Example>
 			<Type>Input</Type>
@@ -446,6 +464,7 @@
 		<!-- ********************************************************************** -->
 		<pCity>
 			<Check>City</Check>
+			<Message>Русские буквы, цифры, точка, запятая, дефис, пробел. От 1 до 100 символов</Message>
 			<Comment>Населённый пункт почт. адреса</Comment>
 			<Example>Москва</Example>
 			<Type>Input</Type>
@@ -460,6 +479,7 @@
 		<!-- ********************************************************************** -->
 		<pIndex>
 			<Check>Index</Check>
+			<Message>Латинские буквы, цифры, дефис, пробел. От 3 до 10 символов</Message>
 			<Comment>Почтовый индекс почтового адреса</Comment>
 			<Example>101000</Example>
 			<Type>Input</Type>
@@ -501,6 +521,7 @@
 		<!-- ********************************************************************** -->
 		<pAddress>
 			<Check>Address</Check>
+			<Message>От 1 до 45 символов</Message>
 			<Comment>Улица, дом почтового адреса</Comment>
 			<Example>Ленина, д. 51, кв. 7</Example>
 			<Type>TextArea</Type>
@@ -514,6 +535,7 @@
 		<BankName>
 			<Title>Банковские реквизиты</Title>
 			<Check>BankName</Check>
+			<Message>От 1 до 100 символов</Message>
 			<Comment>Наименование банка</Comment>
 			<Example>ООО "КБ Легион"</Example>
 			<Type>Input</Type>
@@ -526,6 +548,7 @@
 		<!-- ********************************************************************** -->
 		<Bik>
 			<Check>Bik</Check>
+			<Message>Латинские буквы, цифры. От 8 до 10 символов</Message>
 			<Comment>БИК</Comment>
 			<Example>544959119</Example>
 			<Type>Input</Type>
@@ -538,6 +561,7 @@
 		<!-- ********************************************************************** -->
 		<BankAccount>
 			<Check>BankAccount</Check>
+			<Message>Цифры. От 10 до 30 символов</Message>
 			<Comment>Номер расчётного счёта</Comment>
 			<Example>40701256800030000589</Example>
 			<Type>Input</Type>
@@ -550,6 +574,7 @@
 		<!-- ********************************************************************** -->
 		<Kor>
 			<Check>Kor</Check>
+			<Message>Цифры, дефис. От 5 до 20 символов</Message>
 			<Comment>Корреспондентский счёт</Comment>
 			<Example>30101810500000000444</Example>
 			<Type>Input</Type>

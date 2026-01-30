@@ -9,11 +9,50 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Args = Args();
 #-------------------------------------------------------------------------------
-$ModeID =  (string) @$Args['ModeID'];
-$RowID  = (integer) @$Args['RowID'];
+$ModeID	=  (string) @$Args['ModeID'];
+$RowID	= (integer) @$Args['RowID'];
+$OrderID= (integer) @$Args['OrderID'];
 #-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+// костыль, для уменьшения числа запросов к АПИ фронтом
+if($OrderID){
+	#-------------------------------------------------------------------------------
+	// код услуги
+	$Order = DB_Select('OrdersOwners',Array('(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`'),Array('ID'=>$OrderID,'UNIQ'));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Order)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$ModeID = SPrintF('%sOrders',$Order['Code']);
+	#-------------------------------------------------------------------------------
+	// идентфикатор по таблице услуги
+	$Order = DB_Select(SPrintF('%sOwners',$ModeID),Array('ID'),Array('Where'=>SPrintF('`OrderID` = %u',$OrderID),'UNIQ'));
+	#-------------------------------------------------------------------------------
+	switch(ValueOf($Order)){
+	case 'error':
+		return ERROR | @Trigger_Error(500);
+	case 'exception':
+		return ERROR | @Trigger_Error(400);
+	case 'array':
+		break;
+	default:
+		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	$RowID = $Order['ID'];
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Regulars = Regulars();
 #-------------------------------------------------------------------------------

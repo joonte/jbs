@@ -18,7 +18,13 @@ if(Is_Error(System_Load('modules/Authorisation.mod','libs/Upload.php')))
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Services = DB_Select('Services',Array('*'),Array('SortOn'=>'SortID'));
+// достаём активные для юзера тарифы
+$Where = Array(
+		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
+		'`IsActive` = "yes"',
+		);
+#-------------------------------------------------------------------------------
+$Services = DB_Select('Services',Array('*'),Array('Where'=>$Where,'SortOn'=>'SortID'));
 #-------------------------------------------------------------------------------
 switch(ValueOf($Services)){
 case 'error':
