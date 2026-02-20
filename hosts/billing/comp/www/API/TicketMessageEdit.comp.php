@@ -159,7 +159,8 @@ $Count = DB_Count('EdesksMessages',Array('Where'=>SPrintF('`EdeskID` = %d', $Tic
 if(Is_Error($Count))
 	return ERROR | Trigger_Error(500);
 #-------------------------------------------------------------------------------
-if($Count + 1 > IntVal($Settings['MaxMessages']))
+//Debug(SPrintF('[comp/www/API/TicketMessageEdit]: Message = "%s"',$Message));
+if($Count + 1 > IntVal($Settings['MaxMessages']) && StrLen($Message) > 0)
 	return new gException('TOO_MANY_MESSAGES',SPrintF('Тема содержит слишком большое количество сообщений. Максимальное число сообщений в одном тикете равно %u. Пожалуйста, опишите вашу проблему и создайте новый запрос.',IntVal($Settings['MaxMessages'])));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
