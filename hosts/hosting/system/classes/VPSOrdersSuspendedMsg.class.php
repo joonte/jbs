@@ -26,12 +26,19 @@ class VPSOrdersSuspendedMsg extends Message {
 		$this->params['VPSScheme'] = $VPSScheme;
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+		$Server = DB_Select('Servers', Array('Address', 'Params'), Array('UNIQ', 'Where' => SPrintF('(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = %u) = `Servers`.`ID`',$this->params['OrderID'])));
+		if (!Is_Array($Server))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+		$this->params['Server'] = $Server;
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		// ссылка на продление заказа
 		$this->params['ProlongLink'] = SPrintF('%s://%s/v2/VPSOrderPay/%u/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
-		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/v2/VPSOrders/%u/SchemeChange/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
+		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/v2/VPSOrders/%u/SchemeChange',URL_SCHEME,HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return $this->params;

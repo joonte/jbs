@@ -31,7 +31,7 @@ class DNSmanagerOrdersSuspendedMsg extends Message {
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на смену тарифа
-		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/v2/DNSmanagerOrders/%u/SchemeChange/',URL_SCHEME,HOST_ID,$this->params['OrderID']);
+		$this->params['SchemeChangeLink'] = SPrintF('%s://%s/v2/DNSmanagerOrders/%u/SchemeChange',URL_SCHEME,HOST_ID,$this->params['OrderID']);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return $this->params;

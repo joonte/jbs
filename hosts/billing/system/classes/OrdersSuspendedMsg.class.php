@@ -31,13 +31,14 @@ class OrdersSuspendedMsg extends Message {
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ссылка на продление заказа
-		$Ajax = SPrintF("ShowWindow('/ServiceOrderPay',{ServiceOrderID:'%s'});",$this->params['ID']);
+		$this->params['ProlongLink'] = SPrintF('%s://%s/v2/ServiceOrderPay/%u',URL_SCHEME,HOST_ID,$this->params['ID']);
+		/*$Ajax = SPrintF("ShowWindow('/ServiceOrderPay',{ServiceOrderID:'%s'});",$this->params['ID']);
 		#-------------------------------------------------------------------------------
 		$ProlongLink = Comp_Load('Formats/System/EvalLink',$Ajax);
 		if(Is_Error($ProlongLink))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
-		$this->params['ProlongLink'] = $ProlongLink;
+		$this->params['ProlongLink'] = $ProlongLink;*/
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		return $this->params;
