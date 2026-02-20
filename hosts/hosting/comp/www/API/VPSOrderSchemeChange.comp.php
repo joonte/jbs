@@ -53,8 +53,8 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-if($VPSOrder['StatusID'] != 'Active')
-	return new gException('ORDER_NO_ACTIVE','Заказ виртуального сервера не активен');
+if(!In_Array($VPSOrder['StatusID'],Array('Active','Suspended')))
+	return new gException('ORDER_NOT_ACTIVE','Тариф можно изменить только для активного или заблокированного заказа');
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $OldScheme = DB_Select('VPSSchemes',Array('ID','IsSchemeChange','SchemeParams','Name','CostDay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
