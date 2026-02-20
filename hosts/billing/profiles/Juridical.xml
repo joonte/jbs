@@ -61,7 +61,6 @@
 		<!-- ********************************************************************** -->
 		<Ogrn>
 			<Check>Ogrn</Check>
-			<Message>Латинские буквы, цифры. От 8 до 13 символов</Message>
 			<Comment>ОГРН</Comment>
 			<Example>1704101359</Example>
 			<Type>Input</Type>
@@ -75,7 +74,6 @@
 		<!-- ********************************************************************** -->
 		<Inn>
 			<Check>Inn</Check>
-			<Message>Латинские буквы, цифры. От 10 до 12 символов</Message>
 			<Comment>ИНН</Comment>
 			<Example>7701107259</Example>
 			<Type>Input</Type>
@@ -88,7 +86,6 @@
 		<!-- ********************************************************************** -->
 		<Kpp>
 			<Check>Kpp</Check>
-			<Message>Цифры. От 8 до 10 символов</Message>
 			<Comment>КПП</Comment>
 			<Example>632946014</Example>
 			<Type>Input</Type>
@@ -120,6 +117,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = RussianCellPhone(value);</onblur>
+				<Formatters>RussianCellPhone</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -156,6 +154,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
+				<Formatters>AddUrlScheme</Formatters>
 			</Attribs>
 			<IsDuty>0</IsDuty>
 			<Value/>
@@ -164,7 +163,6 @@
 		<dPost>
 			<Title>Директор</Title>
 			<Check>dPost</Check>
-			<Message>От 3 символов</Message>
 			<Comment>Должность</Comment>
 			<Example>Директор</Example>
 			<Type>Input</Type>
@@ -177,13 +175,14 @@
 		<!-- ********************************************************************** -->
 		<dSourname>
 			<Check>Sourname</Check>
-			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Фамилия директора</Comment>
 			<Example>Иванов</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value); form.aSourname.value = value;</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
+				<CopyTo>aSourname</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -191,13 +190,14 @@
 		<!-- ********************************************************************** -->
 		<dName>
 			<Check>Name</Check>
-			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Имя директора</Comment>
 			<Example>Пётр</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value); form.aName.value = value;</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
+				<CopyTo>aName</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -205,13 +205,14 @@
 		<!-- ********************************************************************** -->
 		<dLastname>
 			<Check>Lastname</Check>
-			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Отчество директора</Comment>
 			<Example>Викторович</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value); form.aLastname.value = value;</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
+				<CopyTo>aLastname</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -219,7 +220,6 @@
 		<!-- ********************************************************************** -->
 		<aSourname>
 			<Check>Sourname</Check>
-			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Title>Главный бухгалтер</Title>
 			<Comment>Фамилия главного бухгалтера</Comment>
 			<Example>Иванов</Example>
@@ -227,6 +227,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -234,13 +235,13 @@
 		<!-- ********************************************************************** -->
 		<aName>
 			<Check>Name</Check>
-			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Имя главного бухгалтера</Comment>
 			<Example>Пётр</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -248,13 +249,13 @@
 		<!-- ********************************************************************** -->
 		<aLastname>
 			<Check>Lastname</Check>
-			<Message>Русские буквы, дефис. До 50 символов</Message>
 			<Comment>Отчество главного бухгалтера</Comment>
 			<Example>Викторович</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -305,6 +306,7 @@
 			<Attribs>
 				<size>1</size>
 				<onblur>var Form = document.forms.ProfileEditForm;if(Form.pCountry.value == 'RU') Form.pCountry.value = Form.jCountry.value;</onblur>
+				<CopyTo>pCountry</CopyTo>
 				<style>width: 100%;</style>
 			</Attribs>
 			<IsDuty>1</IsDuty>
@@ -313,13 +315,14 @@
 		<!-- ********************************************************************** -->
 		<jState>
 			<Check>State</Check>
-			<Message>Русские буквы, точка, дефис, пробел. От 2 до 60 символов</Message>
 			<Comment>Область / край юридического адреса</Comment>
 			<Example>Московская обл.</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);var Form = document.forms.ProfileEditForm;if(!Form.pState.value) Form.pState.value = Form.jState.value;</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
+				<CopyTo>pState</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -327,13 +330,14 @@
 		<!-- ********************************************************************** -->
 		<jCity>
 			<Check>City</Check>
-			<Message>Русские буквы, цифры, точка, запятая, дефис, пробел. От 1 до 100 символов</Message>
 			<Comment>Населённый пункт юр. адреса</Comment>
 			<Example>Москва</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);var Form = document.forms.ProfileEditForm;if(!Form.pCity.value) Form.pCity.value = value;</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
+				<CopyTo>pCity</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -342,13 +346,13 @@
 		<!-- ********************************************************************** -->
 		<jIndex>
 			<Check>Index</Check>
-			<Message>Латинские буквы, цифры, дефис, пробел. От 3 до 10 символов</Message>
 			<Comment>Почтовый индекс юридического адреса</Comment>
 			<Example>101000</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>var Form = document.forms.ProfileEditForm;if(!Form.pIndex.value) Form.pIndex.value = Form.jIndex.value;</onblur>
+				<CopyTo>pIndex</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -378,6 +382,7 @@
 			<Attribs>
 				<size>1</size>
 				<onblur>var Form = document.forms.ProfileEditForm;if(Form.pType.value == 'Street') Form.pType.value = Form.jType.value;</onblur>
+				<CopyTo>pType</CopyTo>
 				<style>width: 100%;</style>
 			</Attribs>
 			<IsDuty>1</IsDuty>
@@ -386,13 +391,13 @@
 		<!-- ********************************************************************** -->
 		<jAddress>
 			<Check>Address</Check>
-			<Message>От 1 до 45 символов</Message>
 			<Comment>Улица, дом юридического адреса</Comment>
 			<Example>Ленина, д. 51, кв. 7</Example>
 			<Type>TextArea</Type>
 			<Attribs>
 				<rows>3</rows>
 				<onblur>var Form = document.forms.ProfileEditForm;if(!Form.pAddress.value) Form.pAddress.value = Form.jAddress.value;</onblur>
+				<CopyTo>pAddress</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -450,13 +455,13 @@
 		<!-- ********************************************************************** -->
 		<pState>
 			<Check>State</Check>
-			<Message>Русские буквы, точка, дефис, пробел. От 2 до 60 символов</Message>
 			<Comment>Область / край почтового адреса</Comment>
 			<Example>Московская обл.</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -464,13 +469,13 @@
 		<!-- ********************************************************************** -->
 		<pCity>
 			<Check>City</Check>
-			<Message>Русские буквы, цифры, точка, запятая, дефис, пробел. От 1 до 100 символов</Message>
 			<Comment>Населённый пункт почт. адреса</Comment>
 			<Example>Москва</Example>
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -479,7 +484,6 @@
 		<!-- ********************************************************************** -->
 		<pIndex>
 			<Check>Index</Check>
-			<Message>Латинские буквы, цифры, дефис, пробел. От 3 до 10 символов</Message>
 			<Comment>Почтовый индекс почтового адреса</Comment>
 			<Example>101000</Example>
 			<Type>Input</Type>
@@ -521,7 +525,6 @@
 		<!-- ********************************************************************** -->
 		<pAddress>
 			<Check>Address</Check>
-			<Message>От 1 до 45 символов</Message>
 			<Comment>Улица, дом почтового адреса</Comment>
 			<Example>Ленина, д. 51, кв. 7</Example>
 			<Type>TextArea</Type>
@@ -535,7 +538,6 @@
 		<BankName>
 			<Title>Банковские реквизиты</Title>
 			<Check>BankName</Check>
-			<Message>От 1 до 100 символов</Message>
 			<Comment>Наименование банка</Comment>
 			<Example>ООО "КБ Легион"</Example>
 			<Type>Input</Type>
@@ -548,7 +550,6 @@
 		<!-- ********************************************************************** -->
 		<Bik>
 			<Check>Bik</Check>
-			<Message>Латинские буквы, цифры. От 8 до 10 символов</Message>
 			<Comment>БИК</Comment>
 			<Example>544959119</Example>
 			<Type>Input</Type>
@@ -561,7 +562,6 @@
 		<!-- ********************************************************************** -->
 		<BankAccount>
 			<Check>BankAccount</Check>
-			<Message>Цифры. От 10 до 30 символов</Message>
 			<Comment>Номер расчётного счёта</Comment>
 			<Example>40701256800030000589</Example>
 			<Type>Input</Type>
@@ -574,7 +574,6 @@
 		<!-- ********************************************************************** -->
 		<Kor>
 			<Check>Kor</Check>
-			<Message>Цифры, дефис. От 5 до 20 символов</Message>
 			<Comment>Корреспондентский счёт</Comment>
 			<Example>30101810500000000444</Example>
 			<Type>Input</Type>

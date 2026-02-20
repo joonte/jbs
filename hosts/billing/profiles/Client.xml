@@ -24,6 +24,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
+				<Formatters>AddUrlScheme</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -36,6 +37,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
+				<Formatters>AddUrlScheme</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>

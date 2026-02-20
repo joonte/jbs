@@ -31,7 +31,7 @@
 		</Inn>
 		<!-- ********************************************************************** -->
 		<GRNIP>
-			<Check>/^[0-9]{15}$/u</Check>
+			<Check>GRNIP</Check>
 			<Comment>ГРНИП</Comment>
 			<Example>554555447455667</Example>
 			<Type>Input</Type>
@@ -43,7 +43,7 @@
 		</GRNIP>
 		<!-- ********************************************************************** -->
 		<OGRNIP>
-			<Check>/^[0-9]{15}$/u</Check>
+			<Check>GRNIP</Check>
 			<Comment>ОГРНИП</Comment>
 			<Example>455756445664455</Example>
 			<Type>Input</Type>
@@ -55,7 +55,7 @@
 		</OGRNIP>
 		<!-- ********************************************************************** -->
 		<GrnipDate>
-			<Check>/^[0-9]{2}\.[0-9]{2}\.[0-9]{4}$/u</Check>
+			<Check>BornDate</Check>
 			<Comment>Дата постановки на учёт</Comment>
 			<Example>12.03.2005</Example>
 			<Type>Input</Type>
@@ -75,6 +75,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -88,6 +89,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -101,6 +103,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -188,6 +191,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = RussianCellPhone(value);</onblur>
+				<Formatters>RussianCellPhone</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -224,6 +228,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
+				<Formatters>AddUrlScheme</Formatters>
 			</Attribs>
 			<IsDuty>0</IsDuty>
 			<Value/>
@@ -274,6 +279,7 @@
 			<Attribs>
 				<size>1</size>
 				<onblur>var Form = document.forms.ProfileEditForm;if(Form.pCountry == 'RU') Form.pCountry.value = Form.jCountry.value;</onblur>
+				<CopyTo>jCountry</CopyTo>
 				<style>width: 100%;</style>
 			</Attribs>
 			<IsDuty>1</IsDuty>
@@ -288,6 +294,8 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);var Form = document.forms.ProfileEditForm;if(!Form.pState.value) Form.pState.value = Form.jState.value;</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
+				<CopyTo>pState</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -301,6 +309,8 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);var Form = document.forms.ProfileEditForm;if(!Form.pCity.value) Form.pCity.value = value;</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
+				<CopyTo>pCity</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -315,6 +325,8 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>var Form = document.forms.ProfileEditForm;if(!Form.pIndex.value) Form.pIndex.value = Form.jIndex.value;</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
+				<CopyTo>pIndex</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -344,6 +356,7 @@
 			<Attribs>
 				<size>1</size>
 				<onblur>var Form = document.forms.ProfileEditForm;if(!Form.pType.value) Form.pType.value = Form.jType.value;</onblur>
+				<CopyTo>pType</CopyTo>
 				<style>width: 100%;</style>
 			</Attribs>
 			<IsDuty>1</IsDuty>
@@ -358,6 +371,7 @@
 			<Attribs>
 				<rows>3</rows>
 				<onblur>var Form = document.forms.ProfileEditForm;if(!Form.pAddress.value) Form.pAddress.value = Form.jAddress.value;</onblur>
+				<CopyTo>pAddress</CopyTo>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -421,6 +435,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -434,6 +449,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>

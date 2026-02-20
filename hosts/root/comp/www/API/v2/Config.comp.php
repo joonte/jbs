@@ -56,7 +56,8 @@ if($Result){
 $Config = Config();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Regulars = Regulars();
+$Regulars = Regulars();		// регулярки для профилей
+$Messages = Messages();		// сообщения к регляркам профилей
 #-------------------------------------------------------------------------------
 if(IsSet($GLOBALS['__USER']))
 	$Replace = Array_ToLine($GLOBALS['__USER'],'%');
@@ -73,8 +74,15 @@ foreach(Array_Keys($Config['Profiles']['Templates']) as $Key){
 	// достраиваем регулярки
 	foreach(Array_Keys($Template['Attribs']) as $Attrib){
 		#-------------------------------------------------------------------------------
+		// достаём пояснение регуляки по ключу
+		if(IsSet($Messages['Regulars'][$Template['Attribs'][$Attrib]['Check']]))
+			if(!IsSet($Template['Attribs'][$Attrib]['Message']))
+				$Template['Attribs'][$Attrib]['Message'] = $Messages['Regulars'][$Template['Attribs'][$Attrib]['Check']];
+		#-------------------------------------------------------------------------------
+		// достаём регулярку по ключу
 		if(IsSet($Regulars[$Template['Attribs'][$Attrib]['Check']]))
 			$Template['Attribs'][$Attrib]['Check'] = $Regulars[$Template['Attribs'][$Attrib]['Check']];
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		//UnSet($Template['Attribs'][$Attrib]['Attribs']);
 		#-------------------------------------------------------------------------------

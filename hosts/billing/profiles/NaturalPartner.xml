@@ -14,6 +14,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -27,6 +28,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -40,6 +42,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -140,6 +143,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>0</IsDuty>
 			<Value/>
@@ -153,6 +157,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>0</IsDuty>
 			<Value/>

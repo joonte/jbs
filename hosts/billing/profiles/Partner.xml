@@ -7,6 +7,7 @@
 	<Attribs>
 		<Name>
 			<Check>/^[а-яА-ЯёЁa-zA-Z\-\"\s\.]{1,50}$/u</Check>
+			<Message>Русские и английские буквы, дефис, точка, пробел, двойные кавычки. От 1 до 50 символов</Message>
 			<Comment>Имя как партнёра</Comment>
 			<Example>Креативная группа "ТриТон"</Example>
 			<Type>Input</Type>
@@ -38,6 +39,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
+				<Formatters>AddUrlScheme</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -50,6 +52,7 @@
 			<Type>Input</Type>
 			<Attribs>
 				<type>text</type>
+				<Formatters>AddUrlScheme</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>

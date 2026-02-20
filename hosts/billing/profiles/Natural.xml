@@ -14,6 +14,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -27,6 +28,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -40,6 +42,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value); value = DeleteSpace(value);</onblur>
+				<Formatters>FirstCapitalLetter,DeleteSpace</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -79,6 +82,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = RussianCellPhone(value);</onblur>
+				<Formatters>RussianCellPhone</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -266,6 +270,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -279,6 +284,7 @@
 			<Attribs>
 				<type>text</type>
 				<onblur>value = FirstCapitalLetter(value);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
@@ -346,10 +352,13 @@
 			<Attribs>
 				<rows>3</rows>
 				<onblur>var Matrix = value.split(' ');Result = '';for(var i=0;i&lt;Matrix.length;i++){ var Element = Trim(Matrix[i]);if(Element){ Result += SPrintF('%s%s ',Element.charAt(0).toUpperCase(),Element.substring(1).toLowerCase()); } } value = Trim(Result);</onblur>
+				<Formatters>FirstCapitalLetter</Formatters>
 			</Attribs>
 			<IsDuty>1</IsDuty>
 			<Value/>
 		</pRecipient>
 	</Attribs>
 	<!-- *********************************************************************** -->
+        <!-- *********************************************************************** -->
 </XML>
+
