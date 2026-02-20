@@ -26,7 +26,7 @@ foreach(Array_Keys($Tags) as $Key){
 		#-------------------------------------------------------------------------------
 		foreach($Tags[$Key] as $Service){
 			#-------------------------------------------------------------------------------
-			$Orders = DB_Select('OrdersOwners','ID',Array('Where'=>Array(SPrintF('`UserID` = %u',$UserID),'`StatusID` = "Active"',SPrintF('`ServiceID` = %u',$Service))));
+			$Orders = DB_Select('OrdersOwners','ID',Array('Where'=>Array(SPrintF('`UserID` = %u',$UserID),/*'`StatusID` = "Active"',*/SPrintF('`ServiceID` = %u',$Service))));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($Orders)){
 			case 'error':
