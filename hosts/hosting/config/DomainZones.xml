@@ -862,7 +862,7 @@
 	<pro>
 		<Server>whois.nic.ru</Server>
 		<Name>pro</Name>
-		<Available>NOT\sFOUND|Domain\snot\sfound|DOMAIN\sNOT\sFOUND</Available>
+		<Available>NOT\sFOUND|Domain\snot\sfound|DOMAIN\sNOT\sFOUND|No\sentries\sfound\sfor</Available>
 		<NotAvailable>Governmental\sReserved\sName</NotAvailable>
 		<MinChars>3</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
@@ -1109,6 +1109,18 @@
 		<Registrar>Default</Registrar>
 		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
 	</fun>
+	<monster>
+		<Server>whois.nic.monster</Server>
+		<Name>monster</Name>
+		<Available>DOMAIN\sNOT\sFOUND</Available>
+		<NotAvailable>name\sis\sreserved</NotAvailable>
+		<MinChars>3</MinChars>
+		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
+		<ExpirationDate>Registry Expiry Date:\s+([0-9]{4}\-[0-9]{2}\-[0-9]{2})</ExpirationDate>
+		<NsName>Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})</NsName>
+		<Registrar>Default</Registrar>
+		<IsUseRegistratorWhoIs>0</IsUseRegistratorWhoIs>
+	</monster>
 	<!-- *********************************************************************** -->
 	<!-- какой у нгео whois - неизвестно. этот работает тока для доменов зареганных через reg.ru -->
 	<team>
