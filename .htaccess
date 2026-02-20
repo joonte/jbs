@@ -28,6 +28,9 @@ RedirectMatch	/([a-zA-Z]*)Orders/([0-9]*)/$			/$1Orders?OrderID=$2
 # ссылки в почте на смену тарифа, и тоже красивые =)
 RedirectMatch	/([a-zA-Z]*)Orders/([0-9]*)/(SchemeChange)/$	/$1Orders?OrderID=$2&SchemeChange=1
 
+# новый интерфейс, договора
+RedirectMatch	"^/Clause(.*)$"					"/v2/Clause$1"
+
 RewriteCond %{REQUEST_URI} (.*)
 RewriteRule ^(install|public|styles|v2|index.php) - [L]
 #RewriteCond %{HTTPS} !=on
