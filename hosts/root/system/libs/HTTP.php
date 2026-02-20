@@ -255,7 +255,7 @@ function HTTP_Send($Target,$Settings,$Get = Array(),$Post = Array(),$Addins = Ar
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF("[HTTP_Send]: получили ответ:\n%s",$Receive));
+	Debug(SPrintF("[HTTP_Send]: получили ответ:\n%s",($IsLogging)?$Receive:'skipping, IsLogging = FALSE'));
 	#-------------------------------------------------------------------------------
 	$Log = SPrintF("%s://%s:%u [%s]\n%s\n%s\n\n",$Protocol,$Address,$Port,Date('r'),$Query,$Receive);
 	#-------------------------------------------------------------------------------

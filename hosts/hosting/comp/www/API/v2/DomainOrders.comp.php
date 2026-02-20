@@ -39,7 +39,6 @@ $Columns = Array(
 		'(SELECT `CostProlong` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `CostProlong`',
 		'CONCAT(`Ns1Name`,",",`Ns2Name`,",",`Ns3Name`,",",`Ns4Name`) AS `DNSs`',        // DNS for JBS-1337
 		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = (SELECT `ServerID` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`)) as `Params`',
-		'(SELECT `IsAutoProlong` FROM `Orders` WHERE `DomainOrdersOwners`.`OrderID` = `Orders`.`ID`) AS `IsAutoProlong`',
 		'(SELECT `UserNotice` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `DomainOrdersOwners`.`OrderID`) AS `UserNotice`',
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `DomainOrdersOwners`.`ContractID`) AS `Customer`',
 		'(SELECT `TypeID` FROM `Contracts` WHERE `DomainOrdersOwners`.`ContractID` = `Contracts`.`ID`) as `ContractTypeID`',

@@ -74,6 +74,7 @@
 						<ListElement>IPaddr</ListElement>
 						<ListElement>ILOaddr</ListElement>
 						<ListElement>UserNotice</ListElement>
+						<ListElement>AdminNotice</ListElement>
 					</ColumnsIDs>
 				</Args>
 			</Search>

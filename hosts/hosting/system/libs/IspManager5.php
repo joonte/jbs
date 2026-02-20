@@ -945,7 +945,7 @@ function IspManager5_Get_Email_Boxes($Settings){
 # added by lissyara 2015-05-24 in 14:05 MSK
 function IspManager5_AddIP($Settings,$Login,$ID,$Domain,$IP,$AddressType){
         /****************************************************************************/
-        $__args_types = Array('array','string','string','string','string','string');
+        $__args_types = Array('array','string','string,integer','string','string','string');
         $__args__ = Func_Get_Args(); Eval(FUNCTION_INIT);
         /****************************************************************************/
 	$Version = IspManager5_Check_Version($Settings);

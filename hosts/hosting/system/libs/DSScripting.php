@@ -191,7 +191,7 @@ function DSScripting_Get_Account_Usage($Settings,$Scheme,$Users){
 				continue;
 			#-------------------------------------------------------------------------------
 			// заменяем в ключах пробелы/слэши, заменяем значения
-			$OutTmp[Str_Replace($Replace,'_',Trim($Line[0]))] = Str_iReplace(Array('on','off','false','true'),Array('Включен','Выклчюен','нет','да'),Trim($Line[1]));
+			$OutTmp[Str_Replace($Replace,'_',Trim($Line[0]))] = Str_iReplace(Array('on','off','false','true'),Array('Включен','Выключен','нет','да'),Trim($Line[1]));
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
