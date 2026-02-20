@@ -1,1 +1,0 @@
-import{ak as n,r as c,al as a,am as s}from"./index-C9dBN6m4.js";const k=n("basket",()=>{const e=c({});async function r(){const t=await a.post(s.basket);e.value=t.data}async function o(t){try{return await a.post(s.deleteFromBasket,{...t}),"success"}catch{return"error"}}return{basketList:e,fetchBasket:r,deleteFromBasket:o}});export{k as u};

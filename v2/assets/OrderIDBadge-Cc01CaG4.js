@@ -1,1 +1,0 @@
-import{c as e,h as r,o,t as s}from"./index-C9dBN6m4.js";const a={key:0,class:"tw-text-xs tw-text-white tw-bg-sky-400 tw-rounded-full tw-py-1 tw-px-2"},i={__name:"OrderIDBadge",props:{orderId:{type:[String,Number]}},setup(t){return(d,c)=>t.orderId?(o(),e("div",a," # "+s(t.orderId),1)):r("",!0)}};export{i as _};

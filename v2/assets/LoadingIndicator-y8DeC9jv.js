@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o as n,c as o,a as c}from"./index-Codq73aV.js";const t={},_={class:"suspense-block"};function r(a,s){return n(),o("div",_,s[0]||(s[0]=[c("span",{class:"suspense-spinner"},null,-1)]))}const d=e(t,[["render",r],["__scopeId","data-v-978487d4"]]);export{d as _};

@@ -1,0 +1,1 @@
+import{_ as e}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o,c as s,M as r}from"./index-Codq73aV.js";const n={},c={class:"tw-text-sky-400 tw-text-sm tw-border tw-border-sky-400 tw-rounded tw-bg-sky-100 tw-p-4 md:tw-p-6"};function _(t,d){return o(),s("div",c,[r(t.$slots,"default")])}const p=e(n,[["render",_]]);export{p as _};
