@@ -56,6 +56,7 @@ case 'array':
 								'ContractID'	=> $Contract['ID'],
 								'Month'		=> $CurrentMonth,
 								'ServiceID'	=> $VPSOrder['ServiceID'],
+								'OrderID'	=> $Order['ID'],
 								'Comment'	=> SPrintF('№%s',$Number),
 								'Amount'	=> $ConsiderItem['DaysConsidered'],
 								'Cost'		=> $ConsiderItem['Cost'],

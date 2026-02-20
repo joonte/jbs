@@ -37,6 +37,7 @@ if($WorkCompliteID){
 				'ContractID'	=> $ContractID,
 				'Month'		=> (Date('Y') - 1970)*12 + Date('n'),
 				'ServiceID'	=> 1,
+				'OrderID'	=> 0,
 				'Comment'	=> '',
 				'Amount'	=> 1,
 				'Cost'		=> 10.00,
@@ -123,6 +124,13 @@ if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 $Table[] = Array('Услуга',$Comp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+$Comp = Comp_Load('Form/TextArea',Array('name'=>'OrderID','style'=>'width:100%;','rows'=>3),$WorkComplite['OrderID']);
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Table[] = Array('Номер заказа',$Comp);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $Comp = Comp_Load('Form/TextArea',Array('name'=>'Comment','style'=>'width:100%;','rows'=>3),$WorkComplite['Comment']);

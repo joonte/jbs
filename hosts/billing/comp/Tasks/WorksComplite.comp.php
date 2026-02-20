@@ -56,9 +56,9 @@ case 'array':
 		// достаём номер контракта (ключ нужен потом, для удаления из массива уже обработанного договора)
 		$Contract = $TmpData['Params'][$Key];
 		#-------------------------------------------------------------------------------
-		$Columns = Array('CreateDate','ContractID','Month','ServiceID','Comment','SUM(`Amount`) as `Amount`','Cost','Discont');
+		$Columns = Array('CreateDate','ContractID','Month','ServiceID','OrderID','Comment','SUM(`Amount`) as `Amount`','Cost','Discont');
 		#-------------------------------------------------------------------------------
-		$WorksComplite = DB_Select('WorksComplite',$Columns,Array('GroupBy'=>Array('ServiceID','Month','Comment','Cost','Discont'),'Where'=>SPrintF('`ContractID` = %u',$Contract['ID'],$CurrentMonth)));
+		$WorksComplite = DB_Select('WorksComplite',$Columns,Array('GroupBy'=>Array('ServiceID','Month','OrderID','Comment','Cost','Discont'),'Where'=>SPrintF('`ContractID` = %u',$Contract['ID'],$CurrentMonth)));
 		#-------------------------------------------------------------------------------
 		switch(ValueOf($WorksComplite)){
 		case 'error':

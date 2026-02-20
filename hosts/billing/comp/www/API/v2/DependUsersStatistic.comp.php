@@ -11,11 +11,6 @@ Eval(COMP_INIT);
 $Out = Array();
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$Config = Config();
-#-------------------------------------------------------------------------------
-$Percent = $Config['Tasks']['Types']['CaclulatePartnersReward']['PartnersRewardPercent'];
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 // выбираем список рефералов
 $Referals = DB_Select('Users',Array('ID'),Array('Where'=>'`OwnerID` = @local.__USER_ID'));
 #-------------------------------------------------------------------------------
@@ -39,7 +34,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	$ReferalsIDs = Implode(',',$Array);
 	#-------------------------------------------------------------------------------
-	$Result = DB_Query(SPrintF("CREATE TEMPORARY TABLE `%s` SELECT * FROM `InvoicesOwners` WHERE `StatusID`='Payed' AND `UserID` IN (%s);",$TableName,$ReferalsIDs));
+	$Result = DB_Query(SPrintF("CREATE TEMPORARY TABLE `%s` SELECT *,(SELECT `RegisterDate` FROM `Users` WHERE `Users`.`ID` = `InvoicesOwners`.`UserID`) AS `RegisterDate` FROM `InvoicesOwners` WHERE `StatusID`='Payed' AND `UserID` IN (%s);",$TableName,$ReferalsIDs));
 	if(Is_Error($Result))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
@@ -48,7 +43,7 @@ case 'array':
 			"FROM_UNIXTIME(`StatusDate`,'%m') AS `Month`",
 			'COUNT(DISTINCT(`UserID`)) AS `NumUsers`',
 			'COUNT(*) AS `NumPayments`',
-			SPrintF('ROUND(SUM(`Summ`) * %u / 100, 2) AS `MonthSum`',$Percent),
+			'SUM(`Summ`) AS `MonthSum`',
 			);
 	#-------------------------------------------------------------------------------
 	$Payments = DB_Select($TableName,$Columns,Array('GroupBy'=>Array('Year','Month')));

@@ -56,6 +56,7 @@ if(!$Contract['IsUponConsider']){
 						'ContractID' => $Contract['ID'],
 						'Month'      => $CurrentMonth,
 						'ServiceID'  => $HostingOrder['ServiceID'],
+						'OrderID'	=> $Order['ID'],
 						'Comment'    => SPrintF('№%s',$Number),
 						'Amount'     => $ConsiderItem['DaysConsidered'],
 						'Cost'       => $ConsiderItem['Cost'],

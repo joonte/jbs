@@ -44,10 +44,6 @@ $DOM->AddChild('Into',$Comp);
 # надо думать ... 
 if(TRUE)
 {
-# достаём процент партнёрского вознаграждения
-$Config = Config();
-#-------------------------------------------------------------------------------
-$Percent = $Config['Tasks']['Types']['CaclulatePartnersReward']['PartnersRewardPercent'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # выбираем список рефералов
@@ -79,7 +75,8 @@ case 'array':
 				"FROM_UNIXTIME(`StatusDate`,'%m') AS `Month`",
 				'COUNT(DISTINCT(`UserID`)) AS `NumUsers`',
 				'COUNT(*) AS `NumPayments`',
-				SPrintF('ROUND(SUM(`Summ`) * %u / 100, 2) AS `MonthSum`',$Percent),
+				'SUM(`Summ`) `MonthSum`',
+				//SPrintF('ROUND(SUM(`Summ`) * %u / 100, 2) AS `MonthSum`',$Percent),
 			);
 	$Payments = DB_Select($TableName,$Columns,Array('GroupBy'=>Array('Year','Month')));
 	switch(ValueOf($Payments)){

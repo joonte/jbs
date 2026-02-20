@@ -226,6 +226,7 @@ if($IsUseBasket || (!$IsNoBasket && $CostPay > $ServiceOrder['ContractBalance'])
 				'ContractID'	=> $ServiceOrder['ContractID'],
 				'Month'		=> $CurrentMonth,
 				'ServiceID'	=> $Service['ID'],
+				'OrderID'	=> $ServiceOrder['ID'],
 				'Comment'	=> $ServiceOrder['Keys'],
 				'Amount'	=> $AmountPay,
 				'Cost'		=> $Cost,

@@ -41,7 +41,7 @@ if($ServiceID){
 			'Item'			=> 'Услуга',
 			'Measure'		=> 'шт.',
 			'ConsiderTypeID'	=> 'Upon',
-			'PartnersRewardPercent'	=> -1,
+			'PartnersRewardPercent'	=> 2,
 			'CostOn'		=> 10,
 			'Cost'			=> 10,
 			'IsProtected'		=> FALSE,
@@ -236,7 +236,7 @@ $Comp = Comp_Load(
 			'type'  => 'text',
 			'name'  => 'PartnersRewardPercent',
 			'value' => $Service['PartnersRewardPercent'],
-			'prompt'=> SPrintF('Процент начисляемый по партнёрской программе, при оплате этой услуги. 0 - не начислять, -1 - начислять процент используемый по умолчанию (%s%%)',$Config['Tasks']['Types']['CaclulatePartnersReward']['PartnersRewardPercent'])
+			'prompt'=> SPrintF('Процент начисляемый по партнёрской программе, при оплате этой услуги. 0 - не начислять'),
 			)
 		);
 if(Is_Error($Comp))

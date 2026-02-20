@@ -63,6 +63,7 @@ case 'array':
 						'ContractID'	=> $DomainOrder['ContractID'],
 						'Month'		=> $CurrentMonth,
 						'ServiceID'	=> $DomainOrder['ServiceID'],
+						'OrderID'	=> $DomainOrder['OrderID'],
 						'Comment'	=> SPrintF('№%s',$Number),
 						'Amount'	=> $ConsiderItem['YearsRemainded'],
 						'Cost'		=> $ConsiderItem['Cost'],

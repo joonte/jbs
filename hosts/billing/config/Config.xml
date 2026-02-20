@@ -1288,7 +1288,6 @@
 			<CaclulatePartnersReward>
 				<Name>Партнёрские начисления</Name>
 				<Params type="array"/>
-				<PartnersRewardPercent>5</PartnersRewardPercent>
 				<ExecuteTime>4:00</ExecuteTime>
 				<ExecuteDayOfMonth>5</ExecuteDayOfMonth>
 				<ExecuteMonths>1</ExecuteMonths>

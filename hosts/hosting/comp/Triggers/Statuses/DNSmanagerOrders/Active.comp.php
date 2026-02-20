@@ -57,6 +57,7 @@ switch(ValueOf($Order)){
                   'ContractID' => $Contract['ID'],
                   'Month'      => $CurrentMonth,
                   'ServiceID'  => $Order['ServiceID'],
+		  'OrderID'	=> $Order['ID'],
                   'Comment'    => SPrintF('№%s',$Number),
                   'Amount'     => $ConsiderItem['DaysConsidered'],
                   'Cost'       => $ConsiderItem['Cost'],

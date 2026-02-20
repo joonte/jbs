@@ -220,6 +220,7 @@ foreach($Services as $Service){
 							'ContractID'	=> $ServiceOrder['ContractID'],
 							'Month'		=> $CurrentMonth,
 							'ServiceID'	=> $Service['ID'],
+							'OrderID'	=> $ServiceOrder['OrderID'],
 							'Comment'	=> SPrintF('№%s',$Number),
 							'Amount'	=> 1,
 							'Cost'		=> $OrdersConsider['Cost'],
