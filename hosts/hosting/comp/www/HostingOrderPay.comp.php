@@ -85,7 +85,7 @@ $DOM->AddText('Title',SPrintF('Оплата заказа хостинга, %s',$
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
 #-------------------------------------------------------------------------------
-$HostingScheme = DB_Select('HostingSchemes',Array('ID','CostDay','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
+$HostingScheme = DB_Select('HostingSchemes',Array('ID','CostDay','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong','IsSchemeChange'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingScheme)){
 case 'error':
@@ -115,6 +115,9 @@ if(Is_Error($Comp))
 $Table[] = Array('Стоимость тарифа (в день)',$Comp);
 #-------------------------------------------------------------------------------
 if($HostingOrder['IsPayed']){
+	#-------------------------------------------------------------------------------
+	if(!$HostingScheme['IsProlong'] && $HostingScheme['IsSchemeChange'])
+		return new gException('SCHEME_NOT_PROLONG_BUT_CAN_BE_CHANGED','Тарифный план заказа хостинга не позволяет продление, но вы можете сменить его на другой и продлить');
 	#-------------------------------------------------------------------------------
 	if(!$HostingScheme['IsProlong'])
 		return new gException('SCHEME_NOT_ALLOW_PROLONG','Тарифный план заказа хостинга не позволяет продление');

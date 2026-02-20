@@ -71,7 +71,7 @@ if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
 $UserID = $HostingOrder['UserID'];
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','CostDay','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
+$HostingScheme = DB_Select('HostingSchemes',Array('ID','Name','CostDay','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay','IsSchemeChange'),Array('UNIQ','ID'=>$HostingOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($HostingScheme)){
 case 'error':
@@ -88,6 +88,9 @@ default:
 Debug(SPrintF('[comp/www/API/HostingOrderPay]: ранее оплачено за заказ: %s',$HostingOrder['PayedSumm']));
 #-------------------------------------------------------------------------------
 if($HostingOrder['IsPayed']){
+	#-------------------------------------------------------------------------------
+	if(!$HostingScheme['IsProlong'] && $HostingScheme['IsSchemeChange'])
+		return new gException('SCHEME_NOT_PROLONG_BUT_CAN_BE_CHANGED','Тарифный план заказа хостинга не позволяет продление, но вы можете сменить его на другой и продлить');
 	#-------------------------------------------------------------------------------
 	if(!$HostingScheme['IsProlong'])
 		return new gException('SCHEME_NOT_ALLOW_PROLONG','Тарифный план заказа хостинга не позволяет продление');

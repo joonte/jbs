@@ -85,7 +85,7 @@ $DOM->AddText('Title',SPrintF('Оплата виртуального серве�
 #-------------------------------------------------------------------------------
 $DOM->AddChild('Head',new Tag('SCRIPT',Array('type'=>'text/javascript','src'=>'SRC:{Js/Pages/OrderPay.js}')));
 #-------------------------------------------------------------------------------
-$VPSScheme = DB_Select('VPSSchemes',Array('ID','CostDay','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+$VPSScheme = DB_Select('VPSSchemes',Array('ID','CostDay','MinDaysPay','MinDaysProlong','MaxDaysPay','IsActive','IsProlong','IsSchemeChange'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSScheme)){
 case 'error':
@@ -115,6 +115,9 @@ if(Is_Error($Comp))
 $Table[] = Array('Стоимость тарифа (в день)',$Comp);
 #-------------------------------------------------------------------------------
 if($VPSOrder['IsPayed']){
+	#-------------------------------------------------------------------------------
+	if(!$VPSScheme['IsProlong'] && $VPSScheme['IsSchemeChangeable'])
+		return new gException('SCHEME_NOT_PROLONG_BUT_CAN_BE_CHANGED','Тарифный план заказа ВПС не позволяет продление, но вы можете сменить его на другой и продлить');
 	#-------------------------------------------------------------------------------
 	if(!$VPSScheme['IsProlong'])
 		return new gException('SCHEME_NOT_ALLOW_PROLONG','Тарифный план заказа на виртуальный сервер не позволяет продление');

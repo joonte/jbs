@@ -71,7 +71,7 @@ if(!In_Array($StatusID,Array('Waiting','Active','Suspended')))
 #-------------------------------------------------------------------------------
 $UserID = $VPSOrder['UserID'];
 #-------------------------------------------------------------------------------
-$VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
+$VPSScheme = DB_Select('VPSSchemes',Array('ID','Name','CostDay','CostInstall','IsActive','IsProlong','MinDaysPay','MinDaysProlong','MaxDaysPay','IsSchemeChange'),Array('UNIQ','ID'=>$VPSOrder['SchemeID']));
 #-------------------------------------------------------------------------------
 switch(ValueOf($VPSScheme)){
 case 'error':
@@ -89,6 +89,9 @@ default:
 Debug(SPrintF('[comp/www/API/VPSOrderPay]: ранее оплачено за заказ %s',$VPSOrder['PayedSumm']));
 #-------------------------------------------------------------------------------
 if($VPSOrder['IsPayed']){
+	#-------------------------------------------------------------------------------
+	if(!$VPSScheme['IsProlong'] && $VPSScheme['IsSchemeChangeable'])
+		return new gException('SCHEME_NOT_PROLONG_BUT_CAN_BE_CHANGED','Тарифный план заказа ВПС не позволяет продление, но вы можете сменить его на другой и продлить');
 	#-------------------------------------------------------------------------------
 	if(!$VPSScheme['IsProlong'])
 		return new gException('SCHEME_NOT_ALLOW_PROLONG','Тарифный план заказа виртуального сервера не позволяет продление');
