@@ -97,7 +97,9 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 	#-------------------------------------------------------------------------------
 	//$Message = SPrintF("%s\n\n[hidden]Data = %s[/hidden]",Trim($Message),print_r($Data,true));
 	#-------------------------------------------------------------------------------
-	$Message = SPrintF("%s\n\n[hidden]posted via Telegram, chat_id = %s[/hidden]",Trim($Message),$ChatID);
+	//$Message = SPrintF("%s\n\n[hidden]posted via Telegram, chat_id = %s[/hidden]",Trim($Message),$ChatID);
+	// перенесено вниз, надо скрывать chatid админа, а тут неизвестно админ ответил или нет
+	//$Message = SPrintF("%s\n\n[size=10][color=gray]posted via Telegram, from chat_id: %s[/color][/size]",Trim($Message),$ChatID);
 	#-------------------------------------------------------------------------------
 	$ReplyToID = $Data->{'reply_to_message'}->{'message_id'};
 	#-------------------------------------------------------------------------------
@@ -244,6 +246,9 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 		if(Is_Error($IsUpdate))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
+		if(!$GLOBALS['__USER']['IsAdmin'])
+			$Message = SPrintF("%s\n\n[size=10][color=gray]posted via Telegram, from chat_id: %s[/color][/size]",Trim($Message),$ChatID);
+		#-------------------------------------------------------------------------------
 		// цитируем предыдущее сообщение, если это не от администратора
 		if(!$GLOBALS['__USER']['IsAdmin'] && IsSet($Data->{'reply_to_message'}->{'text'}))
 			$Message = SPrintF('[quote]%s[/quote]%s',$Data->{'reply_to_message'}->{'text'},($Message)?$Message:'');
@@ -267,8 +272,21 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 		$GLOBALS['__USER']['IsNoLogIP']	= 'Telegram';
 		#-------------------------------------------------------------------------------
 		$IsAdd = Comp_Load('www/API/TicketMessageEdit',$Params);
-		if(Is_Error($IsAdd))
+		switch(ValueOf($IsAdd)){
+		case 'error':
 			return ERROR | @Trigger_Error(500);
+		case 'exception':
+			#-------------------------------------------------------------------------------
+			if(!$Telegram->MessageSend($ChatID,'Не удалось добавить ваше сообщение к обсуждению. Попробуйте написать через систему поддержки'))
+				return new gException('ERROR_SEND_EdeskCannotAdd','Ошибка отправки сообщения о ошибке доабвления в тикет');
+			#-------------------------------------------------------------------------------
+			return Array('Status'=>'Ok');
+			#-------------------------------------------------------------------------------
+		case 'array':
+			break;
+		default:
+			return ERROR | @Trigger_Error(101);
+		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// ставим статус, так как постили по факту от админа, статус не встаёт
