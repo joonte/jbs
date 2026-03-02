@@ -388,6 +388,18 @@ SELECT
    `UsersIPs`.*
 FROM
    `UsersIPs`;
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `ResourceChartsOwners`;
+DROP TABLE IF EXISTS `ResourceChartsOwners`;
+CREATE
+	VIEW `ResourceChartsOwners` AS
+SELECT
+	`ResourceCharts`.*,
+	(SELECT `UserID` FROM `Contracts` WHERE `Contracts`.`ID` = (SELECT `ContractID` FROM `Orders` WHERE `Orders`.`ID` = `ResourceCharts`.`OrderID`)) AS `UserID`
+FROM
+	`ResourceCharts`;
+
+
 
 
 

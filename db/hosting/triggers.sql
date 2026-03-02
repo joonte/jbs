@@ -241,7 +241,7 @@ DROP TRIGGER IF EXISTS `UpdateHostingStatus`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `UpdateHostingStatus` AFTER UPDATE ON `HostingOrders`
   FOR EACH ROW BEGIN
-    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = (UNIX_TIMESTAMP() + IFNULL(`DaysRemainded`,0)*24*60*60) WHERE `ID` = NEW.`OrderID`;
   END;
 |
 DELIMITER ;
@@ -251,7 +251,7 @@ DROP TRIGGER IF EXISTS `UpdateDomainStatus`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `UpdateDomainStatus` AFTER UPDATE ON `DomainOrders`
   FOR EACH ROW BEGIN
-    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = NEW.`ExpirationDate`  WHERE `ID` = NEW.`OrderID`;
+    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = NEW.`ExpirationDate` WHERE `ID` = NEW.`OrderID`;
   END;
 |
 DELIMITER ;
@@ -260,7 +260,7 @@ DROP TRIGGER IF EXISTS `UpdateVPSStatus`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `UpdateVPSStatus` AFTER UPDATE ON `VPSOrders`
   FOR EACH ROW BEGIN
-    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = (UNIX_TIMESTAMP() + IFNULL(`DaysRemainded`,0)*24*60*60) WHERE `ID` = NEW.`OrderID`;
   END;
 |
 DELIMITER ;
@@ -269,7 +269,7 @@ DROP TRIGGER IF EXISTS `UpdateDSStatus`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `UpdateDSStatus` AFTER UPDATE ON `DSOrders`
   FOR EACH ROW BEGIN
-    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = (UNIX_TIMESTAMP() + IFNULL(`DaysRemainded`,0)*24*60*60) WHERE `ID` = NEW.`OrderID`;
   END;
 |
 DELIMITER ;
@@ -278,7 +278,7 @@ DROP TRIGGER IF EXISTS `UpdateExtraIPStatus`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `UpdateExtraIPStatus` AFTER UPDATE ON `ExtraIPOrders`
   FOR EACH ROW BEGIN
-    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = (UNIX_TIMESTAMP() + IFNULL(`DaysRemainded`,0)*24*60*60) WHERE `ID` = NEW.`OrderID`;
   END;
 |
 DELIMITER ;
@@ -287,7 +287,7 @@ DROP TRIGGER IF EXISTS `UpdateISPswStatus`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `UpdateISPswStatus` AFTER UPDATE ON `ISPswOrders`
   FOR EACH ROW BEGIN
-    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+    UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = (UNIX_TIMESTAMP() + IFNULL(`DaysRemainded`,0)*24*60*60) WHERE `ID` = NEW.`OrderID`;
   END;
 |
 DELIMITER ;
@@ -373,7 +373,7 @@ DROP TRIGGER IF EXISTS `UpdateDNSmanagerStatus`;
 DELIMITER |
 CREATE DEFINER = CURRENT_USER TRIGGER `UpdateDNSmanagerStatus` AFTER UPDATE ON `DNSmanagerOrders`
 	FOR EACH ROW BEGIN
-		UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate` WHERE `ID` = NEW.`OrderID`;
+		UPDATE `Orders` SET `StatusID` = NEW.`StatusID`, `StatusDate` = NEW.`StatusDate`, `ExpirationDate` = (UNIX_TIMESTAMP() + IFNULL(`DaysRemainded`,0)*24*60*60) WHERE `ID` = NEW.`OrderID`;
 	END;
 |
 DELIMITER ;
