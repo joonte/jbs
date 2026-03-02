@@ -28,7 +28,7 @@ foreach($Array as $IP)
 #-------------------------------------------------------------------------------
 $Template = "/^(SELECT.*FROM.*|INSERT INTO|UPDATE .* SET).*/i";
 #-------------------------------------------------------------------------------
-$TemplateAPI = "#^/API/(ISPswSettingURL|Telegram|Viber|VK|Confirm|UnSubScribe|Logon|Logout|YandexMetrika|Events|OrdersPay|.*OrderPay|v2).*#";
+$TemplateAPI = "#^/API/(ISPswSettingURL|Telegram|Viber|VK|MAX|Confirm|UnSubScribe|Logon|Logout|YandexMetrika|Events|OrdersPay|.*OrderPay|v2).*#";
 #-------------------------------------------------------------------------------
 $PayAPI = "#^/API/(OrdersPay|.*OrderPay).*#";
 #-------------------------------------------------------------------------------
@@ -97,7 +97,7 @@ if(Count($Args) > 0){
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[Security module]: оплата: %s',$_SERVER["REQUEST_URI"]));
 		#-------------------------------------------------------------------------------
-		$CacheID = 'PayAPI';
+		$CacheID = SPrintF('RaceCondition_%s',Str_Replace('/','_',$_SERVER["REQUEST_URI"]));
 		#-------------------------------------------------------------------------------
 		$Result = CacheManager::get($CacheID);
 		#-------------------------------------------------------------------------------
