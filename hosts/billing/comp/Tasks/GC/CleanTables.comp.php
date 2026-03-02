@@ -352,6 +352,12 @@ $Params['Queries'][] = Array(
 				'Patterns'	=> Array()
 				);
 #--------------------------------------------------------------------------------
+// Удаляем операции с нулевой суммой старше года
+$Params['Queries'][] = Array(                            
+				'Query'		=> 'DELETE FROM `Postings` WHERE `Before` = `After` AND `CreateDate` < 3UNIX_TIMESTAMP() - 365*24*60*60;',
+				'Patterns'	=> Array()
+				);
+#--------------------------------------------------------------------------------
 #--------------------------------------------------------------------------------
 $IsInsert = DB_Insert('TmpData',Array('AppID'=>'GC.CleanTables','Params'=>$Params));
 if(Is_Error($IsInsert))
