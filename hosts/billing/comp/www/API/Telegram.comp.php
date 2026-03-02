@@ -32,6 +32,13 @@ default:
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// параметры сервера как подстановка
+$Replace = Array_ToLine($Settings,'%');
+#-------------------------------------------------------------------------------
+UnSet($Replace['%Params.Token%']);
+UnSet($Replace['%Params.Secret%']);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 // проверяем секретный ключ, убеждаемся что сообщение пришло от телеграмма
 if(!$Secret || $Secret != $Settings['Params']['Secret'])
 	return new gException('SECRET_KEY_NOT_MATCH','Секретный ключ не совпадает с ключом из настроек');
@@ -388,7 +395,10 @@ if(IsSet($Data->{'reply_to_message'}->{'message_id'})){
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // сюда мы попали если ничего не найдено
-if(!$Telegram->MessageSend($ChatID,SPrintF($Settings['Params']['StartMessage'],$Settings['Params']['BotName'])))
+foreach(Array_Keys($Replace) as $Key)
+	$Settings['Params']['StartMessage'] = Str_Replace($Key,$Replace[$Key],$Settings['Params']['StartMessage']);
+#-------------------------------------------------------------------------------
+if(!$Telegram->MessageSend($ChatID,$Settings['Params']['StartMessage']))
 	return new gException('ERROR_SEND_START_MESSAGE','Ошибка отправки стартового сообщения на сервер Telegram');
 #-------------------------------------------------------------------------------
 if(!$Telegram->MessageSend($ChatID,$Settings['Params']['StubMessage']))
