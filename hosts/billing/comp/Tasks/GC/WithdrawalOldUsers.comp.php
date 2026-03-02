@@ -46,6 +46,9 @@ $Where = Array(
 			'(SELECT SUM(`Balance`) FROM `ContractsOwners` WHERE `UserID` = `Users`.`ID`) > 0',
 			/* нет свежих постов в тикетницу */
 			SPrintF('(SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) < UNIX_TIMESTAMP() - %u * 24 * 3600 OR (SELECT MAX(`CreateDate`) FROM `EdesksMessagesOwners` WHERE `UserID` = `Users`.`ID`) IS NULL',$Settings['InactiveDaysForUser'],$Settings['InactiveDaysForUser']),
+			/* нет операций пополнения в течении последнего года. этим отсекутся те у кого рефералы деньги приносят 
+			 * они будут срезаны потом, после того как у них за неактивность будут сняты рефералы и деньги приходить не будут */
+			'(SELECT COUNT(*) FROM `PostingsOwners` WHERE `UserID` = `Users`.`ID` AND `CreateDate` > UNIX_TIMESTAMP() -365*24*60*60) < 1 AND `Before` < `After`',
 		);
 #-------------------------------------------------------------------------------
 $Users = DB_Select('Users', Array('ID','Email','Name','EnterDate','RegisterDate'),Array('Where'=>$Where));
