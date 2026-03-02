@@ -22,6 +22,28 @@ if(!$Settings['IsActive'])
 	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+# выбираем значения партнёрских процентов по каждой услуге
+$PartnerPercents = Array();
+#-------------------------------------------------------------------------------
+$Services = DB_Select('Services',Array('ID','PartnersRewardPercent'));
+switch(ValueOf($Services)){
+case 'error':
+	return ERROR | @Trigger_Error(500);
+case 'exception':
+	return ERROR | @Trigger_Error(400);
+case 'array':
+	#-------------------------------------------------------------------------------
+	foreach($Services as $Service)
+		$PartnerPercents[$Service['ID']] = $Service['PartnersRewardPercent'];
+		//$PartnerPercents[$Service['ID']] = ($Service['PartnersRewardPercent'] < 0)?$Settings['PartnersRewardPercent']:$Service['PartnersRewardPercent'];
+	#------------------------------------------------------------------------------- 
+	break;
+	#-------------------------------------------------------------------------------
+default:
+	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 # vars
 $TotalSumm = 0;
 #-------------------------------------------------------------------------------
@@ -38,10 +60,14 @@ $PreviousMonthName = $MonthsNames[Date('n',$PreviousTime)];
 $Theme = SPrintF('Начисления по партнёрской программе за %s %u г.',$PreviousMonthName,$PreviousYear);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
+// выбираем рефералов
 $Columns = Array(
 			'DISTINCT(`OwnerID`) AS `DistinctOwnerID`',
 			'(SELECT `Email` FROM `Users` WHERE `ID` = `DistinctOwnerID`) AS `Email`',
 			'COUNT(`ID`) AS `NumDependUsers`',
+			'(SELECT `Params` FROM `TmpData` WHERE `AppID` = "DependUsers.Statistics" AND `UserID` = `DistinctOwnerID` LIMIT 1) AS `Params`',
+			'(SELECT `ID` FROM `TmpData` WHERE `AppID` = "DependUsers.Statistics" AND `UserID` = `DistinctOwnerID` LIMIT 1) AS `TmpDataID`',
+
 		);
 #-------------------------------------------------------------------------------
 $Owners = DB_Select('Users',$Columns,Array('Where'=>'`OwnerID` != 1','GroupBy'=>'OwnerID'));
@@ -78,37 +104,69 @@ foreach($Owners as $Owner){
 		#-------------------------------------------------------------------------------
 		# TODO: п хорошему, надо послать клиенту письмо. что ему бы деньги-то начислились, но договора нет. поэтому фиг.
 		Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: У клиента (%s) отсутствует договор с типом "NaturalPartner"',$Owner['Email']));
+		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
 	case 'array':
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: У клиента (%s) найден договор #%u, тип (%s)',$Owner['Email'],$Contract['ID'],$Contract['TypeID']));
 		#-------------------------------------------------------------------------------
-		# выбираем значения партнёрских процентов по каждой услуге
-		$PartnerPercents = Array();
+		$MessageToUser = "За прошедший месяц, вам перечислено от ваших рефералов:\n\n";
 		#-------------------------------------------------------------------------------
-		$Services = DB_Select('Services',Array('ID','PartnersRewardPercent'));
-		switch(ValueOf($Services)){
+		$TotalSummToUser = 0;
+		#-------------------------------------------------------------------------------
+		// массив для добавления в TmpData
+		$TmpData = Array(
+					'Summ'			=> 0,				// сумма выплаченная юзеру *
+					'ReferalsCount'		=> $Owners['NumDependUsers'],	// число рефералов *
+					'ReferalsWithPayments'	=> 0,				// число рефералов с платежами
+					'ReferalsPaymentsCount'	=> 0,				// число платежей рефералов
+					'ReferalsPaymentsSumm'	=> 0,				// сумма платежей реферала
+					'ReferalsWorks'		=> 0,				// число выполных работ у рефералов *
+					'ReferalsWithWorks'	=> 0	,			// число рефералов с выполенными работами
+				);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		$StartTime	= StrToTime('first day of previous month 00:00');
+		$EndTime	= StrToTime('last day of previous month 23:59') + 59;
+		#-------------------------------------------------------------------------------
+		// число платжей совершённых рефералами
+		$Where = Array(
+				SPrintF('`UserID` IN (SELECT `ID` FROM `Users` WHERE `OwnerID` = %u)',$Owner['DistinctOwnerID']),
+				SPrintF('`StatusDate` > %u',$StartTime),SPrintF('`StatusDate` < %u',$EndTime),'`StatusID` = "Payed"',
+				);
+		#-------------------------------------------------------------------------------
+		$Columns = Array(
+				'COUNT(DISTINCT(`UserID`)) AS `ReferalsWithPayments`',
+				'COUNT(*) AS `ReferalsPaymentsCount`',
+				'SUM(`Summ`) AS `ReferalsPaymentsSumm`',
+				);
+		#-------------------------------------------------------------------------------
+		$Invoices = DB_Select(Array('InvoicesOwners'),$Columns,Array('Where'=>$Where,'UNIQ'));
+		switch(ValueOf($WorksComplites)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			return ERROR | @Trigger_Error(400);
+			#-------------------------------------------------------------------------------
+			// нет строк. всё по нулям
+			$TmpData['ReferalsWithPayments'] = $TmpData['ReferalsPaymentsCount'] = $TmpData['ReferalsPaymentsSumm'] = 0;
+			#-------------------------------------------------------------------------------
+			break;
+			#-------------------------------------------------------------------------------
 		case 'array':
 			#-------------------------------------------------------------------------------
-			foreach($Services as $Service)
-				$PartnerPercents[$Service['ID']] = $Service['PartnersRewardPercent'];
-				//$PartnerPercents[$Service['ID']] = ($Service['PartnersRewardPercent'] < 0)?$Settings['PartnersRewardPercent']:$Service['PartnersRewardPercent'];
-			#------------------------------------------------------------------------------- 
+			$TmpData['ReferalsWithPayments'] = $Invoices['ReferalsWithPayments'];
+			#-------------------------------------------------------------------------------
+			$TmpData['ReferalsPaymentsCount'] = $Invoices['ReferalsPaymentsCount'];
+			#-------------------------------------------------------------------------------
+			$TmpData['ReferalsPaymentsSumm'] = $Invoices['ReferalsPaymentsSumm'];
+			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------
 		default:
 			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
-		#-------------------------------------------------------------------------------
-		$MessageToUser = "За прошедший месяц, вам перечислено от ваших рефералов:\n\n";
-		#-------------------------------------------------------------------------------
-		$TotalSummToUser = 0;
 		#-------------------------------------------------------------------------------
 		# Выбираем выполенныне за прошлый месяц работы у партнёра
 		$Where = Array(
@@ -119,11 +177,11 @@ foreach($Owners as $Owner){
 		#-------------------------------------------------------------------------------
 		$Columns = Array(
 				'RegisterDate','Email','`WorksCompliteOwners`.*',
-				/* если указан номер заказа, то достаём его дату. если номер не указана, возвращаем ноль (1970 год) */
-				'IF(`OrderID`>0,(SELECT `OrderDate` FROM `Orders` WHERE `Orders`.`ID` = `OrderID`),0) AS `OrderDate`',
+				/* если в работах указан номер заказа, то достаём его дату. если номер не указана, возвращаем ноль (1970 год) */
+				'IF(`OrderID`>0,(SELECT `CreateDate` FROM `OrdersHistory` WHERE `OrdersHistory`.`OrderID` = `WorksCompliteOwners`.`OrderID`),0) AS `OrderDate`',
 				);
 		#-------------------------------------------------------------------------------
-		$WorksComplites = DB_Select(Array('WorksCompliteOwners','Users'),$Columns,Array('Where'=>Array('`Users`.`ID`=`WorksCompliteOwners`.`UserID`','`Users`.`OwnerID`=2248','`Month`=642')));
+		$WorksComplites = DB_Select(Array('WorksCompliteOwners','Users'),$Columns,Array('Where'=>$Where));
 		switch(ValueOf($WorksComplites)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
@@ -135,11 +193,22 @@ foreach($Owners as $Owner){
 			return ERROR | @Trigger_Error(101);
 		}
 		#-------------------------------------------------------------------------------
+		// для подсчёта ReferalsWithWorks
+		$Array = Array();
+		#-------------------------------------------------------------------------------
 		foreach($WorksComplites as $WorksComplite){
+			#-------------------------------------------------------------------------------
+			// добавляем счётчик работ
+			$TmpData['ReferalsWorks']++;
+			#-------------------------------------------------------------------------------
+			// добавляем юзера к юзерам с работами (ReferalsWithWorks)
+			if(!In_Array($WorksComplite['UserID'],$Array))
+				$Array[] = $WorksComplite['UserID'];
+			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: обработка выполенныех работ юзера (%s), владелец %s',$WorksComplite['Email'],$Owner['Email']));
 			#-------------------------------------------------------------------------------
-			// проверяем дату регистрации реферала и дату заказа услуги
+			// проверяем дату регистрации реферала и дату заказа услуги, процент будет разный
 			if($WorksComplite['RegisterDate'] > StrToTime('2026-03-01') && $WorksComplite['OrderDate'] > StrToTime('2026-03-01')){
 				#-------------------------------------------------------------------------------
 				$Percent = $PartnerPercents[$WorksComplite['ServiceID']];
@@ -155,6 +224,9 @@ foreach($Owners as $Owner){
 			#-------------------------------------------------------------------------------
 			# считаем вознаграждение
 			$Reward = Round(($WorksComplite['Amount'] * $WorksComplite['Cost'] - $WorksComplite['Amount'] * $WorksComplite['Cost'] * $WorksComplite['Discont']) * $Percent / 100, 2); 
+			#-------------------------------------------------------------------------------
+			// добавляем вознаграждение в статситику
+			$TmpData['Summ'] = $TmpData['Summ'] + $Reward;
 			#-------------------------------------------------------------------------------
 			# для админов, общая сумма
 			$TotalSumm = $TotalSumm + $Reward;
@@ -191,8 +263,11 @@ foreach($Owners as $Owner){
 			#-------------------------------------------------------------------------------
 		}
 		#-------------------------------------------------------------------------------
+		// считаем уникальных юзеров с работами
+		$TmpData['ReferalsWithWorks'] = SizeOf($Array);
+		#-------------------------------------------------------------------------------
 		#Debug("[comp/Tasks/CaclulatePartnersReward]: message for #" . $WorksComplite['UserID'] . " is " . $MessageToUser);
-		# если общая сумма больше нуля - надо слать письмо
+		# если общая сумма больше нуля - надо слать письмо юзеру и строчку сотрудникам
 		if(IntVal($TotalSummToUser) > 0){
 			#-------------------------------------------------------------------------------
 			$MessageToUser = SPrintF("%sИтого, за прошедший месяц: %01.2f	рублей\n",$MessageToUser,$TotalSummToUser);
@@ -210,6 +285,22 @@ foreach($Owners as $Owner){
 				return ERROR | @Trigger_Error(101);
 			}
 			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
+			// надо внести в TmpTable запись с прибылью за прошлый месяц
+			// построить время, таймштамп последний день предыдущего месяца, 23:59
+			
+
+
+
+
+
+
+
+
+
+
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
 			# сообщение админам/сотрудникам
 			$MessageToAdmins = SPrintF("%sНачислено пользователю [%s]:	%01.2f	рублей\n",$MessageToAdmins,$Owner['Email'],$TotalSummToUser);
 			#-------------------------------------------------------------------------------
@@ -219,6 +310,26 @@ foreach($Owners as $Owner){
 		#-------------------------------------------------------------------------------
 	default:
 		return ERROR | @Trigger_Error(101);
+	}
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// вносим статистику
+	if(Is_Numeric($Owner['TmpDataID'])){
+		#-------------------------------------------------------------------------------
+		$Owner['Params'][$StartTime] = $TmpData;
+		#-------------------------------------------------------------------------------
+		// обновляем
+		$IsUpdate = DB_Update('TmpData',Array('Params'=>$Owner['Params']),Array('ID'=>$Owner['TmpDataID']));
+		if(Is_Error($IsUpdate))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
+	}else{
+		#-------------------------------------------------------------------------------
+		// вставляем
+		$IsInsert = DB_Insert('TmpData',Array('UserID'=>$Owner['DistinctOwnerID'],'AppID'=>'DependUsers.Statistics','Params'=>Array($StartTime=>$TmpData)));
+		if(Is_Error($IsInsert))
+			return ERROR | @Trigger_Error(500);
+		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
 #}
