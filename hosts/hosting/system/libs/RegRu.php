@@ -899,7 +899,7 @@ function RegRu_Build_Query($Query,$DomainZone,$Person,$PersonID){
 		case 'Natural':
 			#-------------------------------------------------------------------------------
 			$Query['person']              = SPrintF('%s %s %s',Translit($Person['Name']),Mb_SubStr(Translit($Person['Lastname']),0,1),Translit($Person['Sourname']));
-			$Query['private_person_flag'] = 1;
+			$Query['private_person_flag'] = 0;
 			$Query['person_r']            = SPrintF('%s %s %s',$Person['Sourname'],$Person['Name'],$Person['Lastname']);
 			$Query['passport']            = SPrintF('%s %s выдан %s %s',$Person['PasportLine'],$Person['PasportNum'],$Person['PasportWhom'],$Person['PasportDate']);
 			$Query['birth_date']          = $Person['BornDate'];
