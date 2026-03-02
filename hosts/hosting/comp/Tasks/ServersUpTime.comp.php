@@ -161,8 +161,8 @@ foreach($Servers as $Server){
 	$Cache[$Group][] = $Server['Address'];
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	// вебхуки, телеграмма и вайбера
-	if($Server['IsActive'] && $Server['IsDefault'] && In_Array($Server['TemplateID'],Array('Telegram','Viber'))){
+	// вебхуки: мах, телеграмм и вайбера
+	if($Server['IsActive'] && $Server['IsDefault'] && In_Array($Server['TemplateID'],Array('MAX','Telegram','Viber'))){
 		#-------------------------------------------------------------------------------
 		// кэшируем данные о вебхуках, на сутки наверное...
 		$CacheWebHookID = 'CacheWebHook';

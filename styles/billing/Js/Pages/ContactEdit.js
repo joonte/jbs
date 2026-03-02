@@ -63,6 +63,11 @@ function Confirm($Method,$Value,$ContactID) {
 			//------------------------------------------------------------------------------
 		case 'Exception':
 			//------------------------------------------------------------------------------
+			//alert($Method);
+			// а макс совсем особенный - даже по сравнению с вайбером
+			if($Method == 'MAX')
+				ShowAlert(ExceptionsStack($Answer.Exception),'/styles/' + window.location.hostname + '/Images/MAX.png');
+			//------------------------------------------------------------------------------
 			// вайбер - он особенно особенный - даже по сравнению с телегой
 			ShowAlert(ExceptionsStack($Answer.Exception), ($Method == 'Viber')?'/styles/' + window.location.hostname + '/Images/Viber.png':'Warning');
 			//------------------------------------------------------------------------------

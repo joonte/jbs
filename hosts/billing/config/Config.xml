@@ -1071,6 +1071,17 @@
 				<Message>Сообщение в конфиге для VKontakte</Message>
 				<Greeting/>
 			</VKontakte>
+			<!-- ********************************************************************* -->
+			<MAX>
+				<Name>MAX сообщения</Name>
+				<IsActive>0</IsActive>
+				<IsEvent>1</IsEvent>
+				<CutSign>1</CutSign>
+				<MessageTemplate>Middle</MessageTemplate>
+				<Message>Сообщение в конфиге для MAX</Message>
+				<Greeting/>
+			</MAX>
+			<!-- ********************************************************************* -->
 		</Methods>
 		<!-- ********************************************************************** -->
 	</Notifies>
@@ -1131,6 +1142,16 @@
 				</Params>
 				<IsActive>1</IsActive>
 			</VKontakte>
+			<!-- ********************************************************************* -->
+			<MAX>
+				<Name>Сообщение через MAX</Name>
+				<Params>
+					<Address>MaxUserID</Address>
+					<Message>Сообщение</Message>
+					<Attribs type="array"/>
+				</Params>
+				<IsActive>1</IsActive>
+			</MAX>
 			<!-- ********************************************************************* -->
 			<SMS>
 				<Name>SMS сообщение</Name>
@@ -1856,6 +1877,14 @@
 					<ConfirmInterval>30</ConfirmInterval>
 					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
 				</VKontakte>
+				<!-- *********************************************************************** -->
+				<MAX>
+					<SettingsReset>0</SettingsReset>
+					<Require>0</Require>
+					<ConfirmRequire>1</ConfirmRequire>
+					<ConfirmInterval>30</ConfirmInterval>
+					<TimeoutRequestConfirm>60</TimeoutRequestConfirm>
+				</MAX>
 				<!-- *********************************************************************** -->
 				<SMS>
 					<SettingsReset>1</SettingsReset>
