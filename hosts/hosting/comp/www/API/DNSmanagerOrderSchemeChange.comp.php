@@ -94,7 +94,7 @@ case 'array':
 				if($DNSmanagerOrder['SchemeID'] == $NewScheme['ID'])
 					return new gException('SCHEMES_MATCHED','Старый и новый тарифные планы совпадают');
 				#-------------------------------------------------------------------------------
-				if(!$NewScheme['IsSchemeChangeable'])
+				if(!$__USER['IsAdmin'] && !$NewScheme['IsSchemeChangeable'])
 					return new gException('SCHEME_NOT_CHANGEABLE','Выбранный тариф не позволяет переход');
 				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
