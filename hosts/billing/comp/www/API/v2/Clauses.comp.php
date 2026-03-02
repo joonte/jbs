@@ -19,7 +19,7 @@ if(Is_Error(System_Load('classes/DOM.class.php')))
 // некоторые страницы без авторизации показываем
 $IsAuth = TRUE;
 #-------------------------------------------------------------------------------
-$Regulars = Array('/Contacts','News','Contracts/(.*)/Content');
+$Regulars = Array('/Contacts','News','Contracts(.*)/Content');
 #-------------------------------------------------------------------------------
 foreach($Regulars as $Regular)
 	if(Preg_Match(SPrintF('#%s#',$Regular),$Partition))
