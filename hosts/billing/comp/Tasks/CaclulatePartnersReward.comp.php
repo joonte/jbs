@@ -87,8 +87,10 @@ $PreviousMonth = (Date('Y') - 1970)*12 + (integer)Date('n') - 1;
 #-------------------------------------------------------------------------------
 foreach($Owners as $Owner){
 	#-------------------------------------------------------------------------------
-	#Debug("[comp/Tasks/CaclulatePartnersReward]: Processing owner #" . $Owner['DistinctOwnerID']);
-#if($Owner['DistinctOwnerID'] == 2248){
+	Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Обработка владельца #%u',$Owner['DistinctOwnerID']));
+	#if($Owner['DistinctOwnerID'] == 2248)
+	#if($Owner['DistinctOwnerID'] != 3815)
+	#	continue;
 	#-------------------------------------------------------------------------------
 	# проверяем наличие договора 'NaturalPartner'
 	$Where = Array(
@@ -113,17 +115,15 @@ foreach($Owners as $Owner){
 		#-------------------------------------------------------------------------------
 		$MessageToUser = "За прошедший месяц, вам перечислено от ваших рефералов:\n\n";
 		#-------------------------------------------------------------------------------
-		$TotalSummToUser = 0;
-		#-------------------------------------------------------------------------------
 		// массив для добавления в TmpData
 		$TmpData = Array(
 					'Summ'			=> 0,				// сумма выплаченная юзеру *
-					'ReferalsCount'		=> $Owners['NumDependUsers'],	// число рефералов *
+					'ReferalsCount'		=> $Owner['NumDependUsers'],	// число рефералов *
 					'ReferalsWithPayments'	=> 0,				// число рефералов с платежами
 					'ReferalsPaymentsCount'	=> 0,				// число платежей рефералов
 					'ReferalsPaymentsSumm'	=> 0,				// сумма платежей реферала
 					'ReferalsWorks'		=> 0,				// число выполных работ у рефералов *
-					'ReferalsWithWorks'	=> 0	,			// число рефералов с выполенными работами
+					'ReferalsWithWorks'	=> 0,				// число рефералов с выполенными работами
 				);
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
@@ -139,11 +139,11 @@ foreach($Owners as $Owner){
 		$Columns = Array(
 				'COUNT(DISTINCT(`UserID`)) AS `ReferalsWithPayments`',
 				'COUNT(*) AS `ReferalsPaymentsCount`',
-				'SUM(`Summ`) AS `ReferalsPaymentsSumm`',
+				'IF(ISNULL(SUM(`Summ`)),0,SUM(`Summ`)) AS `ReferalsPaymentsSumm`',
 				);
 		#-------------------------------------------------------------------------------
 		$Invoices = DB_Select(Array('InvoicesOwners'),$Columns,Array('Where'=>$Where,'UNIQ'));
-		switch(ValueOf($WorksComplites)){
+		switch(ValueOf($Invoices)){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
@@ -211,11 +211,13 @@ foreach($Owners as $Owner){
 			// проверяем дату регистрации реферала и дату заказа услуги, процент будет разный
 			if($WorksComplite['RegisterDate'] > StrToTime('2026-03-01') && $WorksComplite['OrderDate'] > StrToTime('2026-03-01')){
 				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: новый реферал (%s) и услуга (%s), дата регистрации юзера (%s), дата заказа услуги (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate'])));
+				#-------------------------------------------------------------------------------
 				$Percent = $PartnerPercents[$WorksComplite['ServiceID']];
 				#-------------------------------------------------------------------------------
 			}else{
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: старый реферал/услуга (%s/%s), дата регистрации юзера (%s), дата заказа услуги (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate'],$WorksComplite['OrderDate'])));
+				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: старый реферал/услуга (%s/%s), дата регистрации юзера (%s), дата заказа услуги (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate'])));
 				#-------------------------------------------------------------------------------
 				$Percent = 5;
 				#-------------------------------------------------------------------------------
@@ -234,6 +236,7 @@ foreach($Owners as $Owner){
 			if($Reward > 0){
 				#-------------------------------------------------------------------------------
 				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Вознаграждение %s от реферала (%s) составляет %s',$Owner['Email'],$WorksComplite['Email'],$Reward));
+				#-------------------------------------------------------------------------------
 				# пополняем балланс юзера
 				$Comment = SPrintF("Начисления по партнёрской программе за %s, пользователь #%s",date('Y/m',$PreviousTime),$WorksComplite['UserID']);
 				#-------------------------------------------------------------------------------
@@ -249,9 +252,6 @@ foreach($Owners as $Owner){
 					# Добавляем текстовое сообщение для юзера
 					$MessageToUser = SPrintF("%sНачисления от пользователя #%u составили %01.2f	рублей\n",$MessageToUser,$WorksComplite['UserID'],$Reward);
 					#-------------------------------------------------------------------------------
-					# добавляем к общей сумме
-					$TotalSummToUser = $TotalSummToUser + $Reward;
-					#-------------------------------------------------------------------------------
 					# No more...
 					break;
 					#-------------------------------------------------------------------------------
@@ -266,12 +266,16 @@ foreach($Owners as $Owner){
 		// считаем уникальных юзеров с работами
 		$TmpData['ReferalsWithWorks'] = SizeOf($Array);
 		#-------------------------------------------------------------------------------
+		// округляем сумму
+		$TmpData['Summ'] = Round($TmpData['Summ'],2);
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
 		#Debug("[comp/Tasks/CaclulatePartnersReward]: message for #" . $WorksComplite['UserID'] . " is " . $MessageToUser);
 		# если общая сумма больше нуля - надо слать письмо юзеру и строчку сотрудникам
-		if(IntVal($TotalSummToUser) > 0){
+		if(IntVal($TmpData['Summ']) > 0){
 			#-------------------------------------------------------------------------------
-			$MessageToUser = SPrintF("%sИтого, за прошедший месяц: %01.2f	рублей\n",$MessageToUser,$TotalSummToUser);
-			$IsSend = NotificationManager::sendMsg(new Message('PartnersReward',(integer)$Owner['DistinctOwnerID'],Array('Theme'=>$Theme,'Message'=>$MessageToUser,'Summ'=>SPrintF('%01.2f',$TotalSummToUser))));
+			$MessageToUser = SPrintF("\n%sИтого, за прошедший месяц: %01.2f	рублей\n",$MessageToUser,$TmpData['Summ']);
+			$IsSend = NotificationManager::sendMsg(new Message('PartnersReward',(integer)$Owner['DistinctOwnerID'],Array('Theme'=>$Theme,'Message'=>$MessageToUser,'Summ'=>$TmpData['Summ'])));
 			#-------------------------------------------------------------------------------
 			switch(ValueOf($IsSend)){
 			case 'error':
@@ -286,25 +290,31 @@ foreach($Owners as $Owner){
 			}
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			// надо внести в TmpTable запись с прибылью за прошлый месяц
-			// построить время, таймштамп последний день предыдущего месяца, 23:59
-			
-
-
-
-
-
-
-
-
-
-
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
 			# сообщение админам/сотрудникам
-			$MessageToAdmins = SPrintF("%sНачислено пользователю [%s]:	%01.2f	рублей\n",$MessageToAdmins,$Owner['Email'],$TotalSummToUser);
+			$MessageToAdmins = SPrintF("%sНачислено пользователю [%s]:	%01.2f	рублей\n",$MessageToAdmins,$Owner['Email'],$TmpData['Summ']);
 			#-------------------------------------------------------------------------------
 		}
+		#-------------------------------------------------------------------------------
+		#-------------------------------------------------------------------------------
+		// вносим статистику
+		if(Is_Numeric($Owner['TmpDataID'])){
+			#-------------------------------------------------------------------------------
+			$Owner['Params'][$StartTime] = $TmpData;
+			#-------------------------------------------------------------------------------
+			// обновляем
+			$IsUpdate = DB_Update('TmpData',Array('Params'=>$Owner['Params']),Array('ID'=>$Owner['TmpDataID']));
+			if(Is_Error($IsUpdate))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+		}else{
+			#-------------------------------------------------------------------------------
+			// вставляем
+			$IsInsert = DB_Insert('TmpData',Array('UserID'=>$Owner['DistinctOwnerID'],'AppID'=>'DependUsers.Statistics','Params'=>Array($StartTime=>$TmpData)));
+			if(Is_Error($IsInsert))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+		}
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		break;
 		#-------------------------------------------------------------------------------
@@ -312,27 +322,6 @@ foreach($Owners as $Owner){
 		return ERROR | @Trigger_Error(101);
 	}
 	#-------------------------------------------------------------------------------
-	#-------------------------------------------------------------------------------
-	// вносим статистику
-	if(Is_Numeric($Owner['TmpDataID'])){
-		#-------------------------------------------------------------------------------
-		$Owner['Params'][$StartTime] = $TmpData;
-		#-------------------------------------------------------------------------------
-		// обновляем
-		$IsUpdate = DB_Update('TmpData',Array('Params'=>$Owner['Params']),Array('ID'=>$Owner['TmpDataID']));
-		if(Is_Error($IsUpdate))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-	}else{
-		#-------------------------------------------------------------------------------
-		// вставляем
-		$IsInsert = DB_Insert('TmpData',Array('UserID'=>$Owner['DistinctOwnerID'],'AppID'=>'DependUsers.Statistics','Params'=>Array($StartTime=>$TmpData)));
-		if(Is_Error($IsInsert))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-	}
-	#-------------------------------------------------------------------------------
-#}
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
@@ -341,9 +330,9 @@ if(IntVal($TotalSumm) < 1)
 	return $ExecuteTime;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-$MessageToAdmins = SPrintF("\nИтого: %01.2f рублей",$MessageToAdmins,$TotalSumm);
-Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Total reward summ = %s',$TotalSumm));
-Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Admin message = %s',$MessageToAdmins));
+$MessageToAdmins = SPrintF("%s\nИтого: %01.2f рублей",$MessageToAdmins,$TotalSumm);
+Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: TotalSumm = %s',$TotalSumm));
+Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: MessageToAdmins = %s',$MessageToAdmins));
 #-------------------------------------------------------------------------------
 # ищем весь персонал
 $Entrance = Tree_Entrance('Groups',3000000);
