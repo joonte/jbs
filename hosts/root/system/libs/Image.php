@@ -12,8 +12,12 @@ function Image_Resize($Source,$Width,$Height){
     return ERROR | Trigger_Error('[Image_Resize]: модуль работы с изображениями не установлен');
   #-----------------------------------------------------------------------------
   $Real = @ImageCreateFromString($Source);
-  if(!Is_Resource($Real))
-    return ERROR | @Trigger_Error("[Image_Resize]: не возможно создать изображение");
+  #Debug(print_r($Real,true));
+  #https://www.php.net/manual/ru/class.gdimage.php
+  # c php 8 возвращает не ресурс а класс
+  #if(!Is_Resource($Real))
+  if(!$Real)
+    return ERROR | @Trigger_Error("[Image_Resize]: невозможно создать изображение");
   #-----------------------------------------------------------------------------
   if(Function_Exists('imageantialias'))
     ImageAntiAlias($Real,TRUE);
@@ -29,11 +33,11 @@ function Image_Resize($Source,$Width,$Height){
   #-----------------------------------------------------------------------------
   $Sx = @ImageSx($Real);
   if(!$Sx)
-    return ERROR | @Trigger_Error("[Image_Resize]: не возможно получить ширину изображения");
+    return ERROR | @Trigger_Error("[Image_Resize]: невозможно получить ширину изображения");
   #-----------------------------------------------------------------------------
   $Sy = @ImageSy($Real);
   if(!$Sy)
-    return ERROR | @Trigger_Error("[Image_Resize]: не возможно получить высоту изображения");
+    return ERROR | @Trigger_Error("[Image_Resize]: невозможно получить высоту изображения");
   #-----------------------------------------------------------------------------
   $Folder = System_Element('tmp');
   if(Is_Error($Folder))
@@ -114,15 +118,15 @@ function Image_Get_Size($Source){
   #-----------------------------------------------------------------------------
   $Real = @ImageCreateFromString($Source);
   if(!Is_Resource($Real))
-    return ERROR | @Trigger_Error("[Image_Get_Size]: не возможно создать изображение");
+    return ERROR | @Trigger_Error("[Image_Get_Size]: невозможно создать изображение");
   #-----------------------------------------------------------------------------
   $Sx = @ImageSx($Real);
   if(!$Sx)
-    return ERROR | @Trigger_Error("[Image_Get_Size]: не возможно получить ширину изображения");
+    return ERROR | @Trigger_Error("[Image_Get_Size]: невозможно получить ширину изображения");
   #-----------------------------------------------------------------------------
   $Sy = @ImageSy($Real);
   if(!$Sy)
-    return ERROR | @Trigger_Error("[Image_Get_Size]: не возможно получить высоту изображения");
+    return ERROR | @Trigger_Error("[Image_Get_Size]: невозможно получить высоту изображения");
   #-----------------------------------------------------------------------------
   return Array('Width'=>$Sx,'Height'=>$Sy);
 }
