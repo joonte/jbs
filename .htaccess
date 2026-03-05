@@ -21,6 +21,9 @@ RewriteEngine On
 	Deny from all
 </FilesMatch>
 
+# главная на новую версию
+RewriteRule ^$ /v2 [R=301,L]
+
 # ссылки в почте, на оплату выписанных счетов, красивые
 RedirectMatch	/Invoices/([0-9]*)/$				/Invoices?InvoiceID=$1
 # ссылки в почте на оплату услуг, красивые
