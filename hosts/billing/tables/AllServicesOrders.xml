@@ -99,6 +99,7 @@
 				<Args>
 					<ColumnsIDs>
 						<ListElement>ID</ListElement>
+						<ListElement>DependOrderID</ListElement>
 						<ListElement>UserID</ListElement>
 						<ListElement>AdminNotice</ListElement>
 					</ColumnsIDs>
