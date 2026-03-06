@@ -1016,7 +1016,7 @@
 				<IsEvent>1</IsEvent>
 				<CutSign>0</CutSign>
 				<MessageTemplate>Big</MessageTemplate>
-				<Message/>
+				<Message>Укажите адрес электронной почты</Message>
 				<Greeting>Здравствуйте, %s!</Greeting>
 			</Email>
 			<!-- ********************************************************************* -->
@@ -1027,50 +1027,10 @@
 				<IsEvent>1</IsEvent>
 				<CutSign>1</CutSign>
 				<MessageTemplate>Small</MessageTemplate>
-				<Message/>
+				<Message>Введите номер телефона</Message>
 				<Greeting/>
 			</SMS>
 			<!-- ********************************************************************* -->
-			<!-- ********************************************************************* -->
-			<Jabber>
-				<Name>Jabber пейджинг</Name>
-				<IsActive>0</IsActive>
-				<IsEvent>1</IsEvent>
-				<CutSign>1</CutSign>
-				<MessageTemplate>Middle</MessageTemplate>
-				<Message>Добавьте наш номер (%s) в список контактов и авторизуйте его. Обратите внимание, что наш робот не умеет отгадывать загадки и решать логические задачи - поэтому он не сможет пройти тесты по защите от спама</Message>
-				<Greeting />
-			</Jabber>
-			<!-- ********************************************************************* -->
-			<Telegram>
-				<Name>Telegram сообщения</Name>
-				<IsActive>0</IsActive>
-				<IsEvent>1</IsEvent>
-				<CutSign>1</CutSign>
-				<MessageTemplate>Middle</MessageTemplate>
-				<Message>Сообщение в конфиге для телеги</Message>
-				<Greeting/>
-			</Telegram>
-			<!-- ********************************************************************* -->
-			<Viber>
-				<Name>Viber сообщения</Name>
-				<IsActive>0</IsActive>
-				<IsEvent>1</IsEvent>
-				<CutSign>1</CutSign>
-				<MessageTemplate>Middle</MessageTemplate>
-				<Message>Сообщение в конфиге для Viber</Message>
-				<Greeting/>
-			</Viber>
-			<!-- ********************************************************************* -->
-			<VKontakte>
-				<Name>VKontakte сообщения</Name>
-				<IsActive>0</IsActive>
-				<IsEvent>1</IsEvent>
-				<CutSign>1</CutSign>
-				<MessageTemplate>Middle</MessageTemplate>
-				<Message>Сообщение в конфиге для VKontakte</Message>
-				<Greeting/>
-			</VKontakte>
 			<!-- ********************************************************************* -->
 			<MAX>
 				<Name>MAX сообщения</Name>
@@ -1078,9 +1038,52 @@
 				<IsEvent>1</IsEvent>
 				<CutSign>1</CutSign>
 				<MessageTemplate>Middle</MessageTemplate>
-				<Message>Сообщение в конфиге для MAX</Message>
+				<Message>Добавьте текстовое описание этого контактоного адреса.
+					Например: "Мой личный МАХ"</Message>
 				<Greeting/>
 			</MAX>
+			<!-- ********************************************************************* -->
+			<Telegram>
+				<Name>Telegram сообщения</Name>
+				<IsActive>0</IsActive>
+				<IsEvent>1</IsEvent>
+				<CutSign>1</CutSign>
+				<MessageTemplate>Middle</MessageTemplate>
+				<Message>Укажите любое читаемое имя, чтобы понимать какой именно контакт вы добавляете.
+					Например: номер телефона к которому он приязан, заказчик, клиент, моя телега...</Message>
+				<Greeting/>
+			</Telegram>
+			<!-- ********************************************************************* -->
+			<VKontakte>
+				<Name>VKontakte сообщения</Name>
+				<IsActive>0</IsActive>
+				<IsEvent>1</IsEvent>
+				<CutSign>1</CutSign>
+				<MessageTemplate>Middle</MessageTemplate>
+				<Message>Укажите любое читаемое имя, чтобы понимать какой именно контакт вы добавляете.</Message>
+				<Greeting/>
+			</VKontakte>
+			<!-- ********************************************************************* -->
+			<Viber>
+				<Name>Viber сообщения</Name>
+				<IsActive>0</IsActive>
+				<IsEvent>1</IsEvent>
+				<CutSign>1</CutSign>
+				<MessageTemplate>Middle</MessageTemplate>
+				<Message>Укажите любое читаемое имя, чтобы понимать какой именно контакт вы добавляете.</Message>
+				<Greeting/>
+			</Viber>
+			<!-- ********************************************************************* -->
+			<Jabber>
+				<Name>Jabber пейджинг</Name>
+				<IsActive>0</IsActive>
+				<IsEvent>1</IsEvent>
+				<CutSign>1</CutSign>
+				<MessageTemplate>Middle</MessageTemplate>
+				<Message/>
+				<Greeting />
+			</Jabber>
+			<!-- ********************************************************************* -->
 			<!-- ********************************************************************* -->
 		</Methods>
 		<!-- ********************************************************************** -->
