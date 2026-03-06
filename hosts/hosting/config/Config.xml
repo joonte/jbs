@@ -1254,7 +1254,7 @@
 		<!-- *********************************************************************** -->
 		<Libs>
 			<WhoIs>
-				<UseSystemApplication>0</UseSystemApplication>
+				<UseSystemApplication>1</UseSystemApplication>
 			</WhoIs>
 			<!-- *********************************************************************** -->
 		</Libs>

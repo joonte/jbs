@@ -261,9 +261,25 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 	#-------------------------------------------------------------------------------
 	if(!$Answer){
 		#-------------------------------------------------------------------------------
+		Debug(SPrintF('[system/libs/WhoIs.php]: домен (%s) не кэширован, делаем запрос',$Domain));
+		#-------------------------------------------------------------------------------
 		if($UseSystemApplication){
 			#-------------------------------------------------------------------------------
-			$IsExec = Exec(SPrintF('whois %s',$IDNA->encode($Domain)),$Answer);
+			//потом будет использоваться
+			if($DomainZone['IsRdap'])
+				$IsRdap = TRUE;
+			#-------------------------------------------------------------------------------
+			// для кэша
+			$Tmp = System_Element('tmp');
+			if(Is_Error($Tmp))
+				return ERROR | @Trigger_Error(500);
+			#-------------------------------------------------------------------------------
+			$Command = SPrintF('%s %s 2>&1',($DomainZone['IsRdap'])?SPrintF('rdap --cache-dir=%s/.openrdap --whois',$Tmp):'whois',$IDNA->encode($Domain));
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[system/libs/WhoIs.php]: UseSystemApplication, Command = %s',$Command));
+			#-------------------------------------------------------------------------------
+			$IsExec = Exec($Command,$Answer);
+			Debug(SPrintF('[system/libs/WhoIs.php]: Answer = %s',print_r($Answer,true)));
 			#-------------------------------------------------------------------------------
 			$Answer = Implode("\n",$Answer);
 			#-------------------------------------------------------------------------------
@@ -300,12 +316,17 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 	if(Preg_Match(SPrintF('/%s/',$DomainZone['Available']),$Answer))
 		return TRUE;
 	#-------------------------------------------------------------------------------
+	// у rdap по другому
+	if(IsSet($IsRdap))
+		if(Preg_Match('/object does not exist./',$Answer))
+			return TRUE;
+	#-------------------------------------------------------------------------------
 	if(Preg_Match(SPrintF('/%s/',$DomainZone['NotAvailable']),$Answer))
 		return new gException('DOMAIN_NOT_AVAILABLE','Доменное имя не доступно для регистрации');
 	#-------------------------------------------------------------------------------
 	$Result = Array('Info'=>Preg_Replace('/\n\s+\n/sU',"\n",Preg_Replace('/\%.+\n/sU','',$Answer)),'ExpirationDate'=>0);
 	#-------------------------------------------------------------------------------
-	$ExpirationDate = $DomainZone['ExpirationDate'];
+	$ExpirationDate = IsSet($IsRdap)?'Expiration\sDate:\s([0-9]{4}\-[0-9]{2}\-[0-9]{2})':$DomainZone['ExpirationDate'];
 	#-------------------------------------------------------------------------------
 	if($ExpirationDate){
 		#-------------------------------------------------------------------------------
@@ -364,7 +385,7 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$NsName = $DomainZone['NsName'];
+	$NsName = IsSet($IsRdap)?'Name\sServer:\s+([a-zA-Z0-9\.\-]{2,})':$DomainZone['NsName'];
 	#-------------------------------------------------------------------------------
 	if($NsName){
 		#-------------------------------------------------------------------------------
@@ -400,7 +421,7 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 		#-------------------------------------------------------------------------------
 	}
 	#-------------------------------------------------------------------------------
-	$Registrar = $DomainZone['Registrar'];
+	$Registrar = IsSet($IsRdap)?'Registrar:\s(.*)':$DomainZone['Registrar'];
 	#-------------------------------------------------------------------------------
 	if($Registrar){
 		#-------------------------------------------------------------------------------
