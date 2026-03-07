@@ -190,29 +190,10 @@ foreach($BankInvoices as $BankInvoice){
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			// подтверждаем пользователя, если это необходимо
-			$User = DB_Select('Users',Array('ID','ConfirmedWas'),Array('UNIQ','ID'=>$Invoice['UserID']));
-			#--------------------------------------------------------------------------------
-			switch(ValueOf($User)){
-			case 'error':
-				return ERROR | @Trigger_Error(500);
-			case 'exception':
-				return ERROR | @Trigger_Error(400);
-			case 'array':
-				break;
-			default:
-				return ERROR | @Trigger_Error(101);
-			}
-			#-------------------------------------------------------------------------------
-			// юзер в биллинге не подтверждён, но им оплачен счёт как юриком или ИП - подтверждаем
-			if(SizeOf($User['ConfirmedWas']) < 1 && $ConfirmedWas){
+			if($ConfirmedWas){
 				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('www/Administrator/API/UserConfirm',Array('UserID'=>$User['ID'],'Reason'=>$ConfirmedWas));
+				$Comp = Comp_Load('Users/Confirm',$Invoice['UserID'],$ConfirmedWas);
 				if(Is_Error($Comp))
-					return ERROR | @Trigger_Error(500);
-				#-------------------------------------------------------------------------------
-				// активируем задачу проводки счетов
-				$IsUpdate = DB_Update('Tasks',Array('IsActive'=>TRUE,'IsExecuted'=>FALSE,'ExecuteDate'=>Time()),Array('Where'=>'`TypeID` = "NotConfirmedInvoices"'));
-				if(Is_Error($IsUpdate))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------
 			}

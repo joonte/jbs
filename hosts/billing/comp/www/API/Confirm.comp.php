@@ -375,15 +375,10 @@ if(!$Confirm && !$Code){
 	#-------------------------------------------------------------------------------
 	if($NeedConfirmed != "NONE" && $Method == $NeedConfirmed){
 		#-------------------------------------------------------------------------------
-		$__USER['ConfirmedWas'][Time()] = SPrintF('%s: %s; IP: %s',$NeedConfirmed,$Contact['Address'],@$_SERVER['REMOTE_ADDR']);
+		$Reason = SPrintF('%s: %s; IP: %s',$NeedConfirmed,$Contact['Address'],@$_SERVER['REMOTE_ADDR']);
 		#-------------------------------------------------------------------------------
-		$IsUpdate = DB_Update('Users',Array('ConfirmedWas'=>$__USER['ConfirmedWas']),Array('ID'=>$__USER['ID']));
-		if(Is_Error($IsUpdate))
-			return ERROR | @Trigger_Error(500);
-		#-------------------------------------------------------------------------------
-		// активируем задачу проводки счетов
-		$IsUpdate = DB_Update('Tasks',Array('IsActive'=>TRUE,'IsExecuted'=>FALSE,'ExecuteDate'=>Time()),Array('Where'=>'`TypeID` = "NotConfirmedInvoices"'));
-		if(Is_Error($IsUpdate))
+		$Comp = Comp_Load('Users/Confirm',$__USER['ID'],$ConfirmedWas);
+		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------
 	}
