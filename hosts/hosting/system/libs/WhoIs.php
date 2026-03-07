@@ -279,7 +279,7 @@ function WhoIs_Check($DomainName,$ZoneName,$IsAvalible = FALSE){
 			Debug(SPrintF('[system/libs/WhoIs.php]: UseSystemApplication, Command = %s',$Command));
 			#-------------------------------------------------------------------------------
 			$IsExec = Exec($Command,$Answer);
-			Debug(SPrintF('[system/libs/WhoIs.php]: Answer = %s',print_r($Answer,true)));
+			//Debug(SPrintF('[system/libs/WhoIs.php]: Answer = %s',print_r($Answer,true)));
 			#-------------------------------------------------------------------------------
 			$Answer = Implode("\n",$Answer);
 			#-------------------------------------------------------------------------------
