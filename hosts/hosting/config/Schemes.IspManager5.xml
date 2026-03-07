@@ -392,6 +392,15 @@
 	<Type>CheckBox</Type>
 </limit_nodejs>
 <!-- *********************************************************************** -->
+<limit_python>
+	<Name>Python</Name>
+	<Description>Возможность использовать Python на сайтах</Description>
+	<Value>1</Value>
+	<IsCreate>1</IsCreate>
+	<IsSchemeChange>1</IsSchemeChange>
+	<Type>CheckBox</Type>
+</limit_python>
+<!-- *********************************************************************** -->
 <backup>
 	<Name>Создавать бэкапы</Name>
 	<Description>Отметьте, чтобы создавать регулярные резервные копии данных пользователя</Description>
