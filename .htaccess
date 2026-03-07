@@ -22,7 +22,9 @@ RewriteEngine On
 </FilesMatch>
 
 # главная на новую версию
-RewriteRule ^$ /v2 [R=301,L]
+RewriteRule 	^$		/v2 [R=301,L]
+# тикеты
+RedirectMatch	^/Tickets	/v2/Tickets
 
 # ссылки в почте, на оплату выписанных счетов, красивые
 RedirectMatch	/Invoices/([0-9]*)/$				/Invoices?InvoiceID=$1
