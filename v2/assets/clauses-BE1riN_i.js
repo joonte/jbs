@@ -1,0 +1,1 @@
+import{ak as c,r as n,al as t,am as e}from"./index-QTxU56gr.js";const i=c("clauses",()=>{const a=n({});async function u(){const s=await t.post(e.clauses);a.value=s.data}async function r(s){return(await t.post(e.clauses,{Partition:s})).data}return{clausesList:a,fetchClauses:u,fetchClausesByPartition:r}});export{i as u};

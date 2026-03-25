@@ -1,0 +1,1 @@
+import{ak as o,al as r,am as s}from"./index-QTxU56gr.js";const i=o("files",()=>{async function t(e){const a=new FormData;return a.append("Upload",e),(await r.post(s.uploadFile,a,{headers:{"Content-Type":"multipart/form-data"}})).data}return{sendFile:t}});export{i as u};

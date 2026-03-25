@@ -1,1 +1,0 @@
-import{_ as o}from"./HtmlContent-CzbQpMko.js";import{Y as n,o as s,c as r,b as c,P as a}from"./index-SZxWfZSH.js";const _={class:"tw-bg-sky-150 tw-border tw-border-sky-400 tw-rounded tw-p-4"},f=n({__name:"MessageInfo",props:{content:{}},setup(p){return(t,m)=>{const e=o;return s(),r("div",_,[c(e,{content:t.content},null,8,["content"]),a(t.$slots,"default")])}}});export{f as _};
