@@ -27,6 +27,7 @@ $Columns = Array(
 		'*',
 		'(SELECT `Customer` FROM `Contracts` WHERE `Contracts`.`ID` = `VPSOrdersOwners`.`ContractID`) AS `Customer`','(SELECT `ServerID` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `ServerID`',
 		'(SELECT `IsPayed` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `IsPayed`',
+		'(SELECT `Params` FROM `OrdersOwners` WHERE `OrdersOwners`.`ID` = `VPSOrdersOwners`.`OrderID`) AS `Params`',
 		);
 #-------------------------------------------------------------------------------
 $VPSOrders = DB_Select('VPSOrdersOwners',$Columns,Array('Where'=>$Where));
@@ -82,6 +83,13 @@ foreach($VPSOrders as $VPSOrder){
 	#-------------------------------------------------------------------------------
 	if($Servers[$ServerID]['Params']['SystemID'] == 'VmManager6_Hosting')
 		$VPSOrder['Login'] = SPrintF('%s@%s',$VPSOrder['Login'],$Servers[$ServerID]['Params']['Domain']);
+	#-------------------------------------------------------------------------------
+	#-------------------------------------------------------------------------------
+	// данные для входа на сервер, логин
+	$VPSOrder['ServerLogin'] = 'root';
+	#-------------------------------------------------------------------------------
+	if(IsSet($VPSOrder['Params']['DiskTemplate']))
+		$VPSOrder['ServerLogin'] = Preg_Match('/windows/i',$VPSOrder['Params']['DiskTemplate'])?'Admin':'root';
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	UnSet($VPSOrder['AdminNotice']);
