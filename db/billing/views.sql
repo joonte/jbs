@@ -398,6 +398,16 @@ SELECT
 	(SELECT `UserID` FROM `Contracts` WHERE `Contracts`.`ID` = (SELECT `ContractID` FROM `Orders` WHERE `Orders`.`ID` = `ResourceCharts`.`OrderID`)) AS `UserID`
 FROM
 	`ResourceCharts`;
+#-------------------------------------------------------------------------------
+DROP VIEW IF EXISTS `ResourceChartsLimitsOwners`;
+DROP TABLE IF EXISTS `ResourceChartsLimitsOwners`;
+CREATE
+	VIEW `ResourceChartsLimitsOwners` AS
+SELECT
+	`ResourceChartsLimits`.*,
+	(SELECT `UserID` FROM `Contracts` WHERE `Contracts`.`ID` = (SELECT `ContractID` FROM `Orders` WHERE `Orders`.`ID` = `ResourceChartsLimits`.`OrderID`)) AS `UserID`
+FROM
+	`ResourceChartsLimits`;
 
 
 

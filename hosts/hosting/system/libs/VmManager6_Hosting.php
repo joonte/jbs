@@ -1329,12 +1329,12 @@ function VmManager6_Hosting_Get_Account_Usage($Settings,$Users){
 		// перебираем статистику, запрашиваем
 		$Targets = Array(
 				'cpu_load'		=> Array('Limit'=>100),
-				'df.root.used'		=> Array('Limit'=>$VM['total_disks_size_mib'],'multiplier'=>0.00000095367),	/* данные по диску в байтах отдаёются */
-				'mem_usage'		=> Array('Limit'=>$VM['ram_mib'],'multiplier'=>0.00000095367),			/* память в мегабайтах */
+				'df.root.used'		=> Array('Limit'=>(double)$VM['total_disks_size_mib'],'multiplier'=>0.00000095367),	/* данные по диску в байтах отдаёются */
+				'mem_usage'		=> Array('Limit'=>(double)$VM['ram_mib'],'multiplier'=>0.00000095367),			/* память в мегабайтах */
 				'mem_usage_percent'	=> Array('Limit'=>100),
-				'iops'			=> Array('Limit'=>$VM['io_read_iops']),
-				'net_tx_summary'	=> Array('Limit'=>$VM['net_bandwidth_mbitps'],'multiplier'=>0.00000095367),	/* сеть в мегабитах*/
-				'net_rx_summary'	=> Array('Limit'=>$VM['net_bandwidth_mbitps'],'multiplier'=>0.00000095367),
+				'iops'			=> Array('Limit'=>(double)$VM['io_read_iops']),
+				'net_tx_summary'	=> Array('Limit'=>(double)$VM['net_bandwidth_mbitps'],'multiplier'=>0.00000095367),	/* сеть в мегабитах*/
+				'net_rx_summary'	=> Array('Limit'=>(double)$VM['net_bandwidth_mbitps'],'multiplier'=>0.00000095367),
 				);
 		#-------------------------------------------------------------------------------
 		foreach(Array_Keys($Targets) as $Key){
@@ -1361,7 +1361,7 @@ function VmManager6_Hosting_Get_Account_Usage($Settings,$Users){
 			$Data = Array();
 			#-------------------------------------------------------------------------------
 			foreach($Doc[0]['datapoints'] as $iData)
-				$Data[$iData[1]] = $iData[0];
+				$Data[$iData[1]] = (double)$iData[0];
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			// бывает 1-2 последних значения по нулям. тогда их надо исключить из массива
