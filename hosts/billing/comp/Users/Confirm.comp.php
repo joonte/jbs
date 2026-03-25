@@ -27,9 +27,9 @@ default:
 // юзер в биллинге не подтверждён, но им оплачен счёт как юриком или ИП - подтверждаем
 if(SizeOf($User['ConfirmedWas']) < 1){
 	#-------------------------------------------------------------------------------
-	Debug(SPrintF('[comp/Users/Confirm]: подтверждение UserID = %s; Email = %s',$UserID,$User['Email']));
+	Debug(SPrintF('[comp/Users/Confirm]: подтверждение UserID = %s; Email = %s; Reason = %s',$UserID,$User['Email'],$Reason));
 	#-------------------------------------------------------------------------------
-	$Comp = Comp_Load('www/Administrator/API/UserConfirm',Array('UserID'=>$User['ID'],'Reason'=>$ConfirmedWas));
+	$Comp = Comp_Load('www/Administrator/API/UserConfirm',Array('UserID'=>$User['ID'],'Reason'=>$Reason));
 	if(Is_Error($Comp))
 		return ERROR | @Trigger_Error(500);
 	#-------------------------------------------------------------------------------
