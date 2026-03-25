@@ -15,6 +15,10 @@ $ContractID		= (integer) @$Args['ContractID'];
 $ServiceID		= (integer) @$Args['ServiceID'];
 $SchemeID		= (integer) @$Args['SchemeID'];
 #-------------------------------------------------------------------------------
+// используется в лицензиях
+$DependOrderID		= (integer) @$Args['DependOrderID'];
+$IP			= (string)  @$Args['IP'];
+#-------------------------------------------------------------------------------
 if(Is_Error(System_Load('modules/Authorisation.mod')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
@@ -70,6 +74,14 @@ if(!$OrderID){
 			SPrintF('%sSchemeID',$Service['Code'])	=> $SchemeID,
 			'Comment'				=> 'Расчёт дней с балланса',
 			);
+	#-------------------------------------------------------------------------------
+	// передача на последующий уровень IP если не задан DependOrderID
+	if(!$DependOrderID && $IP)
+		$Array['IP'] = $IP;
+	#-------------------------------------------------------------------------------
+	// передача на последующий уровень $DependOrderID
+	if($DependOrderID)
+		$Array['DependOrderID'] = $DependOrderID;
 	#-------------------------------------------------------------------------------
 	$AddOrder = Comp_Load($Path,$Array);
 	#-------------------------------------------------------------------------------
