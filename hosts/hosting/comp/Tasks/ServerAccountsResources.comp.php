@@ -24,6 +24,14 @@ if(!$Settings['IsActive'])
 if(Is_Error(System_Load('classes/HostingServer.class.php','classes/VPSServer.class.php','classes/DSServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
+// директория с файлами графиков
+$Tmp = System_Element('tmp');
+if(Is_Error($Tmp))
+	return ERROR | @Trigger_Error(500);
+#-------------------------------------------------------------------------------
+$Template = SPrintF('%s/ResourceCharts/%%u.json',$Tmp);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
 $Where = Array(
 		'`Services`.`ID` = `ServersGroups`.`ServiceID`',
 		'(`ServersGroups`.`ID` = `Servers`.`ServersGroupID`)',
@@ -120,10 +128,7 @@ default:
 if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 	#-------------------------------------------------------------------------------
 	// достаём список выделенных серверов на этом управляющем сервере
-	$Columns = Array(
-			'OrderID','(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
-			"(SELECT `Params` FROM `TmpData` USE INDEX(`AppID_Col1`) WHERE `AppID` = 'Order.Statistics' AND `OrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`"
-			);
+	$Columns = Array('OrderID','(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`',);
 	$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>Array('`StatusID` IN ("Active","Suspended")',SPrintF('`ServerID` = %u',$Server['ID']))));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Orders)){
@@ -145,12 +150,28 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 				if($Order['Code'] != 'DS')
 					continue;
 				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				$Params = CacheManager::get(SPrintF($Template,$Order['OrderID']));
+				#-------------------------------------------------------------------------------
+				if(!$Params){
+					#-------------------------------------------------------------------------------
+					$Params = IO_Read(SPrintF($Template,$Order['OrderID']));
+					if(Is_Error($Params))
+						$Params = '[]';
+					#-------------------------------------------------------------------------------
+					CacheManager::add(SPrintF($Template,$Order['OrderID']),$Params,24*3600);
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
+				$Params = Json_Decode($Params,TRUE);
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
 				// если поле задано и обновлялся менее получаса назад - пропускаем
-				if(IsSet($Order['Params']['UpdateDate']) && StrToTime($Order['Params']['UpdateDate']) > Time() - 1800)
+				if(IsSet($Params['UpdateDate']) && StrToTime($Params['UpdateDate']) > Time() - 1800)
 					continue;
 				#-------------------------------------------------------------------------------
 				// складываем в массив, ключ/значение[время обновления]
-				$UpdateDate = IsSet($Order['Params']['UpdateDate'])?StrToTime($Order['Params']['UpdateDate']):0;
+				$UpdateDate = IsSet($Params['UpdateDate'])?StrToTime($Params['UpdateDate']):0;
 				$Array1[$Order['OrderID']] = $UpdateDate;
 				//$Array[] = $Order['OrderID'];
 				#-------------------------------------------------------------------------------
@@ -231,8 +252,7 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 if(In_Array($Server['Code'],Array('DS'))){
 	#-------------------------------------------------------------------------------
 	// достаём список выделенных серверов на этом управляющем сервере
-	$Columns = Array('OrderID',"(SELECT `Params` FROM `TmpData` USE INDEX(`AppID_Col1`) WHERE `AppID` = 'Order.Statistics' AND `OrdersOwners`.`OrderID` = `TmpData`.`Col1` LIMIT 1) AS `Params`");
-	$Orders = DB_Select('OrdersOwners',$Columns,Array('Where'=>Array('`StatusID` IN ("Active","Suspended")','`ServiceID` IN (40000)',SPrintF('`ServerID` = %u',$Server['ID']))));
+	$Orders = DB_Select('OrdersOwners',Array('OrderID'),Array('Where'=>Array('`StatusID` IN ("Active","Suspended")','`ServiceID` IN (40000)',SPrintF('`ServerID` = %u',$Server['ID']))));
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Orders)){
 	case 'error':
@@ -243,8 +263,23 @@ if(In_Array($Server['Code'],Array('DS'))){
 		#-------------------------------------------------------------------------------
 		foreach($Orders as $Order){
 			#-------------------------------------------------------------------------------
+			$Params = CacheManager::get(SPrintF($Template,$Order['OrderID']));
+			#-------------------------------------------------------------------------------
+			if(!$Params){
+				#-------------------------------------------------------------------------------
+				$Params = IO_Read(SPrintF($Template,$Order['OrderID']));
+				if(Is_Error($Params))
+					$Params = '[]';
+				#-------------------------------------------------------------------------------
+				CacheManager::add(SPrintF($Template,$Order['OrderID']),$Params, 24*3600);
+				#-------------------------------------------------------------------------------
+			}
+			#-------------------------------------------------------------------------------
+			$Params = Json_Decode($Params,TRUE);
+			#-------------------------------------------------------------------------------
+			#-------------------------------------------------------------------------------
 			// если поле задано и обновлялся недавно - пропускаем
-			if(IsSet($Order['Params']['UpdateDate']) && StrToTime($Order['Params']['UpdateDate']) > Time() - 1800)
+			if(IsSet($Params['UpdateDate']) && StrToTime($Params['UpdateDate']) > Time() - 1800)
 				continue;
 			#-------------------------------------------------------------------------------
 			// тут мы оказываемся только если есть непрочеканные сервера

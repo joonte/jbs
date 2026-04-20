@@ -26,15 +26,31 @@ switch($Period){
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-// выбираем данные графиковa
-$Columns = Array(
-		'ID','Params','Col1','Col2',
-		'(SELECT `StatusID` FROM `OrdersOwners` WHERE `ID` = `TmpData`.`Col1`) AS `StatusID`',
-		'(SELECT `UserID` FROM `OrdersOwners` WHERE `ID` = `TmpData`.`Col1`) AS `UserID`',
-		);
+// директория с файлами графиков
+$Tmp = System_Element('tmp');
+if(Is_Error($Tmp))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$TmpData = DB_Select('TmpData',$Columns,Array('Where'=>Array('`AppID` = "Order.Statistics"',SPrintF('`Col1` = %u',$OrderID)),'Limits'=>Array(0,1),'UNIQ'));
-switch(ValueOf($TmpData)){
+$Path = SPrintF('%s/ResourceCharts/%u.json',$Tmp,$OrderID);
+#-------------------------------------------------------------------------------
+$Params = CacheManager::get($Path);
+#-------------------------------------------------------------------------------
+if(!$Params){
+	#-------------------------------------------------------------------------------
+	$Params = IO_Read($Path);
+	if(Is_Error($Params))
+		return Array();
+	#-------------------------------------------------------------------------------
+	CacheManager::add($Path,$Params,24*3600);
+	#-------------------------------------------------------------------------------
+}
+#-------------------------------------------------------------------------------
+$Params = Json_Decode($Params,TRUE);
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+// достаём владельца заказа
+$Order = DB_Select('OrdersOwners',Array('ID','UserID','StatusID'),Array('ID'=>$OrderID,'UNIQ'));
+switch(ValueOf($Order)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
 case 'exception':
@@ -49,7 +65,7 @@ default:
 // проверяем права юзера на этот заказ
 $__USER = $GLOBALS['__USER'];
 #-------------------------------------------------------------------------------
-$IsPermission = Permission_Check('ServiceOrderRead',(integer)$__USER['ID'],(integer)$TmpData['UserID']);
+$IsPermission = Permission_Check('ServiceOrderRead',(integer)$__USER['ID'],(integer)$Order['UserID']);
 #-------------------------------------------------------------------------------
 switch(ValueOf($IsPermission)){
 case 'error':
@@ -66,7 +82,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 // меняем формат графиков на выходе
-$Comp = Comp_Load('Formats/GraphOut',Array('Params'=>$TmpData['Params'],'StatusID'=>$TmpData['StatusID'],'Period'=>$Period));
+$Comp = Comp_Load('Formats/GraphOut',Array('Params'=>$Params,'StatusID'=>$Order['StatusID'],'Period'=>$Period));
 if(Is_Error($Comp))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
