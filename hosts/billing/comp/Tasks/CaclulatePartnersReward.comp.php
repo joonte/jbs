@@ -206,20 +206,20 @@ foreach($Owners as $Owner){
 				$Array[] = $WorksComplite['UserID'];
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: обработка выполенныех работ юзера (%s), владелец %s',$WorksComplite['Email'],$Owner['Email']));
+			Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: обработка выполенныех работ юзера (%s), владелец %s, сервис #%u, услуга #%u',$WorksComplite['Email'],$Owner['Email'],$WorksComplite['ServiceID'],$WorksComplite['OrderID']));
 			#-------------------------------------------------------------------------------
 			// проверяем дату регистрации реферала и дату заказа услуги, процент будет разный
 			if($WorksComplite['RegisterDate'] > StrToTime('2026-03-01') && $WorksComplite['OrderDate'] > StrToTime('2026-03-01')){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: новый реферал (%s) и услуга (%s), дата регистрации юзера (%s), дата заказа услуги (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate'])));
-				#-------------------------------------------------------------------------------
 				$Percent = $PartnerPercents[$WorksComplite['ServiceID']];
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: новый реферал (%s) и услуга (%s), дата регистрации юзера (%s), дата заказа услуги (%s), процент (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate']),$Percent));
 				#-------------------------------------------------------------------------------
 			}else{
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: старый реферал/услуга (%s/%s), дата регистрации юзера (%s), дата заказа услуги (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate'])));
-				#-------------------------------------------------------------------------------
 				$Percent = 5;
+				#-------------------------------------------------------------------------------
+				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: старый реферал/услуга (%s/%s), дата регистрации юзера (%s), дата заказа услуги (%s), процент (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate']),$Percent));
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
@@ -235,10 +235,10 @@ foreach($Owners as $Owner){
 			#-------------------------------------------------------------------------------
 			if($Reward > 0){
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Вознаграждение %s от реферала (%s) составляет %s',$Owner['Email'],$WorksComplite['Email'],$Reward));
+				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Вознаграждение %s от реферала (%s/#%u) составляет %s (%u%%)',$Owner['Email'],$WorksComplite['Email'],$WorksComplite['UserID'],$Reward,$Percent));
 				#-------------------------------------------------------------------------------
 				# пополняем балланс юзера
-				$Comment = SPrintF("Начисления по партнёрской программе за %s, пользователь #%s",date('Y/m',$PreviousTime),$WorksComplite['UserID']);
+				$Comment = SPrintF("Начисления по партнёрской программе за %s, пользователь #%s (%u%%)",date('Y/m',$PreviousTime),$WorksComplite['UserID'],$Percent);
 				#-------------------------------------------------------------------------------
 				$Comp = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Contract['ID'],'ServiceID'=>'1100','Comment'=>$Comment,'Summ'=>$Reward));
 				#-------------------------------------------------------------------------
