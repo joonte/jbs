@@ -20,8 +20,8 @@ $Out = Array();
 #-------------------------------------------------------------------------------
 // достаём активные для юзера тарифы
 $Where = Array(
-		'(`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH))',
-		'`IsActive` = "yes"',
+		'((`UserID` = @local.__USER_ID OR FIND_IN_SET(`GroupID`,@local.__USER_GROUPS_PATH)) OR ID < 10000)',
+		'(`IsActive` = "yes" OR ID < 10000)',
 		);
 #-------------------------------------------------------------------------------
 $Services = DB_Select('Services',Array('*'),Array('Where'=>$Where,'SortOn'=>'SortID'));
