@@ -216,8 +216,8 @@ set @Text = '<NOBODY>
     <TD>Индивидуальный предприниматель %Executor.CompanyName%</TD>
    </TR>
    <TR>
-    <TD>ИНН | КПП</TD>
-    <TD>%Executor.Inn% | %Executor.Kpp%</TD>
+    <TD>ИНН | ОГРНИП</TD>
+    <TD>%Executor.Inn% | %Executor.OGRNIP%</TD>
    </TR>
    <TR>
     <TD>Юридический адрес</TD>
@@ -999,14 +999,14 @@ VALUES (4,100,100,'yes','yes','yes','Contracts/Content','Базовый дого
 -- SEPARATOR
 -- Шаблоны договора индивидуального предпринимателя
 
-set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия %Executor.SvLine% №%Executor.SvNumber% от %Executor.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и Индивидуальный предприниматель "%Customer.CompanyName%", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании Свидетельства серия %Customer.SvLine% №%Customer.SvNumber% от %Customer.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
+set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании ОГРНИП №%Executor.OGRNIP% от %Executor.GrnipDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и Индивидуальный предприниматель "%Customer.CompanyName%", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании ОГРНИП №%Customer.OGRNIP% от %Customer.GrnipDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Individual/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с индивидуальным предпринимателем',@Text);
 
 -- SEPARATOR
 
-set @Text = '<P align="justify">%Executor.dPost% %Executor.dSourname% %Executor.dName% %Executor.dLastname% от имени %Executor.CompanyForm% "%Executor.CompanyName%", именуемое в дальнейшем "Исполнитель", действующий(ая) на основании %Executor.Basis% с одной стороны, и Индивидуальный предприниматель "%Customer.CompanyName%", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании Свидетельства серия %Customer.SvLine% №%Customer.SvNumber% от %Customer.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
+set @Text = '<P align="justify">%Executor.dPost% %Executor.dSourname% %Executor.dName% %Executor.dLastname% от имени %Executor.CompanyForm% "%Executor.CompanyName%", именуемое в дальнейшем "Исполнитель", действующий(ая) на основании %Executor.Basis% с одной стороны, и Индивидуальный предприниматель "%Customer.CompanyName%", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании ОГРНИП №%Customer.OGRNIP% от %Customer.GrnipDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (4, 100,100,'yes','yes','yes','Contracts/Types/Individual/Agreement/Juridical','Соглашение исполнителя юридического лица с индивидуальным предпринимателем',@Text);
@@ -1020,8 +1020,8 @@ set @Text = '<FONT size="1">
    <TD>Индивидуальный предприниматель "%Customer.CompanyName%"</TD>
   </TR>
   <TR>
-   <TD>ИНН | КПП</TD>
-   <TD>%Customer.Inn% | %Customer.Kpp%</TD>
+   <TD>ИНН | ОГРНИП</TD>
+   <TD>%Customer.Inn% | %Customer.OGRNIP%</TD>
   </TR>
   <TR>
    <TD>Юридический адрес</TD>
@@ -1187,7 +1187,7 @@ VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Individual/Footer/Individua
 
 -- SEPARATOR
 -- Шаблоны договора юридического лица
-set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия %Executor.SvLine% №%Executor.SvNumber% от %Executor.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.dPost% %Customer.dSourname% %Customer.dName% %Customer.dLastname% %Customer.CompanyForm% "%Customer.CompanyName%", именуемое в дальнейшем "Заказчик", действующий(ая) на основании %Customer.Basis%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
+set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании ОГРНИП №%Executor.OGRNIP% от %Executor.GrnipDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.dPost% %Customer.dSourname% %Customer.dName% %Customer.dLastname% %Customer.CompanyForm% "%Customer.CompanyName%", именуемое в дальнейшем "Заказчик", действующий(ая) на основании %Customer.Basis%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`) 
 VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Juridical/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с юридическим лицом',@Text);
@@ -1372,7 +1372,7 @@ VALUES (4,100,100,'yes','yes','yes','Contracts/Types/Juridical/Footer/Juridical'
 
 -- SEPARATOR
 -- Шаблоны договора физического лица
-set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия %Executor.SvLine% №%Executor.SvNumber% от %Executor.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.Sourname% %Customer.Name% %Customer.Lastname%, именуемый(ая) в дальнейшем "Заказчик", паспорт %Customer.PasportLine% %Customer.PasportNum%, выданный %Customer.PasportWhom%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
+set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании ОГРНИП №%Executor.OGRNIP% от %Executor.GrnipDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.Sourname% %Customer.Name% %Customer.Lastname%, именуемый(ая) в дальнейшем "Заказчик", паспорт %Customer.PasportLine% %Customer.PasportNum%, выданный %Customer.PasportWhom%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (3,100,100,'yes','yes','yes','Contracts/Types/Natural/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с физическим лицом',@Text);
@@ -1822,7 +1822,7 @@ VALUES (5,100,100,'yes','yes','yes','Envelopes/Individual/Template','Шабло�
 
 -- SEPARATOR
 -- added by lissyara 2011-08-23 in 11:03 MSK for partner profile
-set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия %Executor.SvLine% №%Executor.SvNumber% от %Executor.SvDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.Sourname% %Customer.Name% %Customer.Lastname%, именуемый(ая) в дальнейшем "Заказчик", паспорт %Customer.PasportLine% %Customer.PasportNum%, выданный %Customer.PasportWhom%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
+set @Text = '<P align="justify">Индивидуальный предприниматель "%Executor.CompanyName%", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании ОГРНИП №%Executor.OGRNIP% от %Executor.GrnipDate%, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и %Customer.Sourname% %Customer.Name% %Customer.Lastname%, именуемый(ая) в дальнейшем "Заказчик", паспорт %Customer.PasportLine% %Customer.PasportNum%, выданный %Customer.PasportWhom%, с другой стороны, именуемые совместно в дальнейшем Стороны, заключили Договор о нижеследующем:</P>';
 
 INSERT INTO `Clauses` (`GroupID`,`AuthorID`,`EditorID`,`IsProtected`,`IsXML`,`IsDOM`,`Partition`,`Title`,`Text`)
 VALUES (3,100,100,'yes','yes','yes','Contracts/Types/NaturalPartner/Agreement/Individual','Соглашение исполнителя индивидуального предпринимателя с физическим лицом',@Text);
@@ -2279,7 +2279,7 @@ set @Text = '<NOBODY>
  <TABLE border="1" cellpadding="5" cellspacing="0" widht="100%">
   <TR>
    <TD>ИНН %Executor.Inn%</TD>
-   <TD>КПП %Executor.Kpp%</TD>
+   <TD>ОГРНИП %Executor.OGRNIP%</TD>
    <TD rowspan="2" valign="bottom">Счет №</TD>
    <TD rowspan="2" valign="bottom">%Executor.BankAccount%</TD>
   </TR>
@@ -2311,7 +2311,7 @@ set @Text = '<NOBODY>
    </TD>
   </TR>
  </TABLE>
- <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%<BR />Заказчик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% КПП: %Customer.Kpp%</P>
+ <P>Плательщик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% ОГРНИП: %Customer.OGRNIP%<BR />Заказчик: Индивидуальный предприниматель "%Customer.CompanyName%" ИНН: %Customer.Inn% ОГРНИП: %Customer.OGRNIP%</P>
  <H1>СЧЁТ №%Invoice.Number% от %Invoice.CreateDate%</H1>
  <DIV id="Services">[список услуг]</DIV>
  <P>
@@ -2365,7 +2365,7 @@ set @Text = '<NOBODY>
  <TABLE border="1" cellpadding="5" cellspacing="0" widht="100%">
   <TR>
    <TD>ИНН %Executor.Inn%</TD>
-   <TD>КПП %Executor.Kpp%</TD>
+   <TD>ОГРНИП %Executor.OGRNIP%</TD>
    <TD rowspan="2" valign="bottom">Счет №</TD>
    <TD rowspan="2" valign="bottom">%Executor.BankAccount%</TD>
   </TR>
@@ -2440,7 +2440,7 @@ set @Text = '<NOBODY>
  <TABLE border="1" cellpadding="5" cellspacing="0" widht="100%">
   <TR>
    <TD>ИНН %Executor.Inn%</TD>
-   <TD>КПП %Executor.Kpp%</TD>
+   <TD>ОГРНИП %Executor.OGRNIP%</TD>
    <TD rowspan="2" valign="bottom">Счет №</TD>
    <TD rowspan="2" valign="bottom">%Executor.BankAccount%</TD>
   </TR>

@@ -3,20 +3,17 @@
 <NOBODY>
  <NOBODY>Индивидуальный предприниматель "</NOBODY>
  <NOBODY id="Executor.CompanyName">-</NOBODY>
- <NOBODY>", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия </NOBODY>
- <NOBODY id="Executor.SvLine">-</NOBODY>
- <NOBODY> №</NOBODY>
- <NOBODY id="Executor.SvNumber">-</NOBODY>
+ <NOBODY>", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании ОГРНИП </NOBODY>
+ <NOBODY id="Executor.OGRNIP">-</NOBODY>
  <NOBODY> от </NOBODY>
- <NOBODY id="Executor.SvDate">-</NOBODY>
+ <NOBODY id="Executor.GrnipDate">-</NOBODY>
  <NOBODY>, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и Индивидуальный предприниматель "</NOBODY>
  <NOBODY id="Customer.CompanyName">-</NOBODY>
- <NOBODY>", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании Свидетельства серия </NOBODY>
- <NOBODY id="Customer.SvLine">-</NOBODY>
+ <NOBODY>", именуемый(ая) в дальнейшем "Заказчик", действующий(ая) на основании ОГРНИП </NOBODY>
  <NOBODY> №</NOBODY>
- <NOBODY id="Customer.SvNumber">-</NOBODY>
+ <NOBODY id="Customer.OGRNIP">-</NOBODY>
  <NOBODY> от </NOBODY>
- <NOBODY id="Customer.SvDate">-</NOBODY>
+ <NOBODY id="Customer.GrnipDate">-</NOBODY>
  <NOBODY>, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с другой стороны составили настоящий Акт о том, что в соответствии с договором №</NOBODY>
  <NOBODY id="Contract.Number">-</NOBODY>
  <NOBODY> от </NOBODY>

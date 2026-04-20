@@ -3,12 +3,11 @@
 <NOBODY>
  <NOBODY>Индивидуальный предприниматель "</NOBODY>
  <NOBODY id="Executor.CompanyName">-</NOBODY>
- <NOBODY>", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании Свидетельства серия </NOBODY>
- <NOBODY id="Executor.SvLine">-</NOBODY>
+ <NOBODY>", именуемый(ая) в дальнейшем "Исполнитель", действующий(ая) на основании ОГРНИП </NOBODY>
  <NOBODY> №</NOBODY>
- <NOBODY id="Executor.SvNumber">-</NOBODY>
+ <NOBODY id="Executor.OGRNIP">-</NOBODY>
  <NOBODY> от </NOBODY>
- <NOBODY id="Executor.SvDate">-</NOBODY>
+ <NOBODY id="Executor.GrnipDate">-</NOBODY>
  <NOBODY>, выданного Инспекцией Министерства Российской федерации по налогам и сборам, с одной стороны, и </NOBODY>
  <NOBODY id="Customer.Sourname">-</NOBODY>
  <NOBODY> </NOBODY>
