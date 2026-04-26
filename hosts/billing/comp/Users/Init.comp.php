@@ -28,7 +28,7 @@ if(Is_Error(System_Load('libs/Tree.php')))
 #-------------------------------------------------------------------------------
 // достаём даныне пользователя
 $Columns = Array(
-		'ID','GroupID','RegisterDate','Name','Sign','Email','UniqID','IsActive','LockReason','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params','ConfirmedWas',
+		'ID','GroupID','RegisterDate','OwnerID','Name','Sign','Email','UniqID','IsActive','LockReason','LayPayMaxSumm','LayPayThreshold','EnterIP','EnterDate','Params','ConfirmedWas',
 		'(SELECT SUM(`Summ`) FROM `InvoicesOwners` WHERE `InvoicesOwners`.`UserID` = `Users`.`ID` AND `InvoicesOwners`.`IsPosted` = "yes") AS `InvoicesAmount`',
 		);
 #-------------------------------------------------------------------------------
