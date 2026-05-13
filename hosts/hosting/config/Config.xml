@@ -132,6 +132,12 @@
 				<IsActive>1</IsActive>
 			</DomainOrdersOnRegister>
 			<!-- ********************************************************************* -->
+			<DomainOrdersForTransfer>
+				<Name>Домен для переноса</Name>
+				<GroupID>1</GroupID>
+				<IsActive>1</IsActive>
+			</DomainOrdersForTransfer>
+			<!-- ********************************************************************* -->
 			<DomainTransfer>
 				<Name>Домен поступил на перенос</Name>
 				<GroupID>1</GroupID>

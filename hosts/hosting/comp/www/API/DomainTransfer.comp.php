@@ -203,7 +203,7 @@ if(Is_Error(DB_Commit($TransactionID)))
 	return ERROR | @Trigger_Error(500);
 #----------------------END TRANSACTION------------------------------------------
 #-------------------------------------------------------------------------------
-return Array('Status'=>'Ok','DomainOrderID'=>$DomainOrderID);
+return Array('Status'=>'Ok','DomainOrderID'=>$DomainOrderID,'ServiceOrderID'=>$DomainOrderID,'OrderID'=>$OrderID);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 
