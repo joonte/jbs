@@ -168,6 +168,9 @@ foreach($Owners as $Owner){
 		}
 		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
+		// для подсчёта ReferalsWithWorks
+		$Array = Array();
+		#-------------------------------------------------------------------------------
 		# Выбираем выполенныне за прошлый месяц работы у партнёра
 		$Where = Array(
 					'`Users`.`ID` = `WorksCompliteOwners`.`UserID`',
@@ -186,82 +189,85 @@ foreach($Owners as $Owner){
 		case 'error':
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
-			break 2;
-		case 'array':
+			#-------------------------------------------------------------------------------
+			Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: нет выполненных работ у рефералов пользователя (%s)',$WorksComplite['Email'],$Owner['Email'],$WorksComplite['ServiceID'],$WorksComplite['OrderID']));
+			#-------------------------------------------------------------------------------
 			break;
-		default:
-			return ERROR | @Trigger_Error(101);
-		}
-		#-------------------------------------------------------------------------------
-		// для подсчёта ReferalsWithWorks
-		$Array = Array();
-		#-------------------------------------------------------------------------------
-		foreach($WorksComplites as $WorksComplite){
 			#-------------------------------------------------------------------------------
-			// добавляем счётчик работ
-			$TmpData['ReferalsWorks']++;
+		case 'array':
 			#-------------------------------------------------------------------------------
-			// добавляем юзера к юзерам с работами (ReferalsWithWorks)
-			if(!In_Array($WorksComplite['UserID'],$Array))
-				$Array[] = $WorksComplite['UserID'];
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: обработка выполенныех работ юзера (%s), владелец %s, сервис #%u, услуга #%u',$WorksComplite['Email'],$Owner['Email'],$WorksComplite['ServiceID'],$WorksComplite['OrderID']));
-			#-------------------------------------------------------------------------------
-			// проверяем дату регистрации реферала и дату заказа услуги, процент будет разный
-			if($WorksComplite['RegisterDate'] > StrToTime('2026-03-01') && $WorksComplite['OrderDate'] > StrToTime('2026-03-01')){
+			foreach($WorksComplites as $WorksComplite){
 				#-------------------------------------------------------------------------------
-				$Percent = $PartnerPercents[$WorksComplite['ServiceID']];
+				// добавляем счётчик работ
+				$TmpData['ReferalsWorks']++;
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: новый реферал (%s) и услуга (%s), дата регистрации юзера (%s), дата заказа услуги (%s), процент (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate']),$Percent));
+				// добавляем юзера к юзерам с работами (ReferalsWithWorks)
+				if(!In_Array($WorksComplite['UserID'],$Array))
+					$Array[] = $WorksComplite['UserID'];
 				#-------------------------------------------------------------------------------
-			}else{
 				#-------------------------------------------------------------------------------
-				$Percent = 5;
+				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: обработка выполенныех работ юзера (%s), владелец %s, сервис #%u, услуга #%u',$WorksComplite['Email'],$Owner['Email'],$WorksComplite['ServiceID'],$WorksComplite['OrderID']));
 				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: старый реферал/услуга (%s/%s), дата регистрации юзера (%s), дата заказа услуги (%s), процент (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate']),$Percent));
-				#-------------------------------------------------------------------------------
-			}
-			#-------------------------------------------------------------------------------
-			#-------------------------------------------------------------------------------
-			# считаем вознаграждение
-			$Reward = Round(($WorksComplite['Amount'] * $WorksComplite['Cost'] - $WorksComplite['Amount'] * $WorksComplite['Cost'] * $WorksComplite['Discont']) * $Percent / 100, 2); 
-			#-------------------------------------------------------------------------------
-			// добавляем вознаграждение в статситику
-			$TmpData['Summ'] = $TmpData['Summ'] + $Reward;
-			#-------------------------------------------------------------------------------
-			# для админов, общая сумма
-			$TotalSumm = $TotalSumm + $Reward;
-			#-------------------------------------------------------------------------------
-			if($Reward > 0){
-				#-------------------------------------------------------------------------------
-				Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Вознаграждение %s от реферала (%s/#%u) составляет %s (%u%%)',$Owner['Email'],$WorksComplite['Email'],$WorksComplite['UserID'],$Reward,$Percent));
-				#-------------------------------------------------------------------------------
-				# пополняем балланс юзера
-				$Comment = SPrintF("Начисления по партнёрской программе за %s, пользователь #%s (%u%%)",date('Y/m',$PreviousTime),$WorksComplite['UserID'],$Percent);
-				#-------------------------------------------------------------------------------
-				$Comp = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Contract['ID'],'ServiceID'=>'1100','Comment'=>$Comment,'Summ'=>$Reward));
-				#-------------------------------------------------------------------------
-				switch(ValueOf($Comp)){
-				case 'error':
-					return ERROR | @Trigger_Error(500);
-				case 'exception':
-					return ERROR | @Trigger_Error(400);
-				case 'array':
+				// проверяем дату регистрации реферала и дату заказа услуги, процент будет разный
+				if($WorksComplite['RegisterDate'] > StrToTime('2026-03-01') && $WorksComplite['OrderDate'] > StrToTime('2026-03-01')){
 					#-------------------------------------------------------------------------------
-					# Добавляем текстовое сообщение для юзера
-					$MessageToUser = SPrintF("%sНачисления от пользователя #%u составили %01.2f	рублей\n",$MessageToUser,$WorksComplite['UserID'],$Reward);
+					$Percent = $PartnerPercents[$WorksComplite['ServiceID']];
 					#-------------------------------------------------------------------------------
-					# No more...
-					break;
+					Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: новый реферал (%s) и услуга (%s), дата регистрации юзера (%s), дата заказа услуги (%s), процент (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate']),$Percent));
 					#-------------------------------------------------------------------------------
-				default:
-					return ERROR | @Trigger_Error(101);
+				}else{
+					#-------------------------------------------------------------------------------
+					$Percent = 5;
+					#-------------------------------------------------------------------------------
+					Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: старый реферал/услуга (%s/%s), дата регистрации юзера (%s), дата заказа услуги (%s), процент (%s)',$WorksComplite['Email'],$WorksComplite['OrderID'],Date('Y-m-d H:i:s',$WorksComplite['RegisterDate']),Date('Y-m-d H:i:s',$WorksComplite['OrderDate']),$Percent));
+					#-------------------------------------------------------------------------------
+				}
+				#-------------------------------------------------------------------------------
+				#-------------------------------------------------------------------------------
+				# считаем вознаграждение
+				$Reward = Round(($WorksComplite['Amount'] * $WorksComplite['Cost'] - $WorksComplite['Amount'] * $WorksComplite['Cost'] * $WorksComplite['Discont']) * $Percent / 100, 2); 
+				#-------------------------------------------------------------------------------
+				// добавляем вознаграждение в статситику
+				$TmpData['Summ'] = $TmpData['Summ'] + $Reward;
+				#-------------------------------------------------------------------------------
+				# для админов, общая сумма
+				$TotalSumm = $TotalSumm + $Reward;
+				#-------------------------------------------------------------------------------
+				if($Reward > 0){
+					#-------------------------------------------------------------------------------
+					Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: Вознаграждение %s от реферала (%s/#%u) составляет %s (%u%%)',$Owner['Email'],$WorksComplite['Email'],$WorksComplite['UserID'],$Reward,$Percent));
+					#-------------------------------------------------------------------------------
+					# пополняем балланс юзера
+					$Comment = SPrintF("Начисления по партнёрской программе за %s, пользователь #%s (%u%%)",date('Y/m',$PreviousTime),$WorksComplite['UserID'],$Percent);
+					#-------------------------------------------------------------------------------
+					$Comp = Comp_Load('www/Administrator/API/PostingMake',Array('ContractID'=>$Contract['ID'],'ServiceID'=>'1100','Comment'=>$Comment,'Summ'=>$Reward));
+					#-------------------------------------------------------------------------
+					switch(ValueOf($Comp)){
+					case 'error':
+						return ERROR | @Trigger_Error(500);
+					case 'exception':
+						return ERROR | @Trigger_Error(400);
+					case 'array':
+						#-------------------------------------------------------------------------------
+						# Добавляем текстовое сообщение для юзера
+						$MessageToUser = SPrintF("%sНачисления от пользователя #%u составили %01.2f	рублей\n",$MessageToUser,$WorksComplite['UserID'],$Reward);
+						#-------------------------------------------------------------------------------
+						# No more...
+						break;
+						#-------------------------------------------------------------------------------
+					default:
+						return ERROR | @Trigger_Error(101);
+					}
+					#-------------------------------------------------------------------------------
 				}
 				#-------------------------------------------------------------------------------
 			}
 			#-------------------------------------------------------------------------------
-		}
+			break;
+		default:        
+			return ERROR | @Trigger_Error(101);
+		} 
+		#-------------------------------------------------------------------------------
 		#-------------------------------------------------------------------------------
 		// считаем уникальных юзеров с работами
 		$TmpData['ReferalsWithWorks'] = SizeOf($Array);
