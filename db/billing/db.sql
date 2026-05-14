@@ -2874,7 +2874,7 @@ INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, 
 
 -- SEPARATOR
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES
-(10, 100, 100, 'CreateTicket/DOMAIN_OWNER_NOT_DEFINED', 'Определить владельца для домена', 'yes', 'yes', 'yes', 'yes', '<NOBODY>Для завершения регистрации домена Вам необходимо определить его владельца.<BR />\nДля этого, пройдите в раздел<BR />\n[color=green]Услуги -> Домены -> Мои заказы[/color]<BR />\nи нажмите соответствующую кнопку напротив заказа домена.</NOBODY>\n');
+(10, 100, 100, 'CreateTicket/DOMAIN_OWNER_NOT_DEFINED', 'Определить владельца для домена', 'yes', 'yes', 'yes', 'yes', '<NOBODY>Для завершения регистрации/переноса домена Вам необходимо определить его владельца.<BR />\nДля этого, пройдите в раздел<BR />\n[color=green]Услуги / Домены[/color]<BR />\nи нажмите три точки справа от домена и выберите пункт "Определить владельца".</NOBODY>\n');
 
 -- SEPARATOR
 INSERT INTO `Clauses` (`GroupID`, `AuthorID`, `EditorID`, `Partition`, `Title`, `IsProtected`, `IsXML`, `IsDOM`, `IsPublish`, `Text`) VALUES

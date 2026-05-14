@@ -53,7 +53,7 @@
 		<!-- *********************************************************************** -->
 		<UniqID>
 			<Text>Обновить данные WhoIs</Text>
-			<Href>javascript:DomainOrderWhoIsUpdate(%ServiceOrderID%);</Href>
+			<Href>javascript:DomainOrderWhoIsUpdate(%OrderID%);</Href>
 			<Icon>Edit.gif</Icon>
 			<JavaScript>DomainOrderWhoIsUpdate.js</JavaScript>
 		</UniqID>

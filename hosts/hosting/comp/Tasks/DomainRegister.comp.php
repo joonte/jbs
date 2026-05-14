@@ -12,7 +12,13 @@ Eval(COMP_INIT);
 if(Is_Error(System_Load('classes/DomainServer.class.php')))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','DomainName','UserID','IsPrivateWhoIs','PersonID','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`','ProfileID','ServerID','StatusID','(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrdersOwners`.`ID`) as `YearsRemainded`','Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`');
+$Columns = Array(
+		'ID','OrderID','DomainName','UserID','IsPrivateWhoIs','PersonID','ProfileID','ServerID','StatusID',
+		'(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `DomainOrdersOwners`.`SchemeID`) as `DomainZone`',
+		'(SELECT SUM(`YearsRemainded`) FROM `DomainConsider` WHERE `DomainConsider`.`DomainOrderID` = `DomainOrdersOwners`.`ID`) as `YearsRemainded`',
+		'Ns1Name','Ns1IP','Ns2Name','Ns2IP','Ns3Name','Ns3IP','Ns4Name','Ns4IP',
+		'(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `DomainOrdersOwners`.`ServerID`) AS `Params`'
+		);
 #-------------------------------------------------------------------------------
 $DomainOrder = DB_Select('DomainOrdersOwners',$Columns,Array('UNIQ','ID'=>$DomainOrderID));
 #-------------------------------------------------------------------------------
@@ -105,7 +111,7 @@ case 'ForRegister':
 			case 'array':
 				#-------------------------------------------------------------------------------
 				# обновляем данные whois - так, на всякий
-				$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$DomainOrderID,'IsReaded'=>TRUE));
+				$Comp = Comp_Load('www/API/DomainOrderWhoIsUpdate',Array('OrderID'=>$DomainOrder['OrderID'],'IsReaded'=>TRUE));
 				if(Is_Error($Comp))
 					return ERROR | @Trigger_Error(500);
 				#-------------------------------------------------------------------------------

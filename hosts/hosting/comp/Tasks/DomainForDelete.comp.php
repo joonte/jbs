@@ -9,7 +9,7 @@ Eval(COMP_INIT);
 /******************************************************************************/
 $Where = "`StatusID` = 'Suspended' AND `StatusDate` + 2678400 - UNIX_TIMESTAMP() <= 0";
 #-------------------------------------------------------------------------------
-$DomainOrders = DB_Select('DomainOrders','ID',Array('Where'=>$Where));
+$DomainOrders = DB_Select('DomainOrders',Array('ID','OrderID'),Array('Where'=>$Where));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
 case 'error':
@@ -24,7 +24,7 @@ case 'array':
 	foreach($DomainOrders as $DomainOrder){
 		#-------------------------------------------------------------------------------
 		# реализация JBS-1049: проверяем не продлён ли домен до этого напрямую у регистратора
-		$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$DomainOrder['ID'],'IsReaded'=>TRUE));
+		$Comp = Comp_Load('www/API/DomainOrderWhoIsUpdate',Array('OrderID'=>$DomainOrder['OrderID'],'IsReaded'=>TRUE));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

@@ -24,6 +24,7 @@ if($OrderTypeCode == 'Default'){
 		return ERROR | @Trigger_Error(400);
 	case 'array':
 		#-------------------------------------------------------------------------------
+		$Replace['ServiceOrderID'] = $Replace['ServiceOrderID'];
 		$Replace['ServiceOrderID'] = $Order['ID'];
 		#-------------------------------------------------------------------------------
 		break;

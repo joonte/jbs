@@ -36,7 +36,7 @@ $Where = Array(
 		SPrintF('UNIX_TIMESTAMP() - %u * 86400 > `StatusDate`',$Settings['WhoIsBeginUpdate'])
 		);
 #-------------------------------------------------------------------------------
-$Columns = Array('ID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `DomainZone`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`');
+$Columns = Array('ID','OrderID','DomainName','(SELECT `Name` FROM `DomainSchemes` WHERE `DomainSchemes`.`ID` = `SchemeID`) AS `DomainZone`','(SELECT `Params` FROM `Servers` WHERE `Servers`.`ID` = `ServerID`) AS `Params`');
 $DomainOrders = DB_Select('DomainOrdersOwners',$Columns,Array('Where'=>$Where,'Limits'=>Array(0,$Settings['Limit']),'SortOn'=>Array('UpdateDate','DomainName')));
 #-------------------------------------------------------------------------------
 switch(ValueOf($DomainOrders)){
@@ -51,7 +51,7 @@ case 'array':
 	#-------------------------------------------------------------------------------
 	foreach($DomainOrders as $DomainOrder){
 		#-------------------------------------------------------------------------------
-		$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$DomainOrder['ID']));
+		$Comp = Comp_Load('www/API/DomainOrderWhoIsUpdate',Array('OrderID'=>$DomainOrder['OrderID']));
 		if(Is_Error($Comp))
 			return ERROR | @Trigger_Error(500);
 		#-------------------------------------------------------------------------------

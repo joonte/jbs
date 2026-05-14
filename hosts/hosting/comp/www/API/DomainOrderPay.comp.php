@@ -29,12 +29,6 @@ if(!$YearsPay)
 	$YearsPay = 1;
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
-# реализация JBS-1047: проверяем не продлён ли домен до этого напрямую у регистратора
-$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$DomainOrderID));
-if(Is_Error($Comp))
-	return ERROR | @Trigger_Error(500);
-#-------------------------------------------------------------------------------
-#-------------------------------------------------------------------------------
 $Columns = Array(
 		'ID','ContractID','OrderID','ServiceID','UserID','DomainName','ExpirationDate','AuthInfo','StatusID','SchemeID','ProfileID',
 		'CONCAT(`Ns1Name`,",",`Ns2Name`,",",`Ns3Name`,",",`Ns4Name`) AS `DNSs`',	// DNS for JBS-1337
@@ -58,6 +52,12 @@ case 'array':
 default:
 	return ERROR | @Trigger_Error(101);
 }
+#-------------------------------------------------------------------------------
+#-------------------------------------------------------------------------------
+# реализация JBS-1047: проверяем не продлён ли домен до этого напрямую у регистратора
+$Comp = Comp_Load('www/API/DomainOrderWhoIsUpdate',Array('OrderID'=>$DomainOrder['OrderID']));
+if(Is_Error($Comp))
+	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 $UserID = (integer)$DomainOrder['UserID'];

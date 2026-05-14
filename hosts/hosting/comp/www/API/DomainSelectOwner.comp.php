@@ -130,7 +130,7 @@ switch(ValueOf($DomainOrder)){
 	    $Where = Array(
 	                    "`IsExecuted` = 'no'",
 			    "`IsActive` = 'yes'",
-			    "`TypeID` = 'DomainPathRegister'",
+			    "`TypeID` IN ('DomainPathRegister','DomainTransfer')",
 			    SPrintF('`UserID` = %u',$__USER['ID'])
 	                  );
             $Tasks = DB_Select('Tasks',Array('ID'),Array('Where'=>$Where));

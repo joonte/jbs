@@ -199,7 +199,7 @@ foreach($Servers as $NowReg){
 						Debug(SPrintF('[comp/Tasks/GC/DomainFindOdd]: Домен %s/%s, в биллинге есть, но его статус не соответствует критериям выборки',$DomainOdd,$NowReg['Params']['Name']));
 						#-------------------------------------------------------------------------------
 						# JBS-595 - проверяем не на переносе ли он - возможно перенос завершился
-						$Columns = Array('`DomainOrdersOwners`.`ID` AS `ID`','StatusID','ExpirationDate','`DomainOrdersOwners`.`UserID` AS `UserID`');
+						$Columns = Array('`DomainOrdersOwners`.`ID` AS `ID`','OrderID','StatusID','ExpirationDate','`DomainOrdersOwners`.`UserID` AS `UserID`');
 						#-------------------------------------------------------------------------------
 						$IsTransfer = DB_Select(Array('DomainOrdersOwners','DomainSchemes'),$Columns,Array('UNIQ','Where'=>$Where,'Limits'=>Array(0,1)));
 						#-------------------------------------------------------------------------------
@@ -211,7 +211,7 @@ foreach($Servers as $NowReg){
 							break;
 						case 'array':
 							#-------------------------------------------------------------------------------
-							$Comp = Comp_Load('www/Administrator/API/DomainOrderWhoIsUpdate',Array('DomainOrderID'=>$IsTransfer['ID']));
+							$Comp = Comp_Load('www/API/DomainOrderWhoIsUpdate',Array('OrderID'=>$IsTransfer['OrderID']));
 							if(Is_Error($Comp))
 								return ERROR | @Trigger_Error(500);
 							#-------------------------------------------------------------------------------
