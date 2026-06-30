@@ -1,1 +1,0 @@
-import{o as e,c as n}from"./index-Cbjm_q31.js";const o=["innerHTML"],_={__name:"HtmlContent",props:{content:{type:String,required:!0}},setup(t){return(r,c)=>(e(),n("div",{class:"html-content tw-text-sm",innerHTML:t.content},null,8,o))}};export{_};

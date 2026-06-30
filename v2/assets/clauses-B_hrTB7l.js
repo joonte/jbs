@@ -1,1 +1,0 @@
-import{ag as c,r as n,ah as t,ai as e}from"./index-Cbjm_q31.js";const l=c("clauses",()=>{const a=n({});async function u(){const s=await t.post(e.clauses);a.value=s.data}async function r(s){return(await t.post(e.clauses,{Partition:s})).data}return{clausesList:a,fetchClauses:u,fetchClausesByPartition:r}});export{l as u};

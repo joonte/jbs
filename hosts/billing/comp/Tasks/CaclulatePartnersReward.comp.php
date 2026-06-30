@@ -190,7 +190,7 @@ foreach($Owners as $Owner){
 			return ERROR | @Trigger_Error(500);
 		case 'exception':
 			#-------------------------------------------------------------------------------
-			Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: нет выполненных работ у рефералов пользователя (%s)',$WorksComplite['Email'],$Owner['Email'],$WorksComplite['ServiceID'],$WorksComplite['OrderID']));
+			Debug(SPrintF('[comp/Tasks/CaclulatePartnersReward]: нет выполненных работ у рефералов пользователя (%s)',$Owner['Email']));
 			#-------------------------------------------------------------------------------
 			break;
 			#-------------------------------------------------------------------------------
