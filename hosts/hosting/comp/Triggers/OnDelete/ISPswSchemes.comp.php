@@ -14,7 +14,7 @@ if(Is_Error($Count))
 	return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
 if($Count)
-	return new gException('DELETE_DENIED',SPrintF('Удаление тарифа (%s) не возможно, %u заказ(ов) на ПО ISPsystem используют данный тариф',$ISPswScheme['Name'],$Count));
+	return new gException('DELETE_DENIED',SPrintF('Удаление тарифа (%s) невозможно, %u заказ(ов) на ПО ISPsystem используют данный тариф',$ISPswScheme['Name'],$Count));
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 return TRUE;

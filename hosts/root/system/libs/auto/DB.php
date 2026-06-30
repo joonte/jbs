@@ -341,7 +341,7 @@ function DB_Update($TableID,$Columns,$Query = Array()){
 	#-------------------------------------------------------------------------------
 	switch(ValueOf($Result)){
 	case 'error':
-		return ERROR | @Trigger_Error('[DB_Update]: не возможно осуществить запрос');
+		return ERROR | @Trigger_Error('[DB_Update]: невозможно осуществить запрос');
 	case 'true':
 		#-------------------------------------------------------------------------------
 		Cache_Delete('[DB_Select]');

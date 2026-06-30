@@ -22,7 +22,7 @@ function Tree_Path($TableID,$RowID,$ColumnsIDs = 'ID'){
     #---------------------------------------------------------------------------
     switch(ValueOf($Row)){
       case 'error':
-        return ERROR | @Trigger_Error('[Tree_Path]: не возможно выбрать запись');
+        return ERROR | @Trigger_Error('[Tree_Path]: невозможно выбрать запись');
       case 'exception':
         return new gException('ROW_NOT_FOUND','Запись не найдена');
       case 'array':
@@ -85,7 +85,7 @@ function Tree_Entrance($TableID,$RowID){
     #---------------------------------------------------------------------------
     switch(ValueOf($Row)){
       case 'error':
-        return ERROR | @Trigger_Error('[Tree_Entrance]: не возможно найти запись');
+        return ERROR | @Trigger_Error('[Tree_Entrance]: невозможно найти запись');
       case 'exception':
         return new gException('ROW_NOT_FOUND','Запись не найдена');
       case 'array':
@@ -98,7 +98,7 @@ function Tree_Entrance($TableID,$RowID){
         #-----------------------------------------------------------------------
         switch(ValueOf($Childs)){
           case 'error':
-            return ERROR | @Trigger_Error('[Tree_Entrance]: не возможно найти дочерние записи');
+            return ERROR | @Trigger_Error('[Tree_Entrance]: невозможно найти дочерние записи');
           case 'exception':
             #----->
           break;
@@ -110,7 +110,7 @@ function Tree_Entrance($TableID,$RowID){
               #-----------------------------------------------------------------
               switch(ValueOf($Entrance)){
                 case 'error':
-                  return ERROR | @Trigger_Error('[Tree_Entrance]: не возможно определить дочерние вхождения записей');
+                  return ERROR | @Trigger_Error('[Tree_Entrance]: невозможно определить дочерние вхождения записей');
                 case 'exception':
                   return ERROR | @Trigger_Error('[Tree_Entrance]: запись оказавшаяся дочерней не найдена');
                 case 'array':
@@ -150,7 +150,7 @@ function Tree_Parents($TableID,$RowID){
   #---------------------------------------------------------------------------
   switch(ValueOf($Row)){
     case 'error':
-      return ERROR | @Trigger_Error('[Tree_Parents]: не возможно найти запись');
+      return ERROR | @Trigger_Error('[Tree_Parents]: невозможно найти запись');
     case 'exception':
       return new gException('ROW_NOT_FOUND','Запись не найдена');
     case 'array':
@@ -159,7 +159,7 @@ function Tree_Parents($TableID,$RowID){
       #-------------------------------------------------------------------------
       $IsQuery = DB_Query($Query);
       if(Is_Error($IsQuery))
-        return ERROR | @Trigger_Error('[Tree_Parents]: не возможно найти дочерние записи');
+        return ERROR | @Trigger_Error('[Tree_Parents]: невозможно найти дочерние записи');
       #-------------------------------------------------------------------------
       $Childs = MySQL::Result($IsQuery);
       #-------------------------------------------------------------------------
@@ -171,7 +171,7 @@ function Tree_Parents($TableID,$RowID){
         #-----------------------------------------------------------------------
         switch(ValueOf($Parents)){
           case 'error':
-            return ERROR | @Trigger_Error('[Tree_Parents]: не возможно определить дочерние вхождения записей');
+            return ERROR | @Trigger_Error('[Tree_Parents]: невозможно определить дочерние вхождения записей');
           case 'exception':
             return ERROR | @Trigger_Error('[Tree_Parents]: запись оказавшаяся дочерней не найдена');
           case 'array':

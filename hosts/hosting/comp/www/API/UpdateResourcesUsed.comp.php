@@ -401,13 +401,14 @@ foreach($Accounts as $Account){
 	}
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
-	$iParams['UpdateDate'] = Date('Y-m-d H:i:s');
+	//$iParams['UpdateDate'] = Date('Y-m-d H:i:s');
+	$iParams['UpdateDate'] = Time();
 	#-------------------------------------------------------------------------------
 	#-------------------------------------------------------------------------------
 	// сохраняем данные
 	$IsWrite = IO_Write(SPrintF($Template,$Account['OrderID']),Json_Encode($iParams),TRUE);
 	if(Is_Error($IsWrite))
-		Debug(SPrintF('[comp/www/API/UpdateResourcesUsed]: не возможно записать файл (%s)',SPrintF($Template,$Account['OrderID'])));
+		Debug(SPrintF('[comp/www/API/UpdateResourcesUsed]: невозможно записать файл (%s)',SPrintF($Template,$Account['OrderID'])));
 	#-------------------------------------------------------------------------------
 	// кэшируем даныне, ну на сутки
 	CacheManager::add(SPrintF($Template,$Account['OrderID']),Json_Encode($iParams), 24*3600);

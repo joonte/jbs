@@ -67,14 +67,14 @@ class MySQL extends stdClass{
 		$this->Link = @MySQLi_Connect($Settings['Server'],$User = $Settings['User'],$Settings['Password'],$Settings['DbName'],$Settings['Port']);
 		#-------------------------------------------------------------------------------
 		if(!$this->Link)
-			return ERROR | @Trigger_Error(SPrintF('[MySQLi->Open]: не возможно соединиться с (%s@%s)',$User,$Address));
+			return ERROR | @Trigger_Error(SPrintF('[MySQLi->Open]: невозможно соединиться с (%s@%s)',$User,$Address));
 		#-------------------------------------------------------------------------------
 		Debug(SPrintF('[MySQLi->Open]: связь как (%s@%s) установлена',$User,$Address));
 		#-------------------------------------------------------------------------------
 		$Init = System_XML('config/MySqlInit.xml');
 		#-------------------------------------------------------------------------------
 		if(Is_Error($Init))
-			return ERROR | @Trigger_Error('[MySQLi->Open]: не возможно загрузить запросы инициализации');
+			return ERROR | @Trigger_Error('[MySQLi->Open]: невозможно загрузить запросы инициализации');
 		#-------------------------------------------------------------------------------
 		foreach($Init as $Query)
 			if(Is_Error($this->Query($Query)))

@@ -23,7 +23,7 @@ function Comp_Load($Element){
   /****************************************************************************/
   $HostsIDs = System_HostsIDs(SPrintF('comp/%s.comp.php',$Element));
   if(Is_Error($HostsIDs))
-    return ERROR | @Trigger_Error('[Comp_Load]: не возможно найти компонент');
+    return ERROR | @Trigger_Error('[Comp_Load]: невозможно найти компонент');
   #-----------------------------------------------------------------------------
   $IsCascade = In_Array(COMP_ALL_HOSTS,$__args__,TRUE);
   #-----------------------------------------------------------------------------
@@ -45,7 +45,7 @@ function Comp_Load($Element){
     #---------------------------------------------------------------------------
     $Comp = Call_User_Func_Array('LoadComp',$Args);
     if(Is_Error($Comp))
-      return ERROR | @Trigger_Error(SPrintF('[Comp_Load]: не возможно загрузить компонент: %s',$Path));
+      return ERROR | @Trigger_Error(SPrintF('[Comp_Load]: невозможно загрузить компонент: %s',$Path));
     #---------------------------------------------------------------------------
     if($IsCascade)
       $Result[] = $Comp;
