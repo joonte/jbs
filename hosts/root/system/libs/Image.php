@@ -85,7 +85,7 @@ function Image_Resize($Source,$Width,$Height){
     }
   }else{
     #---------------------------------------------------------------------------
-    if(!ImageCopy($Result,$Real,($Width-$Sx)/2,($Height-$Sy)/2,0,0,$Sx,$Sy))
+    if(!ImageCopy($Result,$Real,IntVal(($Width-$Sx)/2),IntVal(($Height-$Sy)/2),0,0,$Sx,$Sy))
       return ERROR | @Trigger_Error('[Image_Resize]: не удалось уменьшить изображение');
   }
   #-----------------------------------------------------------------------------

@@ -174,11 +174,14 @@ foreach($Orders as $Order){
 		#-------------------------------------------------------------------------------
 	}else{
 		#-------------------------------------------------------------------------------
-		$Order['Stat'] = Array('UpdateDate'=>Date('Y-m-d H:i:s'));
+		//$Order['Stat'] = Array('UpdateDate'=>Date('Y-m-d H:i:s'));
+		$Order['Stat'] = Array('UpdateDate'=>Time());
 		#-------------------------------------------------------------------------------
 		// а ещё есть услуги без статистики. и типа доменов. и они могут заанчиваться.
 		if($Order['ExpirationDate'] - Time() < 10*24*60*60 && $Order['DaysRemainded'] < 11)
-			$Order['Stat']['Last'][0] = Array('Name'=>'Статус','Used'=>'Оканчивается срок оплаты','Status'=>'Critical','Units'=>'','Limit'=>'');
+			// если заказ закончился, то статус не надо
+			if(Time() - $Order['ExpirationDate'] <  60*24*60*60)
+				$Order['Stat']['Last'][0] = Array('Name'=>'Статус','Used'=>'Оканчивается срок оплаты','Status'=>'Critical','Units'=>'','Limit'=>'');
 		#-------------------------------------------------------------------------------
 		if($Order['StatusID'] == 'Waiting')
 			$Order['Stat']['Last'][0] = Array('Name'=>'Статус','Used'=>'Заказ ожидает оплаты','Status'=>'Warning','Units'=>'','Limit'=>'');
