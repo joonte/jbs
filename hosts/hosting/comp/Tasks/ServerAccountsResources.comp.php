@@ -167,11 +167,13 @@ if(In_Array($Server['Code'],Array('Hosting','VPS','DS'))){
 				#-------------------------------------------------------------------------------
 				#-------------------------------------------------------------------------------
 				// если поле задано и обновлялся менее получаса назад - пропускаем
-				if(IsSet($Params['UpdateDate']) && StrToTime($Params['UpdateDate']) > Time() - 1800)
+				//if(IsSet($Params['UpdateDate']) && StrToTime($Params['UpdateDate']) > Time() - 1800)
+				if(IsSet($Params['UpdateDate']) && $Params['UpdateDate'] > Time() - 1800)
 					continue;
 				#-------------------------------------------------------------------------------
 				// складываем в массив, ключ/значение[время обновления]
-				$UpdateDate = IsSet($Params['UpdateDate'])?StrToTime($Params['UpdateDate']):0;
+				//$UpdateDate = IsSet($Params['UpdateDate'])?StrToTime($Params['UpdateDate']):0;
+				$UpdateDate = IsSet($Params['UpdateDate'])?Time():0;
 				$Array1[$Order['OrderID']] = $UpdateDate;
 				//$Array[] = $Order['OrderID'];
 				#-------------------------------------------------------------------------------
@@ -279,7 +281,8 @@ if(In_Array($Server['Code'],Array('DS'))){
 			#-------------------------------------------------------------------------------
 			#-------------------------------------------------------------------------------
 			// если поле задано и обновлялся недавно - пропускаем
-			if(IsSet($Params['UpdateDate']) && StrToTime($Params['UpdateDate']) > Time() - 1800)
+			//if(IsSet($Params['UpdateDate']) && StrToTime($Params['UpdateDate']) > Time() - 1800)
+			if(IsSet($Params['UpdateDate']) && $Params['UpdateDate'] > Time() - 1800)
 				continue;
 			#-------------------------------------------------------------------------------
 			// тут мы оказываемся только если есть непрочеканные сервера
