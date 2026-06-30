@@ -45,7 +45,7 @@ default:
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
 # находим данные для этого заказа Хостинга/ВПС
-$DependOrder = DB_Select(SPrintF('%sOrdersOwners',$DependService['Code']),Array('ID','UserID','Login','Password','Domain','SchemeID'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ExtraIPOrder['DependOrderID'])));
+$DependOrder = DB_Select(SPrintF('%sOrdersOwners',$DependService['Code']),Array('ID','UserID','Login','Password','Domain','SchemeID','StatusID'),Array('UNIQ','Where'=>SPrintF('`OrderID` = %u',$ExtraIPOrder['DependOrderID'])));
 switch(ValueOf($DependOrder)){
 case 'error':
 	return ERROR | @Trigger_Error(500);
@@ -55,6 +55,15 @@ case 'array':
 	break;
 default:
 	return ERROR | @Trigger_Error(101);
+}
+#-------------------------------------------------------------------------------
+// а заказ может быть удалён. тогда оно находит другой заказ с этим IP и удаляет его там =)
+if($DependOrder['StatusID'] == 'Deleted'){
+	#-------------------------------------------------------------------------------
+	Debug(SPrintF('[comp/Tasks/ExtraIPDelete]: Заказ услуги %s/%s в статусе "%s", задача не требует выполнения',$DependService['Code'],$ExtraIPOrder['DependOrderID'],$DependOrder['StatusID']));
+	#-------------------------------------------------------------------------------
+	return TRUE;
+	#-------------------------------------------------------------------------------
 }
 #-------------------------------------------------------------------------------
 #-------------------------------------------------------------------------------
