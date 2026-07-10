@@ -38,6 +38,8 @@ $Columns = Array(
 		'*',
 		'(SELECT `Params` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `AjaxCall`',
 		'(SELECT `Code` FROM `Services` WHERE `ID` = `OrdersOwners`.`ServiceID`) AS `Code`',
+		'IF(DependOrderID > 0,(SELECT `Code` FROM `Services` WHERE `ID` = (SELECT ServiceID FROM `OrdersOwners` TmpOrdersTable WHERE ID = OrdersOwners.`DependOrderID`)),"") AS DependOrderCode',
+//		'(SELECT `Code` FROM `Services` WHERE `DependOrderID` = `OrdersOwners`.`ServiceID`) AS `DependOrderCode`',
 		'(SELECT SUM(`DaysReserved`*`Cost`*(1-`Discont`)) FROM `OrdersConsider` WHERE `OrderID`=`OrdersOwners`.`ID`) AS PayedSumm',
 		);
 #-------------------------------------------------------------------------------
