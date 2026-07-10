@@ -37,7 +37,7 @@ case 'array':
 	if(!$GLOBALS['__USER']['IsAdmin'])
 		$AjaxCall['Args']['IsStamp'] = $Settings['IsStampUser'];
 	#-------------------------------------------------------------------------------
-	return Array('Status'=>'Ok','AjaxCall'=>$AjaxCall);
+	return Array('Status'=>'Ok','AjaxCall'=>$AjaxCall,'Location'=>SPrintF('%s?%s',$AjaxCall['Url'],Http_Build_Query($AjaxCall['Args'])));
 	#-------------------------------------------------------------------------------
 default:
 	return ERROR | @Trigger_Error(101);
