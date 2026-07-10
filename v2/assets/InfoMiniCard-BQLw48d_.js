@@ -1,0 +1,1 @@
+import{_ as t}from"./_plugin-vue_export-helper-DlAUqK2U.js";import{o,c as r,G as n}from"./index-Bb2UEb_P.js";const s={},c={class:"tw-flex tw-flex-col tw-gap-4 tw-justify-between tw-p-4 tw-border tw-border-gray-200 tw-rounded-lg"};function _(e,a){return o(),r("div",c,[n(e.$slots,"default")])}const f=t(s,[["render",_]]);export{f as _};

@@ -1,1 +1,0 @@
-import{M as t,o as r,c as o,t as s,i as a}from"./index-D16tjl1f.js";const n={key:0,class:"tw-text-xs tw-text-gray-300 tw-border tw-border-gray-300 tw-bg-white tw-rounded-full tw-py-1 tw-px-2"},c=t({__name:"OrderIDBadge",props:{id:{}},setup(d){return(e,i)=>e.id?(r(),o("div",n," # "+s(e.id),1)):a("",!0)}});export{c as _};

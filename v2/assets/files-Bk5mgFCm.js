@@ -1,0 +1,1 @@
+import{aj as o,y as r,z as s}from"./index-Bb2UEb_P.js";const i=o("files",()=>{async function a(e){const t=new FormData;return t.append("Upload",e),(await r.post(s.uploadFile,t,{headers:{"Content-Type":"multipart/form-data"}})).data}return{sendFile:a}});export{i as u};

@@ -1,1 +1,0 @@
-import{ah as p,r as u,ai as s,aj as t}from"./index-D16tjl1f.js";const f=p("server",()=>{const r=u(null);async function o(){const e=await s.post(t.serverGroups);e.data&&(r.value=e.data)}async function a(e,n){return await s.post(t.DSReboot,{DSOrderID:e,XMLHttpRequest:"yes",Command:n})}return{serverGroupsList:r,fetchServerGroups:o,ServerReset:a}});export{f as u};

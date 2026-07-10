@@ -1,0 +1,1 @@
+import{aj as c,r as n,y as a,z as e}from"./index-Bb2UEb_P.js";const i=c("clauses",()=>{const t=n({});async function u(){const s=await a.post(e.clauses);t.value=s.data}async function r(s){return(await a.post(e.clauses,{Partition:s})).data}return{clausesList:t,fetchClauses:u,fetchClausesByPartition:r}});export{i as u};
