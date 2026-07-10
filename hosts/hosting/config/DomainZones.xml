@@ -764,7 +764,7 @@
 	<me>
 		<Server>whois.nic.me</Server>
 		<Name>me</Name>
-		<Available>NOT\sFOUND</Available>
+		<Available>Domain\snot\sfound</Available>
 		<NotAvailable>Default</NotAvailable>
 		<MinChars>2</MinChars>
 		<Regular>/^[0-9a-z]([0-9a-z\-]*[0-9a-z])*$/ui</Regular>
