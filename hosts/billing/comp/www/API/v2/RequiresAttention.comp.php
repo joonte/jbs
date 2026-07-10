@@ -111,7 +111,8 @@ foreach($Orders as $Order){
 			'StatusID'	=> $Order['StatusID'],
 //			'StatusID'	=> $Statuses[SPrintF('%sOrders',($Order['Code'] != 'Default')?$Order['Code']:'')][$Order['StatusID']]['Name'],
 			'Stat'		=> $Order['Stat'],
-			'Url'		=> ($Order['Code'] != 'Default')?SPrintF('/v2/%sOrders/%u',$Order['Code'],$Order['OrderID']):SPrintF('/v2/AdditionalServices/%u',$Order['OrderID']),
+#			'Url'		=> ($Order['Code'] != 'Default')?SPrintF('/v2/%sOrders/%u',$Order['Code'],$Order['OrderID']):SPrintF('/v2/AdditionalServices/%u',$Order['OrderID']),
+			'Url'		=> ($Order['Code'] != 'Default')?SPrintF('/%sOrders/%u',$Order['Code'],$Order['OrderID']):SPrintF('/AdditionalServices/%u',$Order['OrderID']),
 			);
 	#-------------------------------------------------------------------------------
 	$Out[] = $Line;
