@@ -30,7 +30,7 @@ $Comp1 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrat
 if(Is_Error($Comp1))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------
-$Comp2 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/DSCompensation');"),'Произвести компенсацию времени заказам клиентов','Add.gif');
+$Comp2 = Comp_Load('Buttons/Standard',Array('onclick'=>"ShowWindow('/Administrator/OrderCompensation',{ServiceID:40000});"),'Произвести компенсацию времени заказам клиентов','Add.gif');
 if(Is_Error($Comp2))
   return ERROR | @Trigger_Error(500);
 #-------------------------------------------------------------------------------

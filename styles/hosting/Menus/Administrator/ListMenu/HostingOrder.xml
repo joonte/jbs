@@ -34,8 +34,8 @@
 		</UniqID>
 		<!-- *********************************************************************** -->
 		<UniqID>
-			<Text>Компенсировать время</Text>
-			<Href>javascript:ShowWindow("/Administrator/HostingCompensation",{HostingOrderID:%ServiceOrderID%});</Href>
+			<Text>Компенсация/Продление</Text>
+			<Href>javascript:ShowWindow("/Administrator/OrderCompensation",{ServiceOrderID:"%ServiceOrderID%",ServiceID:"%ServiceID%"});</Href>
 			<Icon>Add.gif</Icon>
 		</UniqID>
 		<!-- *********************************************************************** -->
